@@ -1,0 +1,8 @@
+{
+  "manifest_version": 2,
+  "name": "Google Search Blacklist",
+  "author": "Kyle Carhart",
+  "version": "1.0",
+  "description": "Filter domains from your Google searches.",
+  "permissions": ["storage"]
+}
