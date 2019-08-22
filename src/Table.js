@@ -1,15 +1,19 @@
 import React from 'react'
+import TableEntry from './TableEntry'
 
-export default function Table({ entries }) {
+import './Table.css'
+
+export default function Table({ entries, handleClearClick }) {
   return (
     <div className="table">
-      {entries.map((entry, idx) =>
-        idx % 2 === 0 ? (
-          <div className="table-entry">{entry}</div>
-        ) : (
-          <div className="table-entry table-entry-odd">{entry}</div>
-        )
-      )}
+      {entries.map((entry, idx) => (
+        <TableEntry
+          key={idx}
+          entry={entry}
+          odd={idx % 2 === 0}
+          handleClearClick={() => handleClearClick(idx)}
+        />
+      ))}
     </div>
   )
 }

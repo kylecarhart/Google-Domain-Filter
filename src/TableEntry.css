@@ -1,0 +1,26 @@
+.table-entry {
+  padding: 7px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-entry-odd {
+  background: #fafafa;
+}
+
+.table-entry:hover {
+  background: #ededed;
+}
+
+.table-options {
+  display: flex;
+  align-items: center;
+}
+
+.table-options .icon + .icon {
+  margin-left: 10px;
+}
+
+.icon {
+  cursor: pointer;
+}
