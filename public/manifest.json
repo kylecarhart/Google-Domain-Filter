@@ -8,5 +8,8 @@
   "icons": {
     "18": "./icons/18dp.png",
     "48": "./icons/48dp.png"
+  },
+  "browser_action": {
+    "default_popup": "index.html"
   }
 }
