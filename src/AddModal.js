@@ -5,19 +5,25 @@ import Modal from './Modal'
 
 import './Input.css'
 
-const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+const URL_REGEX = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
 export default function AddModal({ setModalVisible, addEntry }) {
   const [input, setInput] = React.useState('')
   const [isValid, setValid] = React.useState(false)
 
+  /* 
+    On every change, set the text and validate it
+  */
   const handleChange = text => {
     setInput(text)
     validateInput(text)
   }
 
+  /* 
+    Validate input based on regex
+  */
   const validateInput = text => {
-    text.match(urlRegex) ? setValid(true) : setValid(false)
+    text.match(URL_REGEX) ? setValid(true) : setValid(false)
   }
 
   return (
