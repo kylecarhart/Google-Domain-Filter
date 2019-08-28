@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React from 'react'
 import Modal from './Modal'
 
@@ -5,7 +7,7 @@ import './Input.css'
 
 const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
-export default function AddModal({ setModalVisible, setEntries }) {
+export default function AddModal({ setModalVisible, addEntry }) {
   const [input, setInput] = React.useState('')
   const [isValid, setValid] = React.useState(false)
 
@@ -38,7 +40,7 @@ export default function AddModal({ setModalVisible, setEntries }) {
           className="save"
           onClick={() => {
             if (isValid) {
-              setEntries(old => [...old, input])
+              addEntry(input)
               setModalVisible(false)
             }
           }}
