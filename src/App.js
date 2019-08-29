@@ -10,11 +10,18 @@ const ENTRIES_STORAGE_LOCATION = 'entries'
 function App() {
   const [modalVisible, setModalVisible] = useState(false)
   const [entries, setEntries] = React.useState([])
+  const [visibleEntries, setVisibleEntries] = React.useState([])
+  const [searchInput, setSearchInput] = React.useState('')
 
   const changeListener = change => {
     // Check if entries were changed (and not some other part of storage)
     if (change[ENTRIES_STORAGE_LOCATION]) {
       setEntries(change[ENTRIES_STORAGE_LOCATION].newValue)
+      setVisibleEntries(
+        change[ENTRIES_STORAGE_LOCATION].newValue.filter(entry =>
+          entry.includes(searchInput)
+        )
+      )
     }
   }
 
@@ -24,6 +31,7 @@ function App() {
   React.useEffect(() => {
     chrome.storage.sync.get([ENTRIES_STORAGE_LOCATION], function(result) {
       setEntries(result[ENTRIES_STORAGE_LOCATION])
+      setVisibleEntries(result[ENTRIES_STORAGE_LOCATION])
     })
 
     // Listen for chrome storage changes and update UI accordingly
@@ -48,6 +56,14 @@ function App() {
     })
   }
 
+  /* 
+    Update input and filter entries to visibleEntries
+  */
+  const handleInputChange = inputText => {
+    setSearchInput(inputText)
+    setVisibleEntries(entries.filter(entry => entry.includes(inputText)))
+  }
+
   return (
     <div className="app">
       {modalVisible && (
@@ -55,12 +71,17 @@ function App() {
       )}
       <header className="header">Google Search Blacklist</header>
       <div className="toolbar">
-        <input className="searchbar" placeholder="Search blacklist..." />
+        <input
+          value={searchInput}
+          onChange={e => handleInputChange(e.target.value)}
+          className="searchbar"
+          placeholder="Search blacklist..."
+        />
         <button className="add-btn" onClick={() => setModalVisible(true)}>
           +
         </button>
       </div>
-      <Table entries={entries} handleClearClick={removeEntry} />
+      <Table entries={visibleEntries} handleClearClick={removeEntry} />
     </div>
   )
 }
