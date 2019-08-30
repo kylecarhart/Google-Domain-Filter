@@ -25,8 +25,10 @@ function App() {
   */
   React.useEffect(() => {
     chrome.storage.sync.get([ENTRIES_STORAGE_LOCATION], function(result) {
-      setEntries(result[ENTRIES_STORAGE_LOCATION])
-      setVisibleEntries(result[ENTRIES_STORAGE_LOCATION])
+      if (result[ENTRIES_STORAGE_LOCATION]) {
+        setEntries(result[ENTRIES_STORAGE_LOCATION])
+        setVisibleEntries(result[ENTRIES_STORAGE_LOCATION])
+      }
     })
 
     // Listen for chrome storage changes and update UI accordingly
@@ -42,7 +44,7 @@ function App() {
     whenever the entires change, filter on searchInput 
   */
   React.useEffect(() => {
-    setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
+    // setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
   }, [entries])
 
   /* 
