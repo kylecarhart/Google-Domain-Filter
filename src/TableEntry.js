@@ -3,7 +3,12 @@ import './TableEntry.css'
 import Edit from './icons/Edit'
 import Clear from './icons/Clear'
 
-export default function TableEntry({ entry, odd = false, handleClearClick }) {
+export default function TableEntry({
+  entry,
+  odd = false,
+  handleClearClick,
+  handleEditClick
+}) {
   const [isHovered, setHovered] = React.useState(false)
 
   return (
@@ -15,7 +20,9 @@ export default function TableEntry({ entry, odd = false, handleClearClick }) {
       {entry}
       {isHovered && (
         <div className="table-options">
-          <Edit size={14} />
+          <div onClick={() => handleEditClick()}>
+            <Edit size={14} />
+          </div>
           <div onClick={() => handleClearClick()}>
             <Clear size={14} />
           </div>

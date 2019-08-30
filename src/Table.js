@@ -3,7 +3,7 @@ import TableEntry from './TableEntry'
 
 import './Table.css'
 
-export default function Table({ entries, handleClearClick }) {
+export default function Table({ entries, handleClearClick, handleEditClick }) {
   return (
     <div className="table">
       {entries.map((entry, idx) => (
@@ -12,6 +12,7 @@ export default function Table({ entries, handleClearClick }) {
           entry={entry}
           odd={idx % 2 === 0}
           handleClearClick={() => handleClearClick(idx)}
+          handleEditClick={() => handleEditClick()}
         />
       ))}
     </div>

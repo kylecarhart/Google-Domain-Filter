@@ -7,7 +7,7 @@ import './Input.css'
 
 const URL_REGEX = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
-export default function AddModal({ closeModal, addEntry }) {
+export default function EditModal({ closeModal, addEntry }) {
   const [input, setInput] = React.useState('')
   const [isValid, setValid] = React.useState(false)
 
@@ -27,7 +27,7 @@ export default function AddModal({ closeModal, addEntry }) {
   }
 
   return (
-    <Modal handleCloseModal={closeModal} header="Add Domain">
+    <Modal handleCloseModal={closeModal} header="Edit Domain">
       <input
         className={`input ${
           input.length !== 0 ? (isValid ? 'valid' : 'invalid') : ''
@@ -42,17 +42,7 @@ export default function AddModal({ closeModal, addEntry }) {
         <button className="cancel" onClick={() => closeModal()}>
           Cancel
         </button>
-        <button
-          className="save"
-          onClick={() => {
-            if (isValid) {
-              addEntry(input)
-              closeModal()
-            }
-          }}
-        >
-          Save
-        </button>
+        <button className="save">Save</button>
       </div>
     </Modal>
   )

@@ -4,11 +4,13 @@ import React, { useState } from 'react'
 import './App.css'
 import Table from './Table'
 import AddModal from './AddModal'
+import EditModal from './EditModal'
 
 const ENTRIES_STORAGE_LOCATION = 'entries'
 
 function App() {
-  const [modalVisible, setModalVisible] = useState(false)
+  const [addModalVisible, setAddModalVisible] = useState(false)
+  const [editModalVisible, setEditModalVisible] = useState(false)
   const [entries, setEntries] = React.useState([])
   const [visibleEntries, setVisibleEntries] = React.useState([])
   const [searchInput, setSearchInput] = React.useState('')
@@ -75,8 +77,14 @@ function App() {
 
   return (
     <div className="app">
-      {modalVisible && (
-        <AddModal setModalVisible={setModalVisible} addEntry={addEntry} />
+      {addModalVisible && (
+        <AddModal
+          closeModal={() => setAddModalVisible(false)}
+          addEntry={addEntry}
+        />
+      )}
+      {editModalVisible && (
+        <EditModal closeModal={() => setEditModalVisible(false)} />
       )}
       <header className="header">Google Search Blacklist</header>
       <div className="toolbar">
@@ -86,11 +94,17 @@ function App() {
           className="searchbar"
           placeholder="Search blacklist..."
         />
-        <button className="add-btn" onClick={() => setModalVisible(true)}>
+        <button className="add-btn" onClick={() => setAddModalVisible(true)}>
           +
         </button>
       </div>
-      <Table entries={visibleEntries} handleClearClick={removeEntry} />
+      <Table
+        entries={visibleEntries}
+        handleClearClick={removeEntry}
+        handleEditClick={() => {
+          setEditModalVisible(true)
+        }}
+      />
     </div>
   )
 }
