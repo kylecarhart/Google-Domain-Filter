@@ -17,11 +17,6 @@ function App() {
     // Check if entries were changed (and not some other part of storage)
     if (change[ENTRIES_STORAGE_LOCATION]) {
       setEntries(change[ENTRIES_STORAGE_LOCATION].newValue)
-      setVisibleEntries(
-        change[ENTRIES_STORAGE_LOCATION].newValue.filter(entry =>
-          entry.includes(searchInput)
-        )
-      )
     }
   }
 
@@ -36,7 +31,19 @@ function App() {
 
     // Listen for chrome storage changes and update UI accordingly
     chrome.storage.onChanged.addListener(changeListener)
+
+    // On cleanup, remove the listener
+    return () => {
+      chrome.storage.onChanged.removeListener(changeListener)
+    }
   }, [])
+
+  /* 
+    whenever the entires change, filter on searchInput 
+  */
+  React.useEffect(() => {
+    setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
+  }, [entries])
 
   /* 
     Remove entry from chrome storage
