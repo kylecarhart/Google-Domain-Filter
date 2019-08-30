@@ -44,7 +44,7 @@ function App() {
     whenever the entires change, filter on searchInput 
   */
   React.useEffect(() => {
-    // setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
+    setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
   }, [entries])
 
   /* 
