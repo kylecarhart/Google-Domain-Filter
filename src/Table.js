@@ -12,7 +12,7 @@ export default function Table({ entries, handleClearClick, handleEditClick }) {
           entry={entry}
           odd={idx % 2 === 0}
           handleClearClick={() => handleClearClick(idx)}
-          handleEditClick={() => handleEditClick()}
+          handleEditClick={() => handleEditClick(idx)}
         />
       ))}
     </div>

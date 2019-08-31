@@ -1,5 +1,3 @@
-/*global chrome*/
-
 import React from 'react'
 import Modal from './Modal'
 
@@ -7,9 +5,9 @@ import './Input.css'
 
 const URL_REGEX = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
-export default function EditModal({ closeModal, addEntry }) {
-  const [input, setInput] = React.useState('')
-  const [isValid, setValid] = React.useState(false)
+export default function EditModal({ closeModal, entryText, editEntry }) {
+  const [input, setInput] = React.useState(entryText)
+  const [isValid, setValid] = React.useState(true)
 
   /* 
     On every change, set the text and validate it
@@ -37,12 +35,21 @@ export default function EditModal({ closeModal, addEntry }) {
           handleChange(e.target.value)
         }}
         placeholder="example.com"
+        autoFocus
       />
       <div className="buttons">
         <button className="cancel" onClick={() => closeModal()}>
           Cancel
         </button>
-        <button className="save">Save</button>
+        <button
+          className="save"
+          onClick={() => {
+            editEntry(input)
+            closeModal()
+          }}
+        >
+          Save
+        </button>
       </div>
     </Modal>
   )

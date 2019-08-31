@@ -14,6 +14,7 @@ function App() {
   const [entries, setEntries] = React.useState([])
   const [visibleEntries, setVisibleEntries] = React.useState([])
   const [searchInput, setSearchInput] = React.useState('')
+  const [selectedEntry, setSelectedEntry] = React.useState(-1)
 
   const changeListener = change => {
     // Check if entries were changed (and not some other part of storage)
@@ -61,9 +62,20 @@ function App() {
   /* 
     Add entry to chrome storage
   */
-  const addEntry = entryInput => {
+  const addEntry = text => {
     chrome.storage.sync.set({
-      [ENTRIES_STORAGE_LOCATION]: [...entries, entryInput]
+      [ENTRIES_STORAGE_LOCATION]: [...entries, text]
+    })
+  }
+
+  /* 
+    Edits an entry in chrome storage based on array index
+  */
+  const editEntry = (idx, text) => {
+    chrome.storage.sync.set({
+      [ENTRIES_STORAGE_LOCATION]: entries.map((entry, _idx) => {
+        return idx === _idx ? text : entry
+      })
     })
   }
 
@@ -84,7 +96,13 @@ function App() {
         />
       )}
       {editModalVisible && (
-        <EditModal closeModal={() => setEditModalVisible(false)} />
+        <EditModal
+          closeModal={() => setEditModalVisible(false)}
+          entryText={entries[selectedEntry]}
+          editEntry={text => {
+            editEntry(selectedEntry, text)
+          }}
+        />
       )}
       <header className="header">Google Search Blacklist</header>
       <div className="toolbar">
@@ -101,8 +119,9 @@ function App() {
       <Table
         entries={visibleEntries}
         handleClearClick={removeEntry}
-        handleEditClick={() => {
+        handleEditClick={idx => {
           setEditModalVisible(true)
+          setSelectedEntry(idx)
         }}
       />
     </div>
