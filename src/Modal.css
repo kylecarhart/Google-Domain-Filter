@@ -35,6 +35,10 @@
   justify-content: space-around;
 }
 
+button {
+  cursor: pointer;
+}
+
 .cancel {
   background: none;
   border: 1px solid #bfbfbf;
