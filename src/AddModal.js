@@ -1,5 +1,3 @@
-/*global chrome*/
-
 import React from 'react'
 import Modal from './Modal'
 
@@ -37,6 +35,7 @@ export default function AddModal({ closeModal, addEntry }) {
           handleChange(e.target.value)
         }}
         placeholder="example.com"
+        autoFocus
       />
       <div className="buttons">
         <button className="cancel" onClick={() => closeModal()}>
