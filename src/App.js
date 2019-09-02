@@ -116,14 +116,24 @@ function App() {
           +
         </button>
       </div>
-      <Table
-        entries={visibleEntries}
-        handleClearClick={removeEntry}
-        handleEditClick={idx => {
-          setEditModalVisible(true)
-          setSelectedEntry(idx)
-        }}
-      />
+      {entries.length > 0 ? (
+        visibleEntries.length > 0 ? (
+          <Table
+            entries={visibleEntries}
+            handleClearClick={removeEntry}
+            handleEditClick={idx => {
+              setEditModalVisible(true)
+              setSelectedEntry(idx)
+            }}
+          />
+        ) : (
+          <div className="tip tip-warning">No results...</div>
+        )
+      ) : (
+        <div className="tip tip-error">
+          Add a domain to your blacklist to start!
+        </div>
+      )}
     </div>
   )
 }
