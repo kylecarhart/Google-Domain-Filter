@@ -68,3 +68,9 @@ body {
   background-color: #fbf3c7;
   color: #7f4c1c;
 }
+
+.btn-info {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}

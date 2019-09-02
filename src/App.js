@@ -5,12 +5,15 @@ import './App.css'
 import Table from './Table'
 import AddModal from './AddModal'
 import EditModal from './EditModal'
+import InfoModal from './InfoModal'
+import Info from './icons/Info'
 
 const ENTRIES_STORAGE_LOCATION = 'entries'
 
 function App() {
   const [addModalVisible, setAddModalVisible] = useState(false)
   const [editModalVisible, setEditModalVisible] = useState(false)
+  const [infoModalVisible, setInfoModalVisible] = useState(false)
   const [entries, setEntries] = React.useState([])
   const [visibleEntries, setVisibleEntries] = React.useState([])
   const [searchInput, setSearchInput] = React.useState('')
@@ -48,7 +51,7 @@ function App() {
   */
   React.useEffect(() => {
     setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
-  }, [entries])
+  }, [entries, searchInput])
 
   /* 
     Remove entry from chrome storage
@@ -104,6 +107,9 @@ function App() {
           }}
         />
       )}
+      {infoModalVisible && (
+        <InfoModal closeModal={() => setInfoModalVisible(false)} />
+      )}
       <header className="header">Google Search Blacklist</header>
       <div className="toolbar">
         <input
@@ -134,6 +140,9 @@ function App() {
           Add a domain to your blacklist to start!
         </div>
       )}
+      <div class="btn-info" onClick={() => setInfoModalVisible(true)}>
+        <Info size={14} />
+      </div>
     </div>
   )
 }
