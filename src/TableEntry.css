@@ -1,7 +1,8 @@
 .table-entry {
-  padding: 7px 20px;
+  padding: 9px 20px;
   display: flex;
   justify-content: space-between;
+  color: #585858;
 }
 
 .table-entry-odd {
@@ -10,6 +11,7 @@
 
 .table-entry:hover {
   background: #ededed;
+  color: #4a4a4a;
 }
 
 .table-options {
@@ -23,4 +25,5 @@
 
 .icon {
   cursor: pointer;
+  margin-right: 5px;
 }

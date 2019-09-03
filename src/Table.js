@@ -10,7 +10,7 @@ export default function Table({ entries, handleClearClick, handleEditClick }) {
         <TableEntry
           key={idx}
           entry={entry}
-          odd={idx % 2 === 0}
+          odd={idx % 2 !== 0}
           handleClearClick={() => handleClearClick(idx)}
           handleEditClick={() => handleEditClick(idx)}
         />
