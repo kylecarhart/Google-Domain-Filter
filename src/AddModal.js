@@ -24,6 +24,13 @@ export default function AddModal({ closeModal, addEntry }) {
     text.match(URL_REGEX) ? setValid(true) : setValid(false)
   }
 
+  const handleKeyDown = e => {
+    if (isValid && input.length > 0 && e.keyCode === 13) {
+      addEntry(input)
+      closeModal()
+    }
+  }
+
   return (
     <Modal handleCloseModal={closeModal} header="Add Domain">
       <input
@@ -36,6 +43,7 @@ export default function AddModal({ closeModal, addEntry }) {
         }}
         placeholder="example.com"
         autoFocus
+        onKeyDown={e => handleKeyDown(e)}
       />
       <div className="buttons">
         <button className="cancel" onClick={() => closeModal()}>
