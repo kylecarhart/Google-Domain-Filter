@@ -4,7 +4,13 @@
   "author": "Kyle Carhart",
   "version": "1.0",
   "description": "Filter domains from your Google searches.",
-  "permissions": ["storage", "activeTab"],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "webRequest",
+    "*://*.google.com/",
+    "webRequestBlocking"
+  ],
   "icons": {
     "18": "./icons/18dp.png",
     "48": "./icons/48dp.png"
@@ -15,7 +21,12 @@
   "content_scripts": [
     {
       "matches": ["https://www.google.com/search?*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
 }
