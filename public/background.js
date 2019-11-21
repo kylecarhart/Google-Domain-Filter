@@ -1,32 +1,50 @@
-// Listen for google search requests and inject site blacklist
-chrome.webRequest.onBeforeRequest.addListener(
-  function(details) {
-    let urlObject = new URLObject(details.url)
+const ENTRIES_STORAGE_LOCATION = 'entries'
 
-    // Escape from redirect if query already contains blacklisted link
-    if (urlObject.queries.q.includes(encodeURI('-site:github.com'))) {
-      return
-    }
+// Listens for requests and handles redirects for google searches
+function beforeRequestListener(domains, details) {
+  let urlObject = new URLObject(details.url)
 
-    urlObject.queries.q +=
-      '+' +
-      encodeURI('-site:github.com') +
-      '+' +
-      encodeURI('-site:dominos.com') +
-      '+' +
-      encodeURI('-site:pizzahut.com') +
-      '+' +
-      encodeURI('-site:papajohns.com') +
-      '+' +
-      encodeURI('-site:marcos.com')
+  // Escape from redirect if query already contains blacklisted link
+  if (domains.every(elem => urlObject.queries.q.includes(elem))) {
+    return
+  }
 
-    return {
-      redirectUrl: urlObject.toString()
-    }
-  },
-  { urls: ['*://*.google.com/search?*'] },
-  ['blocking']
-)
+  // modify the search query exclude blacklisted domains
+  urlObject.queries.q += encodeURI(
+    '+' + domains.map(elem => `-site:${elem}`).join('+')
+  )
+
+  return {
+    redirectUrl: urlObject.toString()
+  }
+}
+
+// When entries are added to storage, modify the DOM
+const changeListener = changes => {
+  // if changes werent made to the entires, escape
+  if (!changes[ENTRIES_STORAGE_LOCATION]) {
+    return
+  }
+
+  const domains = changes[ENTRIES_STORAGE_LOCATION].newValue
+
+  // remove the old listener
+  if (chrome.webRequest.onBeforeRequest.hasListener(someListener)) {
+    chrome.webRequest.onBeforeRequest.removeListener(someListener) // remove the old listener
+  }
+  // create and add a new listener
+  someListener = beforeRequestListener.bind(null, domains)
+  chrome.webRequest.onBeforeRequest.addListener(
+    someListener,
+    { urls: ['*://*.google.com/search?*'] },
+    ['blocking']
+  )
+}
+
+chrome.storage.onChanged.addListener(changeListener)
+let someListener = beforeRequestListener.bind(null, null)
+
+// TODO:
 
 // Object to manipulate URLs and their queries
 function URLObject(url) {
