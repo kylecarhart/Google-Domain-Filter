@@ -1,12 +1,13 @@
 import URLObject from './URLObject'
 
 // Manages a single request listener
-export default class RequestListener {
+export default class RequestListenerController {
   constructor() {
-    this.requestListener = this.beforeRequestListener.bind(null, null)
+    this.requestListener = null
   }
 
-  beforeRequestListener(domains, details) {
+  // Request listener handles appending domains to the search query
+  _beforeRequestListener(domains, details) {
     let urlObject = new URLObject(details.url)
 
     // Escape from redirect if query already contains blacklisted link
@@ -26,14 +27,17 @@ export default class RequestListener {
 
   // Remove the listener
   removeListener() {
-    if (chrome.webRequest.onBeforeRequest.hasListener(this.requestListener)) {
+    if (
+      this.requestListener !== null &&
+      chrome.webRequest.onBeforeRequest.hasListener(this.requestListener)
+    ) {
       chrome.webRequest.onBeforeRequest.removeListener(this.requestListener)
     }
   }
 
   // Add listener that filters domains
   addListener(domains) {
-    this.requestListener = this.beforeRequestListener.bind(null, domains)
+    this.requestListener = this._beforeRequestListener.bind(null, domains)
     chrome.webRequest.onBeforeRequest.addListener(
       this.requestListener,
       { urls: ['*://*.google.com/search?*'] },

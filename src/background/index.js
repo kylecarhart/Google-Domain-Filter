@@ -1,21 +1,27 @@
-import RequestListener from '../RequestListener'
-const ENTRIES_STORAGE_LOCATION = 'entries'
+import RequestListenerController from '../RequestListenerController'
+import DomainStorageController, {
+  DOMAINS_STORAGE_LOCATION
+} from '../DomainStorageController'
 
-const requestListener = new RequestListener()
+const requestListener = new RequestListenerController()
 
-chrome.storage.sync.get(ENTRIES_STORAGE_LOCATION, function(result) {
-  requestListener.addListener(result[ENTRIES_STORAGE_LOCATION])
+// Start the request listener
+DomainStorageController.getDomains().then(result => {
+  if (result) {
+    requestListener.addListener(result)
+  }
 })
 
-// When entries are added to storage, modify the DOM
+// When entries are added to storage, reset the listener
 const changeListener = changes => {
   // if changes werent made to the entires, escape
-  if (!changes[ENTRIES_STORAGE_LOCATION]) {
+  if (!changes[DOMAINS_STORAGE_LOCATION]) {
     return
   }
 
-  const domains = changes[ENTRIES_STORAGE_LOCATION].newValue
+  const domains = changes[DOMAINS_STORAGE_LOCATION].newValue
 
+  // Remove the old listener and replace it with a new one
   requestListener.removeListener()
   requestListener.addListener(domains)
 }
