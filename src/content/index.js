@@ -39,22 +39,23 @@ chrome.storage.sync.get([ENTRIES_STORAGE_LOCATION], function(result) {
 // Listen for changes to entries
 chrome.storage.onChanged.addListener(changeListener)
 
-/* https://stackoverflow.com/questions/32533580/deleting-dom-elements-before-the-page-is-displayed-to-the-screen-in-a-chrome-ex */
-// Listen to changes to the DOM and change the value of the search
-const mutationObserver = new MutationObserver(() => {
-  // document.querySelector('[aria-label="Search"]').value = 'asdf'
-  mutationObserver.disconnect() // Remove the observer if the value if changed
+chrome.storage.sync.get(ENTRIES_STORAGE_LOCATION, function(result) {
+  /* https://stackoverflow.com/questions/32533580/deleting-dom-elements-before-the-page-is-displayed-to-the-screen-in-a-chrome-ex */
+  // Listen to changes to the DOM and change the value of the search
+  const mutationObserver = new MutationObserver(() => {
+    document.querySelector('[aria-label="Search"]').value = document
+      .querySelector('[aria-label="Search"]')
+      .value.split(' ')
+      .filter(elem => !elem.startsWith('-site:'))
+      .join(' ')
+    mutationObserver.disconnect() // Remove the observer if the value if changed
+  })
+
+  // Start the observer
+  mutationObserver.observe(document, { subtree: true, childList: true })
+
+  // When the document is done loading, remove the observer
+  document.addEventListener('DOMContentLoaded', function() {
+    mutationObserver.disconnect()
+  })
 })
-
-// Start the observer
-mutationObserver.observe(document, { subtree: true, childList: true })
-
-// When the document is done loading, remove the observer
-document.addEventListener('DOMContentLoaded', function() {
-  mutationObserver.disconnect()
-})
-
-const getOriginalSearch = () => {
-  // for loop over entries and remove each one from the URL
-  BLOCKED_DOMAINS.forEach()
-}

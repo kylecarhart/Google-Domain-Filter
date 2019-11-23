@@ -1,25 +1,11 @@
-import URLObject from '../URLObject'
-
+import RequestListener from '../RequestListener'
 const ENTRIES_STORAGE_LOCATION = 'entries'
 
-// Listens for requests and handles redirects for google searches
-function beforeRequestListener(domains, details) {
-  let urlObject = new URLObject(details.url)
+const requestListener = new RequestListener()
 
-  // Escape from redirect if query already contains blacklisted link
-  if (domains.every(elem => urlObject.queries.q.includes(elem))) {
-    return
-  }
-
-  // modify the search query exclude blacklisted domains
-  urlObject.queries.q += encodeURI(
-    '+' + domains.map(elem => `-site:${elem}`).join('+')
-  )
-
-  return {
-    redirectUrl: urlObject.toString()
-  }
-}
+chrome.storage.sync.get(ENTRIES_STORAGE_LOCATION, function(result) {
+  requestListener.addListener(result[ENTRIES_STORAGE_LOCATION])
+})
 
 // When entries are added to storage, modify the DOM
 const changeListener = changes => {
@@ -30,18 +16,8 @@ const changeListener = changes => {
 
   const domains = changes[ENTRIES_STORAGE_LOCATION].newValue
 
-  // remove the old listener
-  if (chrome.webRequest.onBeforeRequest.hasListener(someListener)) {
-    chrome.webRequest.onBeforeRequest.removeListener(someListener) // remove the old listener
-  }
-  // create and add a new listener
-  someListener = beforeRequestListener.bind(null, domains)
-  chrome.webRequest.onBeforeRequest.addListener(
-    someListener,
-    { urls: ['*://*.google.com/search?*'] },
-    ['blocking']
-  )
+  requestListener.removeListener()
+  requestListener.addListener(domains)
 }
 
 chrome.storage.onChanged.addListener(changeListener)
-let someListener = beforeRequestListener.bind(null, null)
