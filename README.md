@@ -9,3 +9,10 @@ Blacklist domains from Google search results
 
 - React
 - Figma
+- Webpack (custom config)
+
+#### Build processes
+
+**Build for production:** `npm run build`
+
+**Watch for file changes:** `npm start`. Then use `web-ext` on the `dist` folder to fire up an instance of the extension in chrome or firefox. (If you dont have `web-ext` download it from npm: `npm i -g web-ext`)

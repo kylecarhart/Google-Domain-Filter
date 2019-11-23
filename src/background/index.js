@@ -1,3 +1,5 @@
+import URLObject from '../URLObject'
+
 const ENTRIES_STORAGE_LOCATION = 'entries'
 
 // Listens for requests and handles redirects for google searches
@@ -43,45 +45,3 @@ const changeListener = changes => {
 
 chrome.storage.onChanged.addListener(changeListener)
 let someListener = beforeRequestListener.bind(null, null)
-
-// TODO:
-
-// Object to manipulate URLs and their queries
-function URLObject(url) {
-  this.base = url.split('?')[0]
-
-  // Query map: { q:"asdf", client="firefox", ...}
-  this.queries = url.includes('?')
-    ? {
-        ...url
-          .split('?')[1]
-          .split('&')
-          .map(function(elem) {
-            return {
-              [elem.split('=')[0]]: elem.split('=')[1]
-            }
-          })
-          .reduce(function(acc, curr) {
-            return Object.assign(acc, curr)
-          }, {})
-      }
-    : {}
-
-  // Concatenate query params into string
-  this._getQueryString = function() {
-    const queryArray = []
-    for (const [key, value] of Object.entries(this.queries)) {
-      queryArray.push(key + '=' + value)
-    }
-    return queryArray.join('&')
-  }
-
-  // URL Object API
-  return {
-    base: this.base,
-    queries: this.queries,
-    toString: () => {
-      return this.base + '?' + this._getQueryString()
-    }
-  }
-}

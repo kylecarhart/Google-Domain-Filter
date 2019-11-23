@@ -140,7 +140,7 @@ function App() {
           Add a domain to your blacklist to start!
         </div>
       )}
-      <div class="btn-info" onClick={() => setInfoModalVisible(true)}>
+      <div className="btn-info" onClick={() => setInfoModalVisible(true)}>
         <Info size={14} />
       </div>
     </div>
