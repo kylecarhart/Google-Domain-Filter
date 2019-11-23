@@ -7,8 +7,9 @@ import AddModal from './AddModal'
 import EditModal from './EditModal'
 import InfoModal from './InfoModal'
 import Info from './icons/Info'
-
-const ENTRIES_STORAGE_LOCATION = 'entries'
+import DomainStorageController, {
+  DOMAINS_STORAGE_LOCATION
+} from '../DomainStorageController'
 
 function App() {
   const [addModalVisible, setAddModalVisible] = useState(false)
@@ -21,8 +22,8 @@ function App() {
 
   const changeListener = change => {
     // Check if entries were changed (and not some other part of storage)
-    if (change[ENTRIES_STORAGE_LOCATION]) {
-      setEntries(change[ENTRIES_STORAGE_LOCATION].newValue)
+    if (change[DOMAINS_STORAGE_LOCATION]) {
+      setEntries(change[DOMAINS_STORAGE_LOCATION].newValue)
     }
   }
 
@@ -30,11 +31,9 @@ function App() {
     On component mount, load the domains from chrome storage.
   */
   React.useEffect(() => {
-    chrome.storage.sync.get([ENTRIES_STORAGE_LOCATION], function(result) {
-      if (result[ENTRIES_STORAGE_LOCATION]) {
-        setEntries(result[ENTRIES_STORAGE_LOCATION])
-        setVisibleEntries(result[ENTRIES_STORAGE_LOCATION])
-      }
+    DomainStorageController.getDomains().then(domains => {
+      setEntries(domains)
+      setVisibleEntries(domains)
     })
 
     // Listen for chrome storage changes and update UI accordingly
@@ -54,35 +53,6 @@ function App() {
   }, [entries, searchInput])
 
   /* 
-    Remove entry from chrome storage
-  */
-  const removeEntry = idx => {
-    chrome.storage.sync.set({
-      [ENTRIES_STORAGE_LOCATION]: entries.filter((_, _idx) => idx !== _idx)
-    })
-  }
-
-  /* 
-    Add entry to chrome storage
-  */
-  const addEntry = text => {
-    chrome.storage.sync.set({
-      [ENTRIES_STORAGE_LOCATION]: [...entries, text]
-    })
-  }
-
-  /* 
-    Edits an entry in chrome storage based on array index
-  */
-  const editEntry = (idx, text) => {
-    chrome.storage.sync.set({
-      [ENTRIES_STORAGE_LOCATION]: entries.map((entry, _idx) => {
-        return idx === _idx ? text : entry
-      })
-    })
-  }
-
-  /* 
     Update input and filter entries to visibleEntries
   */
   const handleInputChange = inputText => {
@@ -95,7 +65,7 @@ function App() {
       {addModalVisible && (
         <AddModal
           closeModal={() => setAddModalVisible(false)}
-          addEntry={addEntry}
+          addEntry={DomainStorageController.addDomain}
         />
       )}
       {editModalVisible && (
@@ -103,7 +73,7 @@ function App() {
           closeModal={() => setEditModalVisible(false)}
           entryText={entries[selectedEntry]}
           editEntry={text => {
-            editEntry(selectedEntry, text)
+            DomainStorageController.editDomain(selectedEntry, text)
           }}
         />
       )}
@@ -126,7 +96,7 @@ function App() {
         visibleEntries.length > 0 ? (
           <Table
             entries={visibleEntries}
-            handleClearClick={removeEntry}
+            handleClearClick={DomainStorageController.removeDomain}
             handleEditClick={idx => {
               setEditModalVisible(true)
               setSelectedEntry(idx)
@@ -140,7 +110,7 @@ function App() {
           Add a domain to your blacklist to start!
         </div>
       )}
-      <div class="btn-info" onClick={() => setInfoModalVisible(true)}>
+      <div className="btn-info" onClick={() => setInfoModalVisible(true)}>
         <Info size={14} />
       </div>
     </div>
