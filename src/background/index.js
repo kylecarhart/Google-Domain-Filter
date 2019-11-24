@@ -3,27 +3,49 @@ import DomainStorageController, {
   DOMAINS_STORAGE_LOCATION
 } from '../DomainStorageController'
 
-const requestListener = new RequestListenerController()
+const runApp = async () => {
+  const requestListenerController = new RequestListenerController()
 
-// Start the request listener
-DomainStorageController.getDomains().then(result => {
-  if (result) {
-    requestListener.addListener(result)
+  // On first run, initialize the storage
+  await new Promise((resolve, reject) => {
+    chrome.runtime.onInstalled.addListener(function(details) {
+      switch (details.reason) {
+        case 'install':
+          console.log('Extension installed!')
+          DomainStorageController.initializeStorage().then(_ => {
+            resolve()
+          })
+          break
+        case 'update':
+          console.log('Extension updated!')
+          resolve()
+          break
+        default:
+          resolve()
+          break
+      }
+    })
+  })
+
+  // Start the request listener
+  let domains = await DomainStorageController.getDomains()
+  requestListenerController.addListener(domains)
+
+  // When entries are added to storage, reset the listener
+  const changeListener = changes => {
+    // if changes werent made to the entires, escape
+    if (!changes[DOMAINS_STORAGE_LOCATION]) {
+      return
+    }
+
+    const domains = changes[DOMAINS_STORAGE_LOCATION].newValue
+
+    // Remove the old listener and replace it with a new one
+    requestListenerController.removeListener()
+    requestListenerController.addListener(domains)
   }
-})
 
-// When entries are added to storage, reset the listener
-const changeListener = changes => {
-  // if changes werent made to the entires, escape
-  if (!changes[DOMAINS_STORAGE_LOCATION]) {
-    return
-  }
-
-  const domains = changes[DOMAINS_STORAGE_LOCATION].newValue
-
-  // Remove the old listener and replace it with a new one
-  requestListener.removeListener()
-  requestListener.addListener(domains)
+  chrome.storage.onChanged.addListener(changeListener)
 }
 
-chrome.storage.onChanged.addListener(changeListener)
+runApp()

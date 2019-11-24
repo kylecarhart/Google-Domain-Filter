@@ -1,8 +1,6 @@
 export const DOMAINS_STORAGE_LOCATION = 'entries'
 
 export default class DomainStorageController {
-  constructor() {}
-
   // Add a domain to storage
   static async addDomain(domain) {
     let domains = await DomainStorageController.getDomains()
@@ -30,11 +28,23 @@ export default class DomainStorageController {
     })
   }
 
+  // Get domains
   static getDomains() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       chrome.storage.sync.get(DOMAINS_STORAGE_LOCATION, function(result) {
-        resolve(result[DOMAINS_STORAGE_LOCATION])
+        if (result[DOMAINS_STORAGE_LOCATION]) {
+          resolve(result[DOMAINS_STORAGE_LOCATION])
+        } else {
+          reject(new Error('DOMAINS_STORAGE_LOCATION does not exist'))
+        }
       })
+    })
+  }
+
+  // Initialize storage
+  static async initializeStorage() {
+    return chrome.storage.sync.set({
+      [DOMAINS_STORAGE_LOCATION]: []
     })
   }
 }

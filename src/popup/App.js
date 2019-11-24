@@ -31,10 +31,14 @@ function App() {
     On component mount, load the domains from chrome storage.
   */
   React.useEffect(() => {
-    DomainStorageController.getDomains().then(domains => {
-      setEntries(domains)
-      setVisibleEntries(domains)
-    })
+    DomainStorageController.getDomains()
+      .then(domains => {
+        setEntries(domains)
+        setVisibleEntries(domains)
+      })
+      .catch(e => {
+        console.log(e)
+      })
 
     // Listen for chrome storage changes and update UI accordingly
     chrome.storage.onChanged.addListener(changeListener)
@@ -92,7 +96,7 @@ function App() {
           +
         </button>
       </div>
-      {entries.length > 0 ? (
+      {entries && entries.length > 0 ? (
         visibleEntries.length > 0 ? (
           <Table
             entries={visibleEntries}
