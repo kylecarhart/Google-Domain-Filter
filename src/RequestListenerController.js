@@ -1,5 +1,3 @@
-import URLObject from './URLObject'
-
 // Manages a single request listener
 export default class RequestListenerController {
   constructor() {
@@ -8,20 +6,23 @@ export default class RequestListenerController {
 
   // Request listener handles appending domains to the search query
   _beforeRequestListener(domains, details) {
-    let urlObject = new URLObject(details.url)
+    let url = new URL(details.url)
 
     // Escape from redirect if query already contains blacklisted link
-    if (domains.every(elem => urlObject.queries.q.includes(elem))) {
+    if (domains.every(elem => url.searchParams.get('q').includes(elem))) {
       return
     }
 
     // modify the search query exclude blacklisted domains
-    urlObject.queries.q += encodeURI(
-      '+' + domains.map(elem => `-site:${elem}`).join('+')
+    url.searchParams.set(
+      'q',
+      url.searchParams.get('q') +
+        ' ' +
+        domains.map(elem => `-site:${elem}`).join(' ')
     )
 
     return {
-      redirectUrl: urlObject.toString()
+      redirectUrl: url.toString()
     }
   }
 
