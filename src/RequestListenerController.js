@@ -31,9 +31,7 @@ export default class RequestListenerController {
 
   // Remove the listener
   removeListener() {
-    if (
-      chrome.webRequest.onBeforeRequest.hasListener(this._beforeRequestListener)
-    ) {
+    if (this.hasListener()) {
       chrome.webRequest.onBeforeRequest.removeListener(
         this._beforeRequestListener
       )
@@ -42,10 +40,18 @@ export default class RequestListenerController {
 
   // Add listener that filters domains
   addListener() {
-    chrome.webRequest.onBeforeRequest.addListener(
-      this._beforeRequestListener,
-      { urls: [URL_FILTER] },
-      ['blocking']
+    if (!this.hasListener())
+      chrome.webRequest.onBeforeRequest.addListener(
+        this._beforeRequestListener,
+        { urls: [URL_FILTER] },
+        ['blocking']
+      )
+  }
+
+  // Check for listener
+  hasListener() {
+    return chrome.webRequest.onBeforeRequest.hasListener(
+      this._beforeRequestListener
     )
   }
 }
