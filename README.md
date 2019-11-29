@@ -2,8 +2,8 @@
 
 Blacklist domains from Google search results
 
-![Capture](/uploads/be6a148fa4e5b3bf6398ed0d57a951db/Capture.PNG)
-![Capture](/uploads/73e198f29bb4fe152966fd5208c48f86/Capture.PNG)
+![Capture](https://user-images.githubusercontent.com/6385983/69842432-434c6900-1231-11ea-96d6-7cd50aa58aca.PNG)
+![Capture2](https://user-images.githubusercontent.com/6385983/69842434-447d9600-1231-11ea-8969-7ebefde0913f.PNG)
 
 #### Tools
 
