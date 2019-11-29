@@ -4,7 +4,7 @@ import DomainStorageController, {
 } from '../DomainStorageController'
 
 const runApp = async () => {
-  const requestListenerController = new RequestListenerController()
+  const requestController = new RequestListenerController()
 
   // On first run, initialize the storage
   await new Promise((resolve, reject) => {
@@ -12,7 +12,7 @@ const runApp = async () => {
       switch (details.reason) {
         case 'install':
           console.log('Extension installed!')
-          DomainStorageController.initializeStorage().then(_ => {
+          DomainStorageController.initializeStorage().then(() => {
             resolve()
           })
           break
@@ -29,7 +29,8 @@ const runApp = async () => {
 
   // Start the request listener
   let domains = await DomainStorageController.getDomains()
-  requestListenerController.addListener(domains)
+  requestController.domains = domains
+  requestController.addListener()
 
   // When entries are added to storage, reset the listener
   const changeListener = changes => {
@@ -41,8 +42,7 @@ const runApp = async () => {
     const domains = changes[DOMAINS_STORAGE_LOCATION].newValue
 
     // Remove the old listener and replace it with a new one
-    requestListenerController.removeListener()
-    requestListenerController.addListener(domains)
+    requestController.domains = domains
   }
 
   chrome.storage.onChanged.addListener(changeListener)

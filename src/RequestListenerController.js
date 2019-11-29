@@ -1,15 +1,18 @@
+const URL_FILTER = '*://*.google.com/search?*'
+
 // Manages a single request listener
 export default class RequestListenerController {
-  constructor() {
-    this.requestListener = null
+  constructor(domains = []) {
+    this._beforeRequestListener = this._beforeRequestListener.bind(this)
+    this.domains = domains
   }
 
   // Request listener handles appending domains to the search query
-  _beforeRequestListener(domains, details) {
+  _beforeRequestListener(details) {
     let url = new URL(details.url)
 
     // Escape from redirect if query already contains blacklisted link
-    if (domains.every(elem => url.searchParams.get('q').includes(elem))) {
+    if (this.domains.every(elem => url.searchParams.get('q').includes(elem))) {
       return
     }
 
@@ -18,7 +21,7 @@ export default class RequestListenerController {
       'q',
       url.searchParams.get('q') +
         ' ' +
-        domains.map(elem => `-site:${elem}`).join(' ')
+        this.domains.map(elem => `-site:${elem}`).join(' ')
     )
 
     return {
@@ -29,19 +32,19 @@ export default class RequestListenerController {
   // Remove the listener
   removeListener() {
     if (
-      this.requestListener !== null &&
-      chrome.webRequest.onBeforeRequest.hasListener(this.requestListener)
+      chrome.webRequest.onBeforeRequest.hasListener(this._beforeRequestListener)
     ) {
-      chrome.webRequest.onBeforeRequest.removeListener(this.requestListener)
+      chrome.webRequest.onBeforeRequest.removeListener(
+        this._beforeRequestListener
+      )
     }
   }
 
   // Add listener that filters domains
-  addListener(domains) {
-    this.requestListener = this._beforeRequestListener.bind(null, domains)
+  addListener() {
     chrome.webRequest.onBeforeRequest.addListener(
-      this.requestListener,
-      { urls: ['*://*.google.com/search?*'] },
+      this._beforeRequestListener,
+      { urls: [URL_FILTER] },
       ['blocking']
     )
   }
