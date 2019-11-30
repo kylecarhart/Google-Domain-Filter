@@ -24,6 +24,9 @@ export default class RequestListenerController {
         this.domains.map(elem => `-site:${elem}`).join(' ')
     )
 
+    // pass along domains in a seperate query param
+    url.searchParams.set('gdf', this.domains.join(' '))
+
     return {
       redirectUrl: url.toString()
     }

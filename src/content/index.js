@@ -35,20 +35,36 @@ chrome.storage.onChanged.addListener(changeListener)
 /* ------- END STORAGE LISTENER ------- */
 /* ------- START DOM OBSERVER ------- */
 
+const urlSearchParams = new URLSearchParams(window.location.search)
+const domains = urlSearchParams.get('gdf').split(' ')
+
 /* https://stackoverflow.com/questions/32533580/deleting-dom-elements-before-the-page-is-displayed-to-the-screen-in-a-chrome-ex */
 // Listen to changes to the DOM and change the value of the search
+
 const observer = new MutationObserver(function(mutations) {
   for (let i = 0; i < mutations.length; i++) {
     for (let j = 0; j < mutations[i].addedNodes.length; j++) {
-      // console.log(mutations[i].addedNodes[j])
+      let node = mutations[i].addedNodes[j]
+      console.log(node)
 
       // Fix search input
-      if (mutations[i].addedNodes[j].data === ' ') {
+      if (node.data === ' ') {
         document.querySelector('[aria-label="Search"]').value = document
           .querySelector('[aria-label="Search"]')
           .value.split(' ')
           .filter(elem => !elem.startsWith('-site:'))
           .join(' ')
+      }
+      // Fix "Showing Results For"
+      else if (node.id === 'fprsl') {
+        node.lastChild.nodeValue = filterDomainsFromString(
+          node.lastChild.nodeValue,
+          domains
+        )
+      }
+      // Fix "Search instead for"
+      else if (node.tagName === 'A' && node.className == 'spell_orig') {
+        node.innerText = filterDomainsFromString(node.innerText, domains)
       }
     }
   }
@@ -63,5 +79,13 @@ observer.observe(document.documentElement, {
 document.addEventListener('DOMContentLoaded', function() {
   mutationObserver.disconnect()
 })
+
+const filterDomainsFromString = (string, domains) => {
+  console.log('here')
+  return string
+    .split(' ')
+    .filter(word => !domains.includes(word.replace('-site:', '')))
+    .join(' ')
+}
 
 /* ------- END DOM OBSERVER ------- */
