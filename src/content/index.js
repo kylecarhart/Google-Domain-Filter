@@ -29,7 +29,7 @@ const hideLinksInDOM = domains => {
   })
 }
 
-// // Listen for changes to domains
+// Listen for changes to domains
 chrome.storage.onChanged.addListener(changeListener)
 
 /* ------- END STORAGE LISTENER ------- */
@@ -40,12 +40,10 @@ const domains = urlSearchParams.get('gdf').split(' ')
 
 /* https://stackoverflow.com/questions/32533580/deleting-dom-elements-before-the-page-is-displayed-to-the-screen-in-a-chrome-ex */
 // Listen to changes to the DOM and change the value of the search
-
 const observer = new MutationObserver(function(mutations) {
   for (let i = 0; i < mutations.length; i++) {
     for (let j = 0; j < mutations[i].addedNodes.length; j++) {
       let node = mutations[i].addedNodes[j]
-      // console.log(node)
 
       // Fix search input
       if (node.data === ' ') {
@@ -81,6 +79,7 @@ const observer = new MutationObserver(function(mutations) {
   }
 })
 
+// Start observing
 observer.observe(document.documentElement, {
   childList: true,
   subtree: true
@@ -91,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
   mutationObserver.disconnect()
 })
 
+// Given an array of domains, filter the domains out of the string (preceded by '-site:')
 const filterDomainsFromString = (string, domains) => {
   return string
     .split(' ')
