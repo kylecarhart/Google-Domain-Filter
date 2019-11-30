@@ -45,7 +45,7 @@ const observer = new MutationObserver(function(mutations) {
   for (let i = 0; i < mutations.length; i++) {
     for (let j = 0; j < mutations[i].addedNodes.length; j++) {
       let node = mutations[i].addedNodes[j]
-      console.log(node)
+      // console.log(node)
 
       // Fix search input
       if (node.data === ' ') {
@@ -64,6 +64,10 @@ const observer = new MutationObserver(function(mutations) {
       }
       // Fix "Search instead for"
       else if (node.tagName === 'A' && node.className == 'spell_orig') {
+        node.innerText = filterDomainsFromString(node.innerText, domains)
+      }
+      // Fix "Searches related to"
+      else if (node.tagName === 'H3' && node.className === 'med dPAwzb') {
         node.innerText = filterDomainsFromString(node.innerText, domains)
       }
     }
