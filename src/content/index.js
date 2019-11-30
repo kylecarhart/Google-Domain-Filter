@@ -70,6 +70,13 @@ const observer = new MutationObserver(function(mutations) {
       else if (node.tagName === 'H3' && node.className === 'med dPAwzb') {
         node.innerText = filterDomainsFromString(node.innerText, domains)
       }
+      // Fix "Did you mean"
+      else if (node.tagName === 'A' && node.className === 'gL9Hy') {
+        node.lastChild.nodeValue = filterDomainsFromString(
+          node.lastChild.nodeValue,
+          domains
+        )
+      }
     }
   }
 })
@@ -85,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 const filterDomainsFromString = (string, domains) => {
-  console.log('here')
   return string
     .split(' ')
     .filter(word => !domains.includes(word.replace('-site:', '')))
