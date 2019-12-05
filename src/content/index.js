@@ -1,3 +1,4 @@
+import { QUERY_PARAM_NAME } from '../RequestListenerController'
 import { DOMAINS_STORAGE_LOCATION } from '../DomainStorageController'
 
 /* ------- START STORAGE LISTENER ------- */
@@ -36,7 +37,7 @@ chrome.storage.onChanged.addListener(changeListener)
 /* ------- START DOM OBSERVER ------- */
 
 const urlSearchParams = new URLSearchParams(window.location.search)
-const domains = urlSearchParams.get('gdf').split(' ')
+const domains = urlSearchParams.get(QUERY_PARAM_NAME).split(' ')
 
 /* https://stackoverflow.com/questions/32533580/deleting-dom-elements-before-the-page-is-displayed-to-the-screen-in-a-chrome-ex */
 // Listen to changes to the DOM and change the value of the search
@@ -64,6 +65,7 @@ const observer = new MutationObserver(function(mutations) {
       else if (node.tagName === 'A' && node.className == 'spell_orig') {
         node.innerText = filterDomainsFromString(node.innerText, domains)
       }
+      // FIXME:
       // Fix "Searches related to"
       else if (node.tagName === 'H3' && node.className === 'med dPAwzb') {
         node.innerText = filterDomainsFromString(node.innerText, domains)

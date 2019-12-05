@@ -34,7 +34,7 @@ const runApp = async () => {
 
   // When entries are added to storage, reset the listener
   const changeListener = changes => {
-    // if changes werent made to the entires, escape
+    // if changes weren't made to the entires, escape
     if (!changes[DOMAINS_STORAGE_LOCATION]) {
       return
     }
