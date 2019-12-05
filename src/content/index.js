@@ -1,5 +1,7 @@
 import { DOMAINS_STORAGE_LOCATION } from '../DomainStorageController'
 
+/* ------- START STORAGE LISTENER ------- */
+
 // When domains are added to storage, modify the DOM
 const changeListener = change => {
   // Check if domains were changed (and not some other part of storage)
@@ -27,32 +29,73 @@ const hideLinksInDOM = domains => {
   })
 }
 
-// On page load, get domains from storage and modify the DOM
-chrome.storage.sync.get([DOMAINS_STORAGE_LOCATION], function(result) {
-  const domains = result[DOMAINS_STORAGE_LOCATION]
-  if (domains) {
-    hideLinksInDOM(domains)
-  }
-})
-
 // Listen for changes to domains
 chrome.storage.onChanged.addListener(changeListener)
 
+/* ------- END STORAGE LISTENER ------- */
+/* ------- START DOM OBSERVER ------- */
+
+const urlSearchParams = new URLSearchParams(window.location.search)
+const domains = urlSearchParams.get('gdf').split(' ')
+
 /* https://stackoverflow.com/questions/32533580/deleting-dom-elements-before-the-page-is-displayed-to-the-screen-in-a-chrome-ex */
 // Listen to changes to the DOM and change the value of the search
-const mutationObserver = new MutationObserver(() => {
-  document.querySelector('[aria-label="Search"]').value = document
-    .querySelector('[aria-label="Search"]')
-    .value.split(' ')
-    .filter(elem => !elem.startsWith('-site:'))
-    .join(' ')
-  mutationObserver.disconnect() // Remove the observer if the value if changed
+const observer = new MutationObserver(function(mutations) {
+  for (let i = 0; i < mutations.length; i++) {
+    for (let j = 0; j < mutations[i].addedNodes.length; j++) {
+      let node = mutations[i].addedNodes[j]
+
+      // Fix search input
+      if (node.data === ' ') {
+        document.querySelector('[aria-label="Search"]').value = document
+          .querySelector('[aria-label="Search"]')
+          .value.split(' ')
+          .filter(elem => !elem.startsWith('-site:'))
+          .join(' ')
+      }
+      // Fix "Showing Results For"
+      else if (node.id === 'fprsl') {
+        node.lastChild.nodeValue = filterDomainsFromString(
+          node.lastChild.nodeValue,
+          domains
+        )
+      }
+      // Fix "Search instead for"
+      else if (node.tagName === 'A' && node.className == 'spell_orig') {
+        node.innerText = filterDomainsFromString(node.innerText, domains)
+      }
+      // Fix "Searches related to"
+      else if (node.tagName === 'H3' && node.className === 'med dPAwzb') {
+        node.innerText = filterDomainsFromString(node.innerText, domains)
+      }
+      // Fix "Did you mean"
+      else if (node.tagName === 'A' && node.className === 'gL9Hy') {
+        node.lastChild.nodeValue = filterDomainsFromString(
+          node.lastChild.nodeValue,
+          domains
+        )
+      }
+    }
+  }
 })
 
-// Start the observer
-mutationObserver.observe(document, { subtree: true, childList: true })
+// Start observing
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true
+})
 
 // When the document is done loading, remove the observer
 document.addEventListener('DOMContentLoaded', function() {
   mutationObserver.disconnect()
 })
+
+// Given an array of domains, filter the domains out of the string (preceded by '-site:')
+const filterDomainsFromString = (string, domains) => {
+  return string
+    .split(' ')
+    .filter(word => !domains.includes(word.replace('-site:', '')))
+    .join(' ')
+}
+
+/* ------- END DOM OBSERVER ------- */
