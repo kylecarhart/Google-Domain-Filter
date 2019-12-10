@@ -7,7 +7,7 @@ import Info from './icons/Info'
 import DomainStorageController, {
   DOMAINS_STORAGE_LOCATION
 } from '../DomainStorageController'
-import DomainInput from './DomainInput'
+import InputWithButton from './InputWithButton'
 
 function App() {
   const [entries, setEntries] = useState([])
@@ -43,7 +43,7 @@ function App() {
 
   return (
     <div className="app">
-      <DomainInput />
+      <InputWithButton />
       {entries.length > 0 ? (
         <Table
           entries={entries}

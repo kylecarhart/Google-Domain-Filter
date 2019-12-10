@@ -16,7 +16,7 @@ button {
 .app {
   width: 370px;
   height: 430px;
-  background: #fafafa;
+  background: #eeeeee;
   display: flex;
   flex-direction: column;
   align-items: stretch;

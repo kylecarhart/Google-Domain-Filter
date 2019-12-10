@@ -1,0 +1,27 @@
+.input-with-button {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.input {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 5px 0px 0px 5px;
+  outline: none;
+  border: none;
+}
+
+.button {
+  background-color: #4f86f0;
+  border-radius: 0px 5px 5px 0px;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  flex-grow: 1;
+}
+
+.button:hover {
+  cursor: pointer;
+}
