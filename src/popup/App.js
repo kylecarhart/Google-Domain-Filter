@@ -43,7 +43,11 @@ function App() {
 
   return (
     <div className="app">
-      <InputWithButton />
+      <InputWithButton
+        btnClick={input => {
+          setEntries([...entries, input])
+        }}
+      />
       {entries.length > 0 ? (
         <Table
           entries={entries}

@@ -17,7 +17,12 @@ export default function InputWithButton({
         className="input"
         placeholder="Enter Domains"
       />
-      <button className="button" onClick={btnClick}>
+      <button
+        className="button"
+        onClick={() => {
+          btnClick(inputValue)
+        }}
+      >
         Add
       </button>
     </div>
