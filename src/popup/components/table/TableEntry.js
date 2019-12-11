@@ -1,7 +1,7 @@
 import React from 'react'
 import './TableEntry.css'
-import Edit from './icons/Edit'
-import Clear from './icons/Clear'
+import Edit from '../../icons/Edit'
+import Clear from '../../icons/Clear'
 
 export default function TableEntry({
   entry,

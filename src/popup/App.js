@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react'
 import './App.css'
-import Table from './Table'
-import Info from './icons/Info'
+import Table from './components/table/Table'
 import DomainStorageController, {
   DOMAINS_STORAGE_LOCATION
 } from '../DomainStorageController'
-import InputWithButton from './InputWithButton'
+import InputWithButton from './components/input/InputWithButton'
+import Tip from './components/tip/Tip'
 
-function App() {
+export default function App() {
   const [entries, setEntries] = useState([])
   const [selectedEntry, setSelectedEntry] = useState(-1)
 
@@ -43,11 +43,14 @@ function App() {
 
   return (
     <div className="app">
-      <InputWithButton
-        btnClick={input => {
-          setEntries([...entries, input])
-        }}
-      />
+      <div className="small-header">Domain</div>
+      <div style={{ marginBottom: '16px' }}>
+        <InputWithButton
+          btnClick={input => {
+            setEntries([input, ...entries])
+          }}
+        />
+      </div>
       {entries.length > 0 ? (
         <Table
           entries={entries}
@@ -58,15 +61,12 @@ function App() {
           }}
         />
       ) : (
-        <div className="tip tip-error">
-          Add a domain to your blacklist to start!
-        </div>
+        <Tip
+          text="Enter a domain to start filtering"
+          style="warning"
+          icon="icon"
+        />
       )}
-      <div className="btn-info" onClick={() => setInfoModalVisible(true)}>
-        <Info size={14} />
-      </div>
     </div>
   )
 }
-
-export default App
