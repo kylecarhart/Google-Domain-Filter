@@ -11,15 +11,15 @@ export default function InputWithButton({
   const [inputValue, setInputValue] = useState(initialValue)
 
   const handleKeyDown = e => {
-    switch (e.keyCode) {
-      case 13:
-        if (isValid(inputValue)) {
-          btnClick(inputValue)
-          setInputValue('')
-        }
-        break
-      default:
-        break
+    if (e.keyCode === 13) {
+      validateAndSubmit()
+    }
+  }
+
+  const validateAndSubmit = () => {
+    if (isValid(inputValue)) {
+      btnClick(inputValue)
+      setInputValue('')
     }
   }
 
@@ -32,15 +32,7 @@ export default function InputWithButton({
         placeholder={placeholder}
         onKeyDown={e => handleKeyDown(e)}
       />
-      <button
-        className="button"
-        onClick={() => {
-          if (isValid(inputValue)) {
-            btnClick(inputValue)
-            setInputValue('')
-          }
-        }}
-      >
+      <button className="button" onClick={validateAndSubmit}>
         Add
       </button>
     </div>
