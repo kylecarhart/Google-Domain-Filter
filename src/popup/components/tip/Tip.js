@@ -15,7 +15,7 @@ export default function Tip({
   return (
     <div className={`tip tip-${style}`}>
       <span style={{ order: iconPosition === 'right' ? 0 : 1 }}>{text}</span>
-      {icon && <span></span>}
+      {icon}
     </div>
   )
 }
