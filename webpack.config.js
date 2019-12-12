@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = env => {
   return {
@@ -53,7 +54,11 @@ module.exports = env => {
         excludeChunks: ['background', 'content']
       }),
       // Copy manifest.json
-      new CopyPlugin([{ from: './src/manifest.json', to: '.' }])
+      new CopyPlugin([{ from: './src/manifest.json', to: '.' }]),
+      // Inject version number
+      new webpack.DefinePlugin({
+        __VERSION__: JSON.stringify(process.env.npm_package_version)
+      })
     ]
   }
 }
