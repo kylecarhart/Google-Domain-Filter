@@ -5,15 +5,18 @@ export default function InputWithButton({
   initialValue = '',
   placeholder = '',
   btnClick,
-  btnStyle
+  btnStyle,
+  isValid = () => true
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
 
   const handleKeyDown = e => {
     switch (e.keyCode) {
       case 13:
-        btnClick(inputValue)
-        setInputValue('')
+        if (isValid(inputValue)) {
+          btnClick(inputValue)
+          setInputValue('')
+        }
         break
       default:
         break
@@ -26,14 +29,16 @@ export default function InputWithButton({
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
         className="input"
-        placeholder="Enter Domains"
+        placeholder={placeholder}
         onKeyDown={e => handleKeyDown(e)}
       />
       <button
         className="button"
         onClick={() => {
-          btnClick(inputValue)
-          setInputValue('')
+          if (isValid(inputValue)) {
+            btnClick(inputValue)
+            setInputValue('')
+          }
         }}
       >
         Add

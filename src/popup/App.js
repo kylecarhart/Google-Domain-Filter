@@ -9,12 +9,14 @@ import DomainStorageController, {
 import InputWithButton from './components/input/InputWithButton'
 import Tip from './components/tip/Tip'
 
+const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+
 export default function App() {
   const [entries, setEntries] = useState([])
   const [selectedEntry, setSelectedEntry] = useState(-1)
 
   const changeListener = change => {
-    // Check if entries were changed (and not some other part of storage)
+    // Check if entries were changed (and not some other part of storage
     if (change[DOMAINS_STORAGE_LOCATION]) {
       setEntries(change[DOMAINS_STORAGE_LOCATION].newValue)
     }
@@ -46,11 +48,9 @@ export default function App() {
       <div className="small-header">Domain</div>
       <div style={{ marginBottom: '16px' }}>
         <InputWithButton
-          btnClick={input => {
-            if (input) {
-              setEntries([input, ...entries])
-            }
-          }}
+          btnClick={input => setEntries([input, ...entries])}
+          placeholder="Enter Domains"
+          isValid={input => input && regex.test(input)}
         />
       </div>
       <div className="small-header">Filtered Domains</div>
@@ -59,7 +59,6 @@ export default function App() {
           entries={entries}
           handleClearClick={DomainStorageController.removeDomain}
           handleEditClick={idx => {
-            setEditModalVisible(true)
             setSelectedEntry(idx)
           }}
         />
