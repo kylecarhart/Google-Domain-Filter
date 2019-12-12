@@ -10,7 +10,7 @@ import InputWithButton from './components/input/InputWithButton'
 import Tip from './components/tip/Tip'
 import Info from './icons/Info'
 
-const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
 export default function App() {
   const [entries, setEntries] = useState([])
