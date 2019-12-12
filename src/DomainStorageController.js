@@ -4,7 +4,7 @@ export default class DomainStorageController {
   // Add a domain to storage
   static async addDomain(domain) {
     let domains = await DomainStorageController.getDomains()
-    domains.push(domain)
+    domains.unshift(domain)
     return chrome.storage.sync.set({
       [DOMAINS_STORAGE_LOCATION]: domains
     })

@@ -48,7 +48,7 @@ export default function App() {
       <div className="small-header">Domain</div>
       <div style={{ marginBottom: '16px' }}>
         <InputWithButton
-          btnClick={input => setEntries([input, ...entries])}
+          btnClick={input => DomainStorageController.addDomain(input)}
           placeholder="Enter Domains"
           isValid={input => input && regex.test(input)}
         />
