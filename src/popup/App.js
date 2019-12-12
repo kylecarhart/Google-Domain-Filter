@@ -59,9 +59,7 @@ export default function App() {
         <Table
           entries={entries}
           handleClearClick={DomainStorageController.removeDomain}
-          handleEditClick={idx => {
-            setSelectedEntry(idx)
-          }}
+          handleEditClick={idx => setSelectedEntry(idx)}
         />
       ) : (
         <Tip

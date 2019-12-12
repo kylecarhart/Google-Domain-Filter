@@ -12,6 +12,7 @@ export default function TableEntry({
   const [isHovered, setHovered] = React.useState(false)
 
   return (
+    //TODO: Fix text overflow
     <div
       className={`table-entry ${odd && 'table-entry-odd'}`}
       onMouseEnter={() => setHovered(true)}
