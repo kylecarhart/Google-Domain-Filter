@@ -4,6 +4,7 @@ import './Tip.css'
 /* 
   @param: style: ok, warning, error
   @param: iconPosition: left, right
+  //TODO: finish icon support
 */
 export default function Tip({
   text,

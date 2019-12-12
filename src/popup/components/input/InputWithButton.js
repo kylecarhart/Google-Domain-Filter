@@ -9,6 +9,17 @@ export default function InputWithButton({
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
 
+  const handleKeyDown = e => {
+    switch (e.keyCode) {
+      case 13:
+        btnClick(inputValue)
+        setInputValue('')
+        break
+      default:
+        break
+    }
+  }
+
   return (
     <div className="input-with-button">
       <input
@@ -16,11 +27,13 @@ export default function InputWithButton({
         onChange={e => setInputValue(e.target.value)}
         className="input"
         placeholder="Enter Domains"
+        onKeyDown={e => handleKeyDown(e)}
       />
       <button
         className="button"
         onClick={() => {
           btnClick(inputValue)
+          setInputValue('')
         }}
       >
         Add

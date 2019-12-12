@@ -47,10 +47,13 @@ export default function App() {
       <div style={{ marginBottom: '16px' }}>
         <InputWithButton
           btnClick={input => {
-            setEntries([input, ...entries])
+            if (input) {
+              setEntries([input, ...entries])
+            }
           }}
         />
       </div>
+      <div className="small-header">Filtered Domains</div>
       {entries.length > 0 ? (
         <Table
           entries={entries}
