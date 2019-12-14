@@ -4,12 +4,14 @@ import Edit from '../../icons/Edit'
 import Clear from '../../icons/Clear'
 
 export default function TableEntry({
-  entry,
   odd = false,
   handleClearClick,
-  handleEditClick
+  handleEditClick,
+  initialInputText = ''
 }) {
   const [isHovered, setHovered] = React.useState(false)
+  const [inputText, setInputText] = React.useState(initialInputText)
+  const [isDisabled, setIsDisabled] = React.useState(true)
 
   return (
     //TODO: Fix text overflow
@@ -18,14 +20,19 @@ export default function TableEntry({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {entry}
+      <input
+        className="table-entry-input"
+        value={inputText}
+        onChange={e => setInputText(e.target.value)}
+        disabled={isDisabled}
+      />
       {isHovered && (
         <div className="table-options">
           <div onClick={() => handleEditClick()}>
-            <Edit size={14} />
+            <Edit size={16} />
           </div>
           <div onClick={() => handleClearClick()}>
-            <Clear size={14} />
+            <Clear size={16} />
           </div>
         </div>
       )}

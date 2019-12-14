@@ -8,8 +8,8 @@ export default function Table({ entries, handleClearClick, handleEditClick }) {
     <div className="table">
       {entries.map((entry, idx) => (
         <TableEntry
-          key={idx}
-          entry={entry}
+          key={entry}
+          initialInputText={entry}
           odd={idx % 2 !== 0}
           handleClearClick={() => handleClearClick(idx)}
           handleEditClick={() => handleEditClick(idx)}

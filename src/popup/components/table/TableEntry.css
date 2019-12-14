@@ -27,3 +27,13 @@
   cursor: pointer;
   margin-right: 8px;
 }
+
+.table-entry-input {
+  font-size: 14px;
+  background-color: white;
+}
+
+.table-entry-input:disabled {
+  background: none;
+  border: none;
+}
