@@ -14,7 +14,6 @@ const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9
 
 export default function App() {
   const [domains, setDomains] = useState([])
-  const [selectedEntry, setSelectedEntry] = useState(-1)
 
   const changeListener = change => {
     // Check if entries were changed (and not some other part of storage
@@ -49,7 +48,7 @@ export default function App() {
       <div className="small-header">Domain</div>
       <div style={{ marginBottom: '16px' }}>
         <InputWithButton
-          btnClick={input => DomainStorageController.addDomain(input)}
+          btnClick={input => DomainStorageController.createDomain(input)}
           placeholder="Enter Domains"
           isValid={input =>
             input && regex.test(input) && !domains.includes(input)
@@ -60,8 +59,10 @@ export default function App() {
       {domains.length > 0 ? (
         <Table
           entries={domains}
-          handleClearClick={DomainStorageController.removeDomain}
-          handleEditClick={idx => setSelectedEntry(idx)}
+          handleEntryDeleteClick={DomainStorageController.deleteDomain}
+          handleEntrySaveClick={(idx, domain) =>
+            DomainStorageController.updateDomain(idx, domain)
+          }
         />
       ) : (
         <Tip

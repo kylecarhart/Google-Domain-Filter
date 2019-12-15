@@ -2,7 +2,7 @@ export const DOMAINS_STORAGE_LOCATION = 'entries'
 
 export default class DomainStorageController {
   // Add a domain to storage
-  static async addDomain(domain) {
+  static async createDomain(domain) {
     let domains = await DomainStorageController.getDomains()
     domains.unshift(domain)
     return chrome.storage.sync.set({
@@ -11,7 +11,7 @@ export default class DomainStorageController {
   }
 
   // Remove a domain from storage
-  static async removeDomain(index) {
+  static async deleteDomain(index) {
     let domains = await DomainStorageController.getDomains()
     return chrome.storage.sync.set({
       [DOMAINS_STORAGE_LOCATION]: domains.filter((_, _idx) => index !== _idx)
@@ -19,7 +19,7 @@ export default class DomainStorageController {
   }
 
   // Edit a domain in storage by index
-  static async editDomain(index, domain) {
+  static async updateDomain(index, domain) {
     let domains = await DomainStorageController.getDomains()
     return chrome.storage.sync.set({
       [DOMAINS_STORAGE_LOCATION]: domains.map((entry, _idx) => {

@@ -31,9 +31,9 @@
 .table-entry-input {
   font-size: 14px;
   background-color: white;
+  border: none;
 }
 
 .table-entry-input:disabled {
   background: none;
-  border: none;
 }

@@ -2,11 +2,12 @@ import React from 'react'
 import './TableEntry.css'
 import Edit from '../../icons/Edit'
 import Clear from '../../icons/Clear'
+import Info from '../../icons/Info'
 
 export default function TableEntry({
   odd = false,
-  handleClearClick,
-  handleEditClick,
+  handleDeleteClick,
+  handleSaveClick,
   initialInputText = ''
 }) {
   const [isHovered, setHovered] = React.useState(false)
@@ -26,12 +27,19 @@ export default function TableEntry({
         onChange={e => setInputText(e.target.value)}
         disabled={isDisabled}
       />
-      {isHovered && (
+      {!isDisabled && (
         <div className="table-options">
-          <div onClick={() => handleEditClick()}>
+          <div onClick={() => handleSaveClick(inputText)}>
+            <Info size={16} />
+          </div>
+        </div>
+      )}
+      {isDisabled && isHovered && (
+        <div className="table-options">
+          <div onClick={() => setIsDisabled(false)}>
             <Edit size={16} />
           </div>
-          <div onClick={() => handleClearClick()}>
+          <div onClick={() => handleDeleteClick()}>
             <Clear size={16} />
           </div>
         </div>

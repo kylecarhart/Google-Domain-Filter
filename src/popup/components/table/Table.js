@@ -3,7 +3,11 @@ import TableEntry from './TableEntry'
 
 import './Table.css'
 
-export default function Table({ entries, handleClearClick, handleEditClick }) {
+export default function Table({
+  entries,
+  handleEntryDeleteClick,
+  handleEntrySaveClick
+}) {
   return (
     <div className="table">
       {entries.map((entry, idx) => (
@@ -11,8 +15,8 @@ export default function Table({ entries, handleClearClick, handleEditClick }) {
           key={entry}
           initialInputText={entry}
           odd={idx % 2 !== 0}
-          handleClearClick={() => handleClearClick(idx)}
-          handleEditClick={() => handleEditClick(idx)}
+          handleDeleteClick={() => handleEntryDeleteClick(idx)}
+          handleSaveClick={text => handleEntrySaveClick(idx, text)}
         />
       ))}
     </div>
