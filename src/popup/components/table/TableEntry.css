@@ -36,4 +36,5 @@
 
 .table-entry-input:disabled {
   background: none;
+  color: #424242;
 }
