@@ -1,29 +1,24 @@
 /*global chrome*/
 
 import React, { useState } from 'react'
-import './App.css'
-import Table from './Table'
-import AddModal from './AddModal'
-import EditModal from './EditModal'
-import InfoModal from './InfoModal'
-import Info from './icons/Info'
+import Table from './components/table/Table'
 import DomainStorageController, {
   DOMAINS_STORAGE_LOCATION
 } from '../DomainStorageController'
+import InputWithButton from './components/input/InputWithButton'
+import Tip from './components/tip/Tip'
+import Info from './icons/Info'
+import './App.css'
 
-function App() {
-  const [addModalVisible, setAddModalVisible] = useState(false)
-  const [editModalVisible, setEditModalVisible] = useState(false)
-  const [infoModalVisible, setInfoModalVisible] = useState(false)
-  const [entries, setEntries] = React.useState([])
-  const [visibleEntries, setVisibleEntries] = React.useState([])
-  const [searchInput, setSearchInput] = React.useState('')
-  const [selectedEntry, setSelectedEntry] = React.useState(-1)
+const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+
+export default function App() {
+  const [domains, setDomains] = useState([])
 
   const changeListener = change => {
-    // Check if entries were changed (and not some other part of storage)
+    // Check if entries were changed (and not some other part of storage
     if (change[DOMAINS_STORAGE_LOCATION]) {
-      setEntries(change[DOMAINS_STORAGE_LOCATION].newValue)
+      setDomains(change[DOMAINS_STORAGE_LOCATION].newValue)
     }
   }
 
@@ -33,8 +28,7 @@ function App() {
   React.useEffect(() => {
     DomainStorageController.getDomains()
       .then(domains => {
-        setEntries(domains)
-        setVisibleEntries(domains)
+        setDomains(domains)
       })
       .catch(e => {
         console.log(e)
@@ -49,76 +43,34 @@ function App() {
     }
   }, [])
 
-  /* 
-    Whenever the entires change, filter on searchInput 
-  */
-  React.useEffect(() => {
-    setVisibleEntries(entries.filter(entry => entry.includes(searchInput)))
-  }, [entries, searchInput])
-
-  /* 
-    Update input and filter entries to visibleEntries
-  */
-  const handleInputChange = inputText => {
-    setSearchInput(inputText)
-    setVisibleEntries(entries.filter(entry => entry.includes(inputText)))
-  }
-
   return (
     <div className="app">
-      {addModalVisible && (
-        <AddModal
-          closeModal={() => setAddModalVisible(false)}
-          addEntry={DomainStorageController.addDomain}
+      <div className="small-header">Domain</div>
+      <div style={{ marginBottom: '16px' }}>
+        <InputWithButton
+          btnClick={input => DomainStorageController.createDomain(input)}
+          placeholder="Enter Domains"
+          isValid={input =>
+            input && regex.test(input) && !domains.includes(input)
+          }
         />
-      )}
-      {editModalVisible && (
-        <EditModal
-          closeModal={() => setEditModalVisible(false)}
-          entryText={entries[selectedEntry]}
-          editEntry={text => {
-            DomainStorageController.editDomain(selectedEntry, text)
-          }}
-        />
-      )}
-      {infoModalVisible && (
-        <InfoModal closeModal={() => setInfoModalVisible(false)} />
-      )}
-      <header className="header">Google Search Blacklist</header>
-      <div className="toolbar">
-        <input
-          value={searchInput}
-          onChange={e => handleInputChange(e.target.value)}
-          className="searchbar"
-          placeholder="Search blacklist..."
-        />
-        <button className="add-btn" onClick={() => setAddModalVisible(true)}>
-          +
-        </button>
       </div>
-      {entries && entries.length > 0 ? (
-        visibleEntries.length > 0 ? (
-          <Table
-            entries={visibleEntries}
-            handleClearClick={DomainStorageController.removeDomain}
-            handleEditClick={idx => {
-              setEditModalVisible(true)
-              setSelectedEntry(idx)
-            }}
-          />
-        ) : (
-          <div className="tip tip-warning">No results...</div>
-        )
+      <div className="small-header">Filtered Domains</div>
+      {domains.length > 0 ? (
+        <Table
+          entries={domains}
+          handleEntryDeleteClick={DomainStorageController.deleteDomain}
+          handleEntrySaveClick={(idx, domain) =>
+            DomainStorageController.updateDomain(idx, domain)
+          }
+        />
       ) : (
-        <div className="tip tip-error">
-          Add a domain to your blacklist to start!
-        </div>
+        <Tip
+          text="Enter a domain to start filtering"
+          style="warning"
+          icon={<Info fill="#BB991F"></Info>}
+        />
       )}
-      <div className="btn-info" onClick={() => setInfoModalVisible(true)}>
-        <Info size={14} />
-      </div>
     </div>
   )
 }
-
-export default App

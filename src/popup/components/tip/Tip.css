@@ -1,0 +1,13 @@
+.tip {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 8px 16px;
+  justify-content: space-between;
+}
+
+.tip-warning {
+  background-color: #f0e3b7;
+  border-radius: 5px;
+  color: #5c4906;
+}

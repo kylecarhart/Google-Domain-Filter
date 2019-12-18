@@ -10,6 +10,11 @@ export default class RequestListenerController {
 
   // Request listener handles appending domains to the search query
   _beforeRequestListener(details) {
+    // If there are no domains, don't bother redirecting
+    if (this.domains.length === 0) {
+      return
+    }
+
     let url = new URL(details.url)
 
     // Add the sites to the query if it doesn't contain them already

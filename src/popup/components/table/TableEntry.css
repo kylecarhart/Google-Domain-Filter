@@ -1,0 +1,40 @@
+.table-entry {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  color: #424242;
+}
+
+.table-entry-odd {
+  background: #f8f8f8;
+}
+
+.table-entry:hover {
+  background: #ebebeb;
+  color: #4a4a4a;
+}
+
+.table-options {
+  display: flex;
+  align-items: center;
+}
+
+.table-options .icon + .icon {
+  margin-left: 8px;
+}
+
+.icon {
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.table-entry-input {
+  font-size: 14px;
+  background-color: white;
+  border: none;
+}
+
+.table-entry-input:disabled {
+  background: none;
+  color: #424242;
+}
