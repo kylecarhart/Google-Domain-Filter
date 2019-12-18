@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import './InputWithButton.css'
+import PropTypes from 'prop-types'
 
 export default function InputWithButton({
   initialValue = '',
   placeholder = '',
   btnClick,
-  btnStyle,
   isValid = () => true
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
@@ -37,4 +37,11 @@ export default function InputWithButton({
       </button>
     </div>
   )
+}
+
+InputWithButton.propTypes = {
+  initialValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  btnClick: PropTypes.func,
+  isValid: PropTypes.func
 }

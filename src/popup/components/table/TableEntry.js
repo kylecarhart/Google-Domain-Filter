@@ -3,6 +3,7 @@ import './TableEntry.css'
 import Edit from '../../icons/Edit'
 import Clear from '../../icons/Clear'
 import Info from '../../icons/Info'
+import PropTypes from 'prop-types'
 
 export default function TableEntry({
   odd = false,
@@ -46,4 +47,11 @@ export default function TableEntry({
       )}
     </div>
   )
+}
+
+TableEntry.propTypes = {
+  odd: PropTypes.bool,
+  handleDeleteClick: PropTypes.func,
+  handleSaveClick: PropTypes.func,
+  initialInputText: PropTypes.string
 }

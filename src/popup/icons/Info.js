@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function Info({ size = 24, fill = 'black' }) {
   return (
@@ -17,4 +18,9 @@ export default function Info({ size = 24, fill = 'black' }) {
       </svg>
     </div>
   )
+}
+
+Info.propTypes = {
+  size: PropTypes.number,
+  fill: PropTypes.string
 }

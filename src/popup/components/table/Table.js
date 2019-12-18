@@ -1,5 +1,6 @@
 import React from 'react'
 import TableEntry from './TableEntry'
+import PropTypes from 'prop-types'
 
 import './Table.css'
 
@@ -21,4 +22,10 @@ export default function Table({
       ))}
     </div>
   )
+}
+
+Table.propTypes = {
+  entries: PropTypes.arrayOf(PropTypes.string),
+  handleEntryDeleteClick: PropTypes.func,
+  handleEntrySaveClick: PropTypes.func
 }

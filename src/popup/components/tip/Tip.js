@@ -1,8 +1,9 @@
 import React from 'react'
 import './Tip.css'
+import PropTypes from 'prop-types'
 
 /* 
-  @param: style: ok, warning, error
+  @param: style: ok, warn, error
   @param: iconPosition: left, right
   //TODO: finish icon support
 */
@@ -18,4 +19,11 @@ export default function Tip({
       {icon}
     </div>
   )
+}
+
+Tip.propTypes = {
+  text: PropTypes.string,
+  style: PropTypes.oneOf(['ok', 'warn', 'error']),
+  icon: PropTypes.object,
+  iconPosition: PropTypes.oneOf(['left', 'right'])
 }

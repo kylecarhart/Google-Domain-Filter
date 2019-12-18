@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function Clear({ size = 24 }) {
   return (
@@ -14,4 +15,8 @@ export default function Clear({ size = 24 }) {
       </svg>
     </div>
   )
+}
+
+Clear.propTypes = {
+  size: PropTypes.number
 }

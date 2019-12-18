@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function Edit({ size = 24 }) {
   return (
@@ -14,4 +15,8 @@ export default function Edit({ size = 24 }) {
       </svg>
     </div>
   )
+}
+
+Edit.propTypes = {
+  size: PropTypes.number
 }
