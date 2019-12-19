@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export default function Input({
-  value = '',
+  value,
   onChange,
   handleEnterKey = () => {},
   className,
-  placeholder = ''
+  placeholder = '',
+  ...props
 }) {
   const _onKeyDown = e => {
     if (e.keyCode === 13) {
@@ -21,6 +22,7 @@ export default function Input({
       onChange={e => onChange(e.target.value)}
       onKeyDown={e => _onKeyDown(e)}
       placeholder={placeholder}
+      {...props}
     />
   )
 }

@@ -4,6 +4,7 @@ import Clear from '../../icons/Clear'
 import Info from '../../icons/Info'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Input from '../input/Input'
 
 export default function TableEntry({
   odd = false,
@@ -25,7 +26,7 @@ export default function TableEntry({
     >
       <StyledTableEntryInput
         value={inputText}
-        onChange={e => setInputText(e.target.value)}
+        onChange={text => setInputText(text)}
         disabled={isDisabled}
       />
       {!isDisabled && (
@@ -85,7 +86,7 @@ const StyledIcon = styled.div`
   margin-right: 8px;
 `
 
-const StyledTableEntryInput = styled.input`
+const StyledTableEntryInput = styled(Input)`
   font-size: 14px;
   background-color: white;
   border: none;
