@@ -3,11 +3,7 @@ import TableEntry from './TableEntry'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-export default function Table({
-  entries,
-  handleEntryDeleteClick,
-  handleEntrySaveClick
-}) {
+export default function Table({ entries, handleDelete, handleSave }) {
   return (
     <StyledTable>
       {entries.map((entry, idx) => (
@@ -15,8 +11,8 @@ export default function Table({
           key={entry}
           initialInputText={entry}
           odd={idx % 2 !== 0}
-          handleDeleteClick={() => handleEntryDeleteClick(idx)}
-          handleSaveClick={text => handleEntrySaveClick(idx, text)}
+          handleDelete={() => handleDelete(idx)}
+          handleSave={text => handleSave(idx, text)}
         />
       ))}
     </StyledTable>
@@ -25,8 +21,8 @@ export default function Table({
 
 Table.propTypes = {
   entries: PropTypes.arrayOf(PropTypes.string),
-  handleEntryDeleteClick: PropTypes.func,
-  handleEntrySaveClick: PropTypes.func
+  handleDelete: PropTypes.func,
+  handleSave: PropTypes.func
 }
 
 const StyledTable = styled.div`

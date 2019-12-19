@@ -8,8 +8,8 @@ import Input from '../input/Input'
 
 export default function TableEntry({
   odd = false,
-  handleDeleteClick,
-  handleSaveClick,
+  handleDelete,
+  handleSave,
   initialInputText = ''
 }) {
   const [isHovered, setHovered] = React.useState(false)
@@ -27,11 +27,12 @@ export default function TableEntry({
       <StyledTableEntryInput
         value={inputText}
         onChange={text => setInputText(text)}
+        handleEnterKey={() => handleSave(inputText)}
         disabled={isDisabled}
       />
       {!isDisabled && (
         <StyledTableOptions>
-          <StyledIcon onClick={() => handleSaveClick(inputText)}>
+          <StyledIcon onClick={() => handleSave(inputText)}>
             <Info size={16} />
           </StyledIcon>
         </StyledTableOptions>
@@ -41,7 +42,7 @@ export default function TableEntry({
           <StyledIcon onClick={() => setIsDisabled(false)}>
             <Edit size={16} />
           </StyledIcon>
-          <StyledIcon onClick={() => handleDeleteClick()}>
+          <StyledIcon onClick={() => handleDelete()}>
             <Clear size={16} />
           </StyledIcon>
         </StyledTableOptions>
@@ -52,8 +53,8 @@ export default function TableEntry({
 
 TableEntry.propTypes = {
   odd: PropTypes.bool,
-  handleDeleteClick: PropTypes.func,
-  handleSaveClick: PropTypes.func,
+  handleDelete: PropTypes.func,
+  handleSave: PropTypes.func,
   initialInputText: PropTypes.string
 }
 

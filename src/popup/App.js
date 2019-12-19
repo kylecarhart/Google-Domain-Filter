@@ -55,8 +55,8 @@ export default function App() {
       {domains.length > 0 ? (
         <Table
           entries={domains}
-          handleEntryDeleteClick={DomainStorageController.deleteDomain}
-          handleEntrySaveClick={(idx, domain) =>
+          handleDelete={DomainStorageController.deleteDomain}
+          handleSave={(idx, domain) =>
             DomainStorageController.updateDomain(idx, domain)
           }
         />
