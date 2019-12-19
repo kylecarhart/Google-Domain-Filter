@@ -6,7 +6,7 @@ import DomainStorageController, {
 import InputWithButton from './components/input/InputWithButton'
 import Tip from './components/tip/Tip'
 import Info from './icons/Info'
-import './App.css'
+import styled from 'styled-components'
 
 const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
@@ -42,18 +42,16 @@ export default function App() {
   }, [])
 
   return (
-    <div className="app">
-      <div className="small-header">Domain</div>
-      <div style={{ marginBottom: '16px' }}>
-        <InputWithButton
-          btnClick={input => DomainStorageController.createDomain(input)}
-          placeholder="Enter Domains"
-          isValid={input =>
-            input && regex.test(input) && !domains.includes(input)
-          }
-        />
-      </div>
-      <div className="small-header">Filtered Domains</div>
+    <StyledApp>
+      <StyledSmallHeader>Domain</StyledSmallHeader>
+      <StyledInputWithButton
+        btnClick={input => DomainStorageController.createDomain(input)}
+        placeholder="Enter Domains"
+        isValid={input =>
+          input && regex.test(input) && !domains.includes(input)
+        }
+      />
+      <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
       {domains.length > 0 ? (
         <Table
           entries={domains}
@@ -65,10 +63,32 @@ export default function App() {
       ) : (
         <Tip
           text="Enter a domain to start filtering"
-          style="warning"
+          style="warn"
           icon={<Info fill="#BB991F"></Info>}
         />
       )}
-    </div>
+    </StyledApp>
   )
 }
+
+const StyledApp = styled.div`
+  background: #eeeeee;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 32px;
+`
+
+const StyledSmallHeader = styled.div`
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  margin-bottom: 8px;
+  color: #707070;
+`
+
+const StyledInputWithButton = styled(InputWithButton)`
+  margin-bottom: 16px;
+`
