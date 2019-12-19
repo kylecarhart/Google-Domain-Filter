@@ -1,8 +1,7 @@
 import React from 'react'
 import TableEntry from './TableEntry'
 import PropTypes from 'prop-types'
-
-import './Table.css'
+import styled from 'styled-components'
 
 export default function Table({
   entries,
@@ -10,7 +9,7 @@ export default function Table({
   handleEntrySaveClick
 }) {
   return (
-    <div className="table">
+    <StyledTable>
       {entries.map((entry, idx) => (
         <TableEntry
           key={entry}
@@ -20,7 +19,7 @@ export default function Table({
           handleSaveClick={text => handleEntrySaveClick(idx, text)}
         />
       ))}
-    </div>
+    </StyledTable>
   )
 }
 
@@ -29,3 +28,10 @@ Table.propTypes = {
   handleEntryDeleteClick: PropTypes.func,
   handleEntrySaveClick: PropTypes.func
 }
+
+const StyledTable = styled.div`
+  background: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  overflow: auto;
+`

@@ -1,9 +1,9 @@
 import React from 'react'
-import './TableEntry.css'
 import Edit from '../../icons/Edit'
 import Clear from '../../icons/Clear'
 import Info from '../../icons/Info'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 export default function TableEntry({
   odd = false,
@@ -17,35 +17,34 @@ export default function TableEntry({
 
   return (
     //TODO: Fix text overflow
-    <div
-      className={`table-entry ${odd && 'table-entry-odd'}`}
+    <StyledTableEntry
+      odd={odd}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <input
-        className="table-entry-input"
+      <StyledTableEntryInput
         value={inputText}
         onChange={e => setInputText(e.target.value)}
         disabled={isDisabled}
       />
       {!isDisabled && (
-        <div className="table-options">
-          <div onClick={() => handleSaveClick(inputText)}>
+        <StyledTableOptions>
+          <StyledIcon onClick={() => handleSaveClick(inputText)}>
             <Info size={16} />
-          </div>
-        </div>
+          </StyledIcon>
+        </StyledTableOptions>
       )}
       {isDisabled && isHovered && (
-        <div className="table-options">
-          <div onClick={() => setIsDisabled(false)}>
+        <StyledTableOptions>
+          <StyledIcon onClick={() => setIsDisabled(false)}>
             <Edit size={16} />
-          </div>
-          <div onClick={() => handleDeleteClick()}>
+          </StyledIcon>
+          <StyledIcon onClick={() => handleDeleteClick()}>
             <Clear size={16} />
-          </div>
-        </div>
+          </StyledIcon>
+        </StyledTableOptions>
       )}
-    </div>
+    </StyledTableEntry>
   )
 }
 
@@ -55,3 +54,43 @@ TableEntry.propTypes = {
   handleSaveClick: PropTypes.func,
   initialInputText: PropTypes.string
 }
+
+const StyledTableEntry = styled.div.attrs(props => ({
+  background: props.odd ? '#f8f8f8' : '#ffffff'
+}))`
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  color: #424242;
+  background: ${props => props.background};
+
+  &:hover {
+    background: #ebebeb;
+    color: #4a4a4a;
+  }
+`
+
+const StyledTableOptions = styled.div`
+  display: flex;
+  align-items: center;
+
+  .icon + .icon {
+    margin-left: 8px;
+  }
+`
+
+const StyledIcon = styled.div`
+  cursor: pointer;
+  margin-right: 8px;
+`
+
+const StyledTableEntryInput = styled.input`
+  font-size: 14px;
+  background-color: white;
+  border: none;
+
+  &:disabled {
+    background: none;
+    color: #424242;
+  }
+`
