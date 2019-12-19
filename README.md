@@ -1,18 +1,31 @@
-# Google Search Blacklist
+# Google Domain Filter
 
-Blacklist domains from Google search results
+Blacklist domains from Google search results!
 
-![Capture](https://user-images.githubusercontent.com/6385983/69842432-434c6900-1231-11ea-96d6-7cd50aa58aca.PNG)
-![Capture2](https://user-images.githubusercontent.com/6385983/69842434-447d9600-1231-11ea-8969-7ebefde0913f.PNG)
+![Domains](https://user-images.githubusercontent.com/6385983/70561137-ebc6cb00-1b57-11ea-9f38-0c1a25a5879c.png)
 
-#### Tools
+## Description
 
-- React
-- Figma
-- Webpack (custom config)
+Built with React and webextension APIs, the Google Domain Filter allows you to input a set of domains you would like to filter away from your google results.
 
-#### Build processes
+### How it Works
 
-**Build for production:** `npm run build`
+The extension runs in the background listening to requests made to google that contain a query. The query is then modified to contain additional parameters to filter away google search results that contain any specified domains. The extension then sends the query to google and awaits a response. On response, the extension then modifies the results page to remove any obvious indications that domains were filtered out, making the entire process seamless.
 
-**Watch for file changes:** `npm start`. Then use `web-ext` on the `dist` folder to fire up an instance of the extension in chrome or firefox. (If you dont have `web-ext` download it from npm: `npm i -g web-ext`)
+### Tools/Frameworks/Libraries Used
+
+- **React** for the popup.
+- **Figma** for designing the popup.
+- **Webpack** (custom configuration) to package each individual portion of the extension.
+
+## Build Process
+
+### Development
+
+Make sure you run `npm install` first.
+
+Start by running `npm start` in the root directory. This will kick off the webpack build watch, which will allow you to make changes while webpack re-compiles to the `./dist` folder. While that is running, open another terminal and run `npm run start:firefox`. This will start the `web-ext` helper which will open an contained instance of firefox and install the web extension. `web-ext` will watch for changes to the `./dist` folder and refresh automatically.
+
+### Build for Production
+
+Run `npm run build` to create a build for production. Then follow steps to properly sign the extension using `web-ext`.
