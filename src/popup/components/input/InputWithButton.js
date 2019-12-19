@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Input from '../input/Input'
 
 export default function InputWithButton({
   initialValue = '',
@@ -10,12 +11,6 @@ export default function InputWithButton({
   className
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
-
-  const handleKeyDown = e => {
-    if (e.keyCode === 13) {
-      validateAndSubmit()
-    }
-  }
 
   const validateAndSubmit = () => {
     if (isValid(inputValue)) {
@@ -28,10 +23,9 @@ export default function InputWithButton({
     <StyledInputWithButton className={className}>
       <StyledInput
         value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
-        className="input"
+        onChange={value => setInputValue(value)}
         placeholder={placeholder}
-        onKeyDown={e => handleKeyDown(e)}
+        handleEnterKey={validateAndSubmit}
       />
       <StyledButton className="button" onClick={validateAndSubmit}>
         Add
@@ -53,7 +47,7 @@ const StyledInputWithButton = styled.div`
   justify-content: stretch;
   align-items: stretch;
 `
-const StyledInput = styled.input`
+const StyledInput = styled(Input)`
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 5px 0px 0px 5px;
