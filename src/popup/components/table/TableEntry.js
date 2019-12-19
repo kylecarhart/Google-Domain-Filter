@@ -21,6 +21,7 @@ export default function TableEntry({
       odd={odd}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      isDisabled={isDisabled}
     >
       <StyledTableEntryInput
         value={inputText}
@@ -58,11 +59,11 @@ TableEntry.propTypes = {
 const StyledTableEntry = styled.div.attrs(props => ({
   background: props.odd ? '#f8f8f8' : '#ffffff'
 }))`
-  padding: 8px 16px;
+  padding: 8px 8px;
   display: flex;
   justify-content: space-between;
   color: #424242;
-  background: ${props => props.background};
+  background: ${props => (!props.isDisabled ? '#ebebeb' : props.background)};
 
   &:hover {
     background: #ebebeb;
@@ -88,6 +89,8 @@ const StyledTableEntryInput = styled.input`
   font-size: 14px;
   background-color: white;
   border: none;
+  border-radius: 5px;
+  padding: 1px 8px;
 
   &:disabled {
     background: none;
