@@ -7,21 +7,21 @@ import Icon from '../components/icons'
 export default function InfoPage({ setPage }) {
   return (
     <StyledInfoPage>
-      <Group>
+      <InfoGroup>
         <StyledIcon
           name="CircleArrowLeft"
           size="32px"
           onClick={() => setPage('DomainsPage')}
         />
-      </Group>
-      <Group>
+      </InfoGroup>
+      <InfoGroup>
         <Heading>Google Domain Filter</Heading>
         <div>Version: 1.0</div>
-      </Group>
-      <Group>
+      </InfoGroup>
+      <InfoGroup>
         Developed by: <strong>Kyle Carhart</strong>
-      </Group>
-      <Group>
+      </InfoGroup>
+      <InfoGroup>
         <div>Connect with me below!</div>
         <div>
           <StyledIconLink size="24px" href="https://github.com/kmcgamer">
@@ -40,7 +40,7 @@ export default function InfoPage({ setPage }) {
             <Icon name="Mail" />
           </StyledIconLink>
         </div>
-      </Group>
+      </InfoGroup>
       <Light>If you like this app, drop a rating! Thanks!</Light>
     </StyledInfoPage>
   )
@@ -59,7 +59,7 @@ const StyledInfoPage = styled.div`
   padding: 32px;
 `
 
-const Group = styled.div`
+const InfoGroup = styled.div`
   margin-bottom: 16px;
   color: #333;
   font-size: 14px;

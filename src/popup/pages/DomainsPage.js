@@ -45,36 +45,34 @@ export default function DomainsPage({ setPage }) {
   }, [])
 
   return (
-    <>
-      <StyledDomainsPage>
-        <StyledSmallHeader>Domain</StyledSmallHeader>
-        <StyledInputWithButton
-          btnClick={input => DomainStorageController.createDomain(input)}
-          placeholder="Enter Domains"
-          isValid={input =>
-            input && regex.test(input) && !domains.includes(input)
-          }
-        />
-        <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
-        {domains &&
-          (domains.length > 0 ? (
-            <Table
-              entries={domains}
-              handleDelete={DomainStorageController.deleteDomain}
-              handleSave={(idx, domain) =>
-                DomainStorageController.updateDomain(idx, domain)
-              }
-            />
-          ) : (
-            <Tip
-              text="Enter a domain to start filtering"
-              style="warn"
-              icon={<StyledIcon name="Info" />}
-            />
-          ))}
-      </StyledDomainsPage>
+    <StyledDomainsPage>
+      <StyledSmallHeader>Domain</StyledSmallHeader>
+      <StyledInputWithButton
+        btnClick={input => DomainStorageController.createDomain(input)}
+        placeholder="Enter Domains"
+        isValid={input =>
+          input && regex.test(input) && !domains.includes(input)
+        }
+      />
+      <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
+      {domains &&
+        (domains.length > 0 ? (
+          <Table
+            entries={domains}
+            handleDelete={DomainStorageController.deleteDomain}
+            handleSave={(idx, domain) =>
+              DomainStorageController.updateDomain(idx, domain)
+            }
+          />
+        ) : (
+          <Tip
+            text="Enter a domain to start filtering"
+            style="warn"
+            icon={<StyledIcon name="Info" />}
+          />
+        ))}
       <StyledInfoIcon name="Info" onClick={() => setPage('InfoPage')} />
-    </>
+    </StyledDomainsPage>
   )
 }
 

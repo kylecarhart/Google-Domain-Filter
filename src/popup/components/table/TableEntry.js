@@ -22,31 +22,29 @@ export default function TableEntry({
       onMouseLeave={() => setHovered(false)}
       isDisabled={isDisabled}
     >
-      <StyledTableEntryInput
+      <StyledInput
         value={inputText}
         onChange={text => setInputText(text)}
         handleEnterKey={() => handleSave(inputText)}
         disabled={isDisabled}
       />
       {!isDisabled && (
-        <StyledTableOptions>
-          <StyledIcon onClick={() => handleSave(inputText)}>
-            <Icon name="CircleChecked" />
-          </StyledIcon>
-          <StyledIcon>
-            <Icon name="CircleX" onClick={() => setIsDisabled(true)} />
-          </StyledIcon>
-        </StyledTableOptions>
+        <TableOptions>
+          <StyledIcon
+            name="CircleChecked"
+            onClick={() => handleSave(inputText)}
+          />
+          <StyledIcon name="CircleX" onClick={() => setIsDisabled(true)} />
+        </TableOptions>
       )}
       {isDisabled && isHovered && (
-        <StyledTableOptions>
-          <StyledIcon onClick={() => setIsDisabled(false)}>
-            <Icon name="PencilCreate" />
-          </StyledIcon>
-          <StyledIcon onClick={() => handleDelete()}>
-            <Icon name="Trash" />
-          </StyledIcon>
-        </StyledTableOptions>
+        <TableOptions>
+          <StyledIcon
+            name="PencilCreate"
+            onClick={() => setIsDisabled(false)}
+          />
+          <StyledIcon name="Trash" onClick={() => handleDelete()} />
+        </TableOptions>
       )}
     </StyledTableEntry>
   )
@@ -74,7 +72,7 @@ const StyledTableEntry = styled.div.attrs(props => ({
   }
 `
 
-const StyledTableOptions = styled.div`
+const TableOptions = styled.div`
   display: flex;
   align-items: center;
 
@@ -83,14 +81,14 @@ const StyledTableOptions = styled.div`
   }
 `
 
-const StyledIcon = styled.div`
+const StyledIcon = styled(Icon)`
   cursor: pointer;
   margin-right: 8px;
   line-height: 0;
   font-size: 1rem;
 `
 
-const StyledTableEntryInput = styled(Input)`
+const StyledInput = styled(Input)`
   font-size: 14px;
   background-color: white;
   border: none;
