@@ -7,14 +7,12 @@ export default function InputWithButton({
   initialValue = '',
   placeholder = '',
   btnClick,
-  isValid = () => true,
   className
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
 
-  const validateAndSubmit = () => {
-    if (isValid(inputValue)) {
-      btnClick(inputValue)
+  const _btnClick = () => {
+    if (btnClick(inputValue)) {
       setInputValue('')
     }
   }
@@ -25,9 +23,9 @@ export default function InputWithButton({
         value={inputValue}
         onChange={value => setInputValue(value)}
         placeholder={placeholder}
-        handleEnterKey={validateAndSubmit}
+        handleEnterKey={() => _btnClick(inputValue)}
       />
-      <StyledButton className="button" onClick={validateAndSubmit}>
+      <StyledButton className="button" onClick={() => _btnClick(inputValue)}>
         Add
       </StyledButton>
     </StyledInputWithButton>
@@ -38,7 +36,6 @@ InputWithButton.propTypes = {
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
   btnClick: PropTypes.func,
-  isValid: PropTypes.func,
   className: PropTypes.string
 }
 

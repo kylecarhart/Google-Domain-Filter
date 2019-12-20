@@ -23,6 +23,10 @@ export default function DomainsPage({ setPage }) {
     }
   }
 
+  const validateInput = input => {
+    return input && regex.test(input) && !domains.includes(input)
+  }
+
   /* 
     On component mount, load the domains from chrome storage.
   */
@@ -48,11 +52,12 @@ export default function DomainsPage({ setPage }) {
     <StyledDomainsPage>
       <StyledSmallHeader>Domain</StyledSmallHeader>
       <StyledInputWithButton
-        btnClick={input => DomainStorageController.createDomain(input)}
+        btnClick={input => {
+          if (validateInput(input)) {
+            return DomainStorageController.createDomain(input)
+          }
+        }}
         placeholder="Enter Domains"
-        isValid={input =>
-          input && regex.test(input) && !domains.includes(input)
-        }
       />
       <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
       {domains &&
@@ -60,9 +65,11 @@ export default function DomainsPage({ setPage }) {
           <Table
             entries={domains}
             handleDelete={DomainStorageController.deleteDomain}
-            handleSave={(idx, domain) =>
-              DomainStorageController.updateDomain(idx, domain)
-            }
+            handleSave={(idx, domain) => {
+              if (validateInput(domain)) {
+                DomainStorageController.updateDomain(idx, domain)
+              }
+            }}
           />
         ) : (
           <Tip
