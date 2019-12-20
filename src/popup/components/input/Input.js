@@ -5,8 +5,6 @@ export default function Input({
   value,
   onChange,
   handleEnterKey = () => {},
-  className,
-  placeholder = '',
   ...props
 }) {
   const _onKeyDown = e => {
@@ -17,11 +15,9 @@ export default function Input({
 
   return (
     <input
-      className={className}
       value={value}
       onChange={e => onChange(e.target.value)}
       onKeyDown={e => _onKeyDown(e)}
-      placeholder={placeholder}
       {...props}
     />
   )
@@ -30,7 +26,5 @@ export default function Input({
 Input.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  handleEnterKey: PropTypes.func,
-  className: PropTypes.string,
-  placeholder: PropTypes.string
+  handleEnterKey: PropTypes.func
 }
