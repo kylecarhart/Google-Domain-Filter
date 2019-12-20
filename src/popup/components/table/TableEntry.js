@@ -25,7 +25,13 @@ export default function TableEntry({
       <StyledInput
         value={inputText}
         onChange={text => setInputText(text)}
-        handleEnterKey={() => handleSave(inputText)}
+        handleEnterKey={() => {
+          if (initialInputText === inputText) {
+            setIsDisabled(true)
+          } else {
+            handleSave(inputText)
+          }
+        }}
         disabled={isDisabled}
       />
       {!isDisabled && (
