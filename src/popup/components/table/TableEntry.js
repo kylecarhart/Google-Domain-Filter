@@ -34,7 +34,13 @@ export default function TableEntry({
             name="CircleChecked"
             onClick={() => handleSave(inputText)}
           />
-          <StyledIcon name="CircleX" onClick={() => setIsDisabled(true)} />
+          <StyledIcon
+            name="CircleX"
+            onClick={() => {
+              setInputText(initialInputText)
+              setIsDisabled(true)
+            }}
+          />
         </TableOptions>
       )}
       {isDisabled && isHovered && (
