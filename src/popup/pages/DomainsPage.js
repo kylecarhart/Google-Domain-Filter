@@ -14,7 +14,7 @@ import Tip from '../components/tip/Tip'
 const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
 export default function DomainsPage({ setPage }) {
-  const [domains, setDomains] = useState([])
+  const [domains, setDomains] = useState(null)
 
   const changeListener = change => {
     // Check if entries were changed (and not some other part of storage
@@ -56,21 +56,22 @@ export default function DomainsPage({ setPage }) {
           }
         />
         <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
-        {domains.length > 0 ? (
-          <Table
-            entries={domains}
-            handleDelete={DomainStorageController.deleteDomain}
-            handleSave={(idx, domain) =>
-              DomainStorageController.updateDomain(idx, domain)
-            }
-          />
-        ) : (
-          <Tip
-            text="Enter a domain to start filtering"
-            style="warn"
-            icon={<StyledIcon name="Info" />}
-          />
-        )}
+        {domains &&
+          (domains.length > 0 ? (
+            <Table
+              entries={domains}
+              handleDelete={DomainStorageController.deleteDomain}
+              handleSave={(idx, domain) =>
+                DomainStorageController.updateDomain(idx, domain)
+              }
+            />
+          ) : (
+            <Tip
+              text="Enter a domain to start filtering"
+              style="warn"
+              icon={<StyledIcon name="Info" />}
+            />
+          ))}
       </StyledDomainsPage>
       <StyledInfoIcon name="Info" onClick={() => setPage('InfoPage')} />
     </>
