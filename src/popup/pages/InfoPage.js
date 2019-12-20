@@ -10,7 +10,7 @@ export default function InfoPage({ setPage }) {
       <Group>
         <StyledIcon
           name="CircleArrowLeft"
-          style={{ fontSize: '32px' }}
+          size="32px"
           onClick={() => setPage('DomainsPage')}
         />
       </Group>
@@ -24,30 +24,21 @@ export default function InfoPage({ setPage }) {
       <Group>
         <div>Connect with me below!</div>
         <div>
-          <a href="https://github.com/kmcgamer">
-            <Icon
-              name="Github"
-              style={{ fontSize: '24px', marginRight: '8px' }}
-            />
-          </a>
-          <a href="https://twitter.com/KMCGamer">
-            <Icon
-              name="Twitter"
-              style={{ fontSize: '24px', marginRight: '8px' }}
-            />
-          </a>
-          <a href="https://www.linkedin.com/in/kyle-carhart">
-            <Icon
-              name="LinkedIn"
-              style={{ fontSize: '24px', marginRight: '8px' }}
-            />
-          </a>
-          <a href="mailto: KMCGamer@live.com">
-            <Icon
-              name="Mail"
-              style={{ fontSize: '24px', marginRight: '8px' }}
-            />
-          </a>
+          <StyledIconLink size="24px" href="https://github.com/kmcgamer">
+            <Icon name="Github" />
+          </StyledIconLink>
+          <StyledIconLink size="24px" href="https://twitter.com/KMCGamer">
+            <Icon name="Twitter" />
+          </StyledIconLink>
+          <StyledIconLink
+            size="24px"
+            href="https://www.linkedin.com/in/kyle-carhart"
+          >
+            <Icon name="LinkedIn" />
+          </StyledIconLink>
+          <StyledIconLink size="24px" href="mailto: KMCGamer@live.com">
+            <Icon name="Mail" />
+          </StyledIconLink>
         </div>
       </Group>
       <Light>If you like this app, drop a rating! Thanks!</Light>
@@ -84,9 +75,30 @@ const Light = styled.div`
   color: #7e7e7e;
   font-size: 14px;
 `
+
 const StyledIcon = styled(Icon)`
-  font-size: 32px;
+  font-size: ${props => props.size};
   &:hover {
     cursor: pointer;
+  }
+`
+
+const StyledIconLink = styled.a`
+  font-size: ${props => props.size};
+  &:hover {
+    cursor: pointer;
+  }
+  margin-right: 8px;
+
+  &:link {
+    color: #333;
+  }
+
+  &:visited {
+    color: #333;
+  }
+
+  &:hover {
+    color: dodgerblue;
   }
 `
