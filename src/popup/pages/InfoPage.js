@@ -1,13 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import Icon from '../components/icons'
 
-export default function InfoPage() {
+export default function InfoPage({ setPage }) {
   return (
     <StyledInfoPage>
       <Group>
-        <Icon name="CircleArrowLeft" style={{ fontSize: '32px' }} />
+        <StyledIcon
+          name="CircleArrowLeft"
+          style={{ fontSize: '32px' }}
+          onClick={() => setPage('DomainsPage')}
+        />
       </Group>
       <Group>
         <Heading>Google Domain Filter</Heading>
@@ -50,11 +55,17 @@ export default function InfoPage() {
   )
 }
 
+InfoPage.propTypes = {
+  setPage: PropTypes.func.isRequired
+}
+
 const StyledInfoPage = styled.div`
+  background: #eeeeee;
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: center;
+  padding: 32px;
 `
 
 const Group = styled.div`
@@ -72,4 +83,10 @@ const Light = styled.div`
   font-style: italic;
   color: #7e7e7e;
   font-size: 14px;
+`
+const StyledIcon = styled(Icon)`
+  font-size: 32px;
+  &:hover {
+    cursor: pointer;
+  }
 `
