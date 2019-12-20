@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import Table from './components/table/Table'
+import styled from 'styled-components'
+
 import DomainStorageController, {
   DOMAINS_STORAGE_LOCATION
 } from '../DomainStorageController'
-import InputWithButton from './components/input/InputWithButton'
-import Tip from './components/tip/Tip'
+
 import Icon from './components/icons'
-import styled from 'styled-components'
+import InputWithButton from './components/input/InputWithButton'
+import Table from './components/table/Table'
+import Tip from './components/tip/Tip'
+import InfoPage from './pages/InfoPage'
 
 const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
