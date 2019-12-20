@@ -29,9 +29,9 @@ const StyledTip = styled.div`
   font-size: 14px;
   padding: 8px 16px;
   justify-content: space-between;
-  background: ${props => props.theme.background || '#ffffff'}
-  border-radius: ${props => props.theme.borderRadius || '0px'}
-  color: ${props => props.theme.color || '#333333'}
+  background: ${props => props.theme.background || '#ffffff'};
+  border-radius: ${props => props.theme.borderRadius || '0px'};
+  color: ${props => props.theme.color || '#333333'};
 `
 
 const TipWarnTheme = {

@@ -5,7 +5,7 @@ import DomainStorageController, {
 } from '../DomainStorageController'
 import InputWithButton from './components/input/InputWithButton'
 import Tip from './components/tip/Tip'
-import Info from './icons/Info'
+import Icon from './components/icons'
 import styled from 'styled-components'
 
 const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
@@ -64,7 +64,7 @@ export default function App() {
         <Tip
           text="Enter a domain to start filtering"
           style="warn"
-          icon={<Info fill="#BB991F"></Info>}
+          icon={<StyledIcon name="Info" />}
         />
       )}
     </StyledApp>
@@ -91,4 +91,9 @@ const StyledSmallHeader = styled.div`
 
 const StyledInputWithButton = styled(InputWithButton)`
   margin-bottom: 16px;
+`
+
+const StyledIcon = styled(Icon)`
+  line-height: 0;
+  font-size: 1rem;
 `

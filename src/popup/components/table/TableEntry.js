@@ -1,10 +1,8 @@
 import React from 'react'
-import Edit from '../../icons/Edit'
-import Clear from '../../icons/Clear'
-import Info from '../../icons/Info'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Input from '../input/Input'
+import Icon from '../icons'
 
 export default function TableEntry({
   odd = false,
@@ -33,17 +31,20 @@ export default function TableEntry({
       {!isDisabled && (
         <StyledTableOptions>
           <StyledIcon onClick={() => handleSave(inputText)}>
-            <Info size={16} />
+            <Icon name="CircleChecked" />
+          </StyledIcon>
+          <StyledIcon>
+            <Icon name="CircleX" onClick={() => setIsDisabled(true)} />
           </StyledIcon>
         </StyledTableOptions>
       )}
       {isDisabled && isHovered && (
         <StyledTableOptions>
           <StyledIcon onClick={() => setIsDisabled(false)}>
-            <Edit size={16} />
+            <Icon name="PencilCreate" />
           </StyledIcon>
           <StyledIcon onClick={() => handleDelete()}>
-            <Clear size={16} />
+            <Icon name="Trash" />
           </StyledIcon>
         </StyledTableOptions>
       )}
@@ -85,6 +86,8 @@ const StyledTableOptions = styled.div`
 const StyledIcon = styled.div`
   cursor: pointer;
   margin-right: 8px;
+  line-height: 0;
+  font-size: 1rem;
 `
 
 const StyledTableEntryInput = styled(Input)`
