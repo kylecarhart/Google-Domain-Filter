@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack --env.mode=development --env.watch",
     "build": "webpack --env.mode=production",
-    "start:firefox": "web-ext run --source-dir ./dist/ --firefox=firefoxdeveloperedition"
+    "start:firefox": "web-ext run --source-dir ./dist/ --firefox=firefoxdeveloperedition",
+    "clean": "rimraf dist"
   },
   "author": "Kyle Carhart",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "eslint-plugin-react": "^7.17.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "rimraf": "^3.0.0",
     "style-loader": "^1.0.2",
     "web-ext": "^3.2.1",
     "webpack": "^4.41.3",
