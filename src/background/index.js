@@ -1,28 +1,21 @@
 import RequestListenerController from '../RequestListenerController'
-import { get } from '../useStorage'
+import { getDomains, DOMAIN_STORAGE_KEY } from '../DomainRepository'
 
-const runApp = async () => {
+// Run the application in the background
+;(async () => {
   const requestController = new RequestListenerController()
 
   // Start the request listener
-  let domains = await get('domains')
-  requestController.domains = domains ? domains : []
+  requestController.domains = await getDomains()
   requestController.addListener()
 
-  // When entries are added to storage, reset the listener
+  // When domains are changed, update them in the requestController
   const changeListener = changes => {
-    // if changes weren't made to the entires, escape
-    if (!changes.domains) {
+    if (!changes[DOMAIN_STORAGE_KEY]) {
       return
     }
-
-    const domains = changes.domains.newValue
-
-    // Remove the old listener and replace it with a new one
-    requestController.domains = domains
+    requestController.domains = changes[DOMAIN_STORAGE_KEY].newValue
   }
 
   chrome.storage.onChanged.addListener(changeListener)
-}
-
-runApp()
+})()

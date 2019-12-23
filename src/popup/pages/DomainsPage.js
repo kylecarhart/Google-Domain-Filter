@@ -6,7 +6,7 @@ import Icon from '../components/icons'
 import InputWithButton from '../components/input/InputWithButton'
 import Table from '../components/table/Table'
 import Tip from '../components/tip/Tip'
-import useStorage from '../../useStorage'
+import useStorage from '../hooks/useStorage'
 
 const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 

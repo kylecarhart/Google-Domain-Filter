@@ -16,7 +16,6 @@ export default class RequestListenerController {
     }
 
     let url = new URL(details.url)
-
     // Add the sites to the query if it doesn't contain them already
     if (!this.domains.every(elem => url.searchParams.get('q').includes(elem))) {
       // Modify the search query exclude blacklisted domains
@@ -31,7 +30,6 @@ export default class RequestListenerController {
     // Pass the domains along in a separate query param if the url doesn't already have them
     if (!url.searchParams.get(QUERY_PARAM_NAME)) {
       url.searchParams.set(QUERY_PARAM_NAME, this.domains.join(' '))
-      console.log(url.toString())
     } else {
       return // Escape the redirect otherwise
     }

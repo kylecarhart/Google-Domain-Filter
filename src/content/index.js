@@ -1,12 +1,13 @@
 import { QUERY_PARAM_NAME } from '../RequestListenerController'
+import { DOMAIN_STORAGE_KEY } from '../DomainRepository'
 
 /* ------- START STORAGE LISTENER ------- */
 
 // When domains are added to storage, modify the DOM
 const changeListener = change => {
   // Check if domains were changed (and not some other part of storage)
-  if (change.domains) {
-    hideLinksInDOM(change.domains.newValue)
+  if (change[DOMAIN_STORAGE_KEY]) {
+    hideLinksInDOM(change[DOMAIN_STORAGE_KEY].newValue)
   }
 }
 
