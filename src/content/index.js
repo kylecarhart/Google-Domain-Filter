@@ -1,13 +1,12 @@
 import { QUERY_PARAM_NAME } from '../RequestListenerController'
-import { DOMAINS_STORAGE_LOCATION } from '../DomainStorageController'
 
 /* ------- START STORAGE LISTENER ------- */
 
 // When domains are added to storage, modify the DOM
 const changeListener = change => {
   // Check if domains were changed (and not some other part of storage)
-  if (change[DOMAINS_STORAGE_LOCATION]) {
-    hideLinksInDOM(change[DOMAINS_STORAGE_LOCATION].newValue)
+  if (change.domains) {
+    hideLinksInDOM(change.domains.newValue)
   }
 }
 
@@ -89,7 +88,7 @@ observer.observe(document.documentElement, {
 
 // When the document is done loading, remove the observer
 document.addEventListener('DOMContentLoaded', function() {
-  mutationObserver.disconnect()
+  observer.disconnect()
 })
 
 // Given an array of domains, filter the domains out of the string (preceded by '-site:')

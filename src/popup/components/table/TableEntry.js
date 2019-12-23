@@ -55,7 +55,7 @@ export default function TableEntry({
             name="PencilCreate"
             onClick={() => setIsDisabled(false)}
           />
-          <StyledIcon name="Trash" onClick={handleDelete} />
+          <StyledIcon name="Trash" onClick={() => handleDelete(inputText)} />
         </TableOptions>
       )}
     </StyledTableEntry>

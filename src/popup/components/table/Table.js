@@ -11,7 +11,7 @@ export default function Table({ entries, handleDelete, handleSave }) {
           key={entry}
           initialInputText={entry}
           odd={idx % 2 !== 0}
-          handleDelete={() => handleDelete(idx)}
+          handleDelete={() => handleDelete(entry)}
           handleSave={text => handleSave(idx, text)}
         />
       ))}

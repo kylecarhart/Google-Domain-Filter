@@ -1,52 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-
-import DomainStorageController, {
-  DOMAINS_STORAGE_LOCATION
-} from '../../DomainStorageController'
 
 import Icon from '../components/icons'
 import InputWithButton from '../components/input/InputWithButton'
 import Table from '../components/table/Table'
 import Tip from '../components/tip/Tip'
+import useStorage from '../../useStorage'
 
 const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
 export default function DomainsPage({ setPage }) {
-  const [domains, setDomains] = useState(null)
-
-  const changeListener = change => {
-    // Check if entries were changed (and not some other part of storage
-    if (change[DOMAINS_STORAGE_LOCATION]) {
-      setDomains(change[DOMAINS_STORAGE_LOCATION].newValue)
-    }
-  }
+  const [domains, setDomains] = useStorage('domains', [])
 
   const validateInput = input => {
     return input && regex.test(input) && !domains.includes(input)
   }
-
-  /* 
-    On component mount, load the domains from chrome storage.
-  */
-  React.useEffect(() => {
-    DomainStorageController.getDomains()
-      .then(domains => {
-        setDomains(domains)
-      })
-      .catch(e => {
-        console.log(e)
-      })
-
-    // Listen for chrome storage changes and update UI accordingly
-    chrome.storage.onChanged.addListener(changeListener)
-
-    // On cleanup, remove the listener
-    return () => {
-      chrome.storage.onChanged.removeListener(changeListener)
-    }
-  }, [])
 
   return (
     <StyledDomainsPage>
@@ -54,30 +23,35 @@ export default function DomainsPage({ setPage }) {
       <StyledInputWithButton
         btnClick={input => {
           if (validateInput(input)) {
-            return DomainStorageController.createDomain(input)
+            setDomains([input, ...domains])
+            return true
           }
         }}
         placeholder="Enter Domains"
       />
       <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
-      {domains &&
-        (domains.length > 0 ? (
-          <Table
-            entries={domains}
-            handleDelete={DomainStorageController.deleteDomain}
-            handleSave={(idx, domain) => {
-              if (validateInput(domain)) {
-                DomainStorageController.updateDomain(idx, domain)
-              }
-            }}
-          />
-        ) : (
-          <Tip
-            text="Enter a domain to start filtering"
-            style="warn"
-            icon={<StyledIcon name="Info" />}
-          />
-        ))}
+      {domains.length > 0 ? (
+        <Table
+          entries={domains}
+          handleDelete={domain =>
+            setDomains(domains.filter(elem => elem !== domain))
+          }
+          handleSave={(idx, domain) => {
+            if (validateInput(domain)) {
+              setDomains(
+                domains.map((elem, _idx) => (idx === _idx ? domain : elem))
+              )
+              return true
+            }
+          }}
+        />
+      ) : (
+        <Tip
+          text="Enter a domain to start filtering"
+          style="warn"
+          icon={<StyledIcon name="Info" />}
+        />
+      )}
       <StyledInfoIcon name="Info" onClick={() => setPage('InfoPage')} />
     </StyledDomainsPage>
   )
