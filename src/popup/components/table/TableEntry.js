@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Input from '../input/Input'
 import Icon from '../icons'
+import useStateWithValidation from '../../hooks/useStateWithValidation'
 
 export default function TableEntry({
   odd = false,
@@ -10,9 +11,13 @@ export default function TableEntry({
   handleSave,
   initialInputText = ''
 }) {
-  const [isHovered, setHovered] = React.useState(false)
-  const [inputText, setInputText] = React.useState(initialInputText)
-  const [isDisabled, setIsDisabled] = React.useState(true)
+  const [isHovered, setHovered] = useState(false)
+  const [inputText, setInputText, isValid] = useStateWithValidation(
+    //TODO:
+    initialInputText,
+    'URL'
+  )
+  const [isDisabled, setIsDisabled] = useState(true)
 
   return (
     //TODO: Fix text overflow
@@ -28,7 +33,7 @@ export default function TableEntry({
         handleEnterKey={() => {
           if (initialInputText === inputText) {
             setIsDisabled(true)
-          } else {
+          } else if (isValid) {
             handleSave(inputText)
           }
         }}
@@ -38,7 +43,7 @@ export default function TableEntry({
         <TableOptions>
           <StyledIcon
             name="CircleChecked"
-            onClick={() => handleSave(inputText)}
+            onClick={() => isValid && handleSave(inputText)}
           />
           <StyledIcon
             name="CircleX"

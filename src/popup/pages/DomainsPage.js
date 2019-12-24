@@ -9,21 +9,15 @@ import Tip from '../components/tip/Tip'
 import useStorage from '../hooks/useStorage'
 import { DOMAIN_STORAGE_KEY } from '../../DomainRepository'
 
-const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
-
 export default function DomainsPage({ setPage }) {
   const [domains, setDomains] = useStorage(DOMAIN_STORAGE_KEY, [])
-
-  const validateInput = input => {
-    return input && regex.test(input) && !domains.includes(input)
-  }
 
   return (
     <StyledDomainsPage>
       <StyledSmallHeader>Domain</StyledSmallHeader>
       <StyledInputWithButton
         btnClick={input => {
-          if (validateInput(input)) {
+          if (!domains.includes(input)) {
             setDomains([input, ...domains])
             return true
           }
@@ -38,7 +32,7 @@ export default function DomainsPage({ setPage }) {
             setDomains(domains.filter(elem => elem !== domain))
           }
           handleSave={(idx, domain) => {
-            if (validateInput(domain)) {
+            if (!domains.includes(domain)) {
               setDomains(
                 domains.map((elem, _idx) => (idx === _idx ? domain : elem))
               )

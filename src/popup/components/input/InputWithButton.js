@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+
 import Input from '../input/Input'
+
+import useStateWithValidation from '../../hooks/useStateWithValidation'
 
 export default function InputWithButton({
   initialValue = '',
@@ -9,10 +12,13 @@ export default function InputWithButton({
   btnClick,
   className
 }) {
-  const [inputValue, setInputValue] = useState(initialValue)
+  const [inputValue, setInputValue, isValid] = useStateWithValidation(
+    initialValue,
+    'URL'
+  )
 
   const _btnClick = () => {
-    if (btnClick(inputValue)) {
+    if (isValid && btnClick(inputValue)) {
       setInputValue('')
     }
   }
@@ -23,9 +29,9 @@ export default function InputWithButton({
         value={inputValue}
         onChange={value => setInputValue(value)}
         placeholder={placeholder}
-        handleEnterKey={() => _btnClick(inputValue)}
+        handleEnterKey={() => _btnClick()}
       />
-      <StyledButton className="button" onClick={() => _btnClick(inputValue)}>
+      <StyledButton className="button" onClick={() => _btnClick()}>
         Add
       </StyledButton>
     </StyledInputWithButton>
