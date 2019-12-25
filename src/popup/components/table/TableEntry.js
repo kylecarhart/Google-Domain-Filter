@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Input from '../input/Input'
 import Icon from '../icons'
 import useStateWithValidation from '../../hooks/useStateWithValidation'
+import useOutsideClickHandler from '../../hooks/useOutsideClickHandler'
 
 export default function TableEntry({
   odd = false,
@@ -18,10 +19,26 @@ export default function TableEntry({
     'URL'
   )
   const [isDisabled, setIsDisabled] = useState(true)
+  const ref = useRef(null)
+  useOutsideClickHandler(ref, isDisabled, resetInput)
+
+  function resetInput() {
+    setInputText(initialInputText)
+    setIsDisabled(true)
+  }
+
+  function _handleSave() {
+    if (initialInputText === inputText) {
+      setIsDisabled(true)
+    } else if (isValid) {
+      handleSave(inputText)
+    }
+  }
 
   return (
     //TODO: Fix text overflow
     <StyledTableEntry
+      ref={ref}
       odd={odd}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -30,26 +47,16 @@ export default function TableEntry({
       <StyledInput
         value={inputText}
         onChange={text => setInputText(text)}
-        handleEnterKey={() => {
-          if (initialInputText === inputText) {
-            setIsDisabled(true)
-          } else if (isValid) {
-            handleSave(inputText)
-          }
-        }}
+        handleEnterKey={() => _handleSave()}
         disabled={isDisabled}
       />
       {!isDisabled && (
         <TableOptions>
-          <StyledIcon
-            name="CircleChecked"
-            onClick={() => isValid && handleSave(inputText)}
-          />
+          <StyledIcon name="CircleChecked" onClick={() => _handleSave()} />
           <StyledIcon
             name="CircleX"
             onClick={() => {
-              setInputText(initialInputText)
-              setIsDisabled(true)
+              resetInput()
             }}
           />
         </TableOptions>
