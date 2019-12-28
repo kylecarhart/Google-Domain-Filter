@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Input from '../input/Input'
 import Icon from '../icons'
-import useStateWithValidation from '../../hooks/useStateWithValidation'
+import useValidation, { URL_REGEX } from '../../hooks/useValidation'
 import useOutsideClickHandler from '../../hooks/useOutsideClickHandler'
 
 export default function TableEntry({
@@ -13,13 +13,10 @@ export default function TableEntry({
   initialInputText = ''
 }) {
   const [isHovered, setHovered] = useState(false)
-  const [inputText, setInputText, isValid] = useStateWithValidation(
-    //TODO:
-    initialInputText,
-    'URL'
-  )
+  const [inputText, setInputText] = useState(initialInputText)
+  const isValid = useValidation(inputText, URL_REGEX)
   const [isDisabled, setIsDisabled] = useState(true)
-  const ref = useRef(null)
+  const ref = useRef()
   useOutsideClickHandler(ref, isDisabled, resetInput)
 
   function resetInput() {

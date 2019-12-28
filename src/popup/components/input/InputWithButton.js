@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import Input from '../input/Input'
 
-import useStateWithValidation from '../../hooks/useStateWithValidation'
+import useValidation, { URL_REGEX } from '../../hooks/useValidation'
 
 export default function InputWithButton({
   initialValue = '',
@@ -12,10 +12,8 @@ export default function InputWithButton({
   btnClick,
   className
 }) {
-  const [inputValue, setInputValue, isValid] = useStateWithValidation(
-    initialValue,
-    'URL'
-  )
+  const [inputValue, setInputValue] = useState(initialValue)
+  const isValid = useValidation(inputValue, URL_REGEX)
 
   const _btnClick = () => {
     if (isValid && btnClick(inputValue)) {
