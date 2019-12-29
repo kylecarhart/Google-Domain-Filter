@@ -15,8 +15,9 @@ export default function TableEntry({
   const [isHovered, setHovered] = useState(false)
   const [inputText, setInputText] = useState(initialInputText)
   const [isDisabled, setIsDisabled] = useState(true)
-  const ref = useRef()
-  useOutsideClickHandler(ref, isDisabled, resetInput)
+  const tableEntryRef = useRef()
+  const inputRef = useRef()
+  useOutsideClickHandler(tableEntryRef, isDisabled, resetInput)
 
   function resetInput() {
     setInputText(initialInputText)
@@ -36,13 +37,14 @@ export default function TableEntry({
   return (
     //TODO: Fix text overflow
     <StyledTableEntry
-      ref={ref}
+      ref={tableEntryRef}
       odd={odd}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       isDisabled={isDisabled}
     >
       <StyledInput
+        ref={inputRef}
         value={inputText}
         onChange={text => setInputText(text)}
         handleEnterKey={() => _handleSave()}
@@ -63,7 +65,12 @@ export default function TableEntry({
         <TableOptions>
           <StyledIcon
             name="PencilCreate"
-            onClick={() => setIsDisabled(false)}
+            onClick={() => {
+              setIsDisabled(false)
+              setTimeout(() => {
+                inputRef.current.focus()
+              }, 0)
+            }}
           />
           <StyledIcon name="Trash" onClick={() => handleDelete(inputText)} />
         </TableOptions>
