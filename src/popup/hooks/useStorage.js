@@ -15,7 +15,7 @@ export default function useStorage(key, initialValue) {
         setStoredValue(res[key])
       }
     })
-  }, [])
+  }, [key])
 
   const setValue = value => {
     try {

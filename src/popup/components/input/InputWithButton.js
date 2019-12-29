@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import Input from '../input/Input'
 
-import useValidation, { URL_REGEX } from '../../hooks/useValidation'
+import { testUrl } from '../../../utils'
 
 export default function InputWithButton({
   initialValue = '',
@@ -13,7 +13,7 @@ export default function InputWithButton({
   className
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
-  const isValid = useValidation(inputValue, URL_REGEX)
+  const isValid = testUrl(inputValue)
 
   const _btnClick = () => {
     if (isValid && btnClick(inputValue)) {

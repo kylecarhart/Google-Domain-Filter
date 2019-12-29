@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Input from '../input/Input'
 import Icon from '../icons'
-import useValidation, { URL_REGEX } from '../../hooks/useValidation'
+import { testUrl } from '../../../utils'
 import useOutsideClickHandler from '../../hooks/useOutsideClickHandler'
 
 export default function TableEntry({
@@ -14,7 +14,6 @@ export default function TableEntry({
 }) {
   const [isHovered, setHovered] = useState(false)
   const [inputText, setInputText] = useState(initialInputText)
-  const isValid = useValidation(inputText, URL_REGEX)
   const [isDisabled, setIsDisabled] = useState(true)
   const ref = useRef()
   useOutsideClickHandler(ref, isDisabled, resetInput)
@@ -31,6 +30,8 @@ export default function TableEntry({
       handleSave(inputText)
     }
   }
+
+  const isValid = testUrl(inputText)
 
   return (
     //TODO: Fix text overflow
