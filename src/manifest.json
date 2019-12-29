@@ -29,5 +29,10 @@
       "id": "gsb@carhart.dev",
       "strict_min_version": "53.0"
     }
+  },
+  "icons": {
+    "16": "./static/icon16.png",
+    "48": "./static/icon48.png",
+    "128": "./static/icon128.png"
   }
 }

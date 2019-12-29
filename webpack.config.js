@@ -54,7 +54,10 @@ module.exports = env => {
         excludeChunks: ['background', 'content']
       }),
       // Copy manifest.json
-      new CopyPlugin([{ from: './src/manifest.json', to: '.' }]),
+      new CopyPlugin([
+        { from: './src/manifest.json', to: '.' },
+        { from: './src/static/*', to: './static', flatten: true }
+      ]),
       // Inject version number
       new webpack.DefinePlugin({
         __VERSION__: JSON.stringify(process.env.npm_package_version)
