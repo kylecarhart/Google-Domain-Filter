@@ -47,10 +47,7 @@ export default function DomainsPage({ setPage }) {
           icon={<StyledIcon name="Info" />}
         />
       )}
-      <StyledInfoIcon
-        onClick={() => setPage('InfoPage')}
-        onEnter={() => setPage('InfoPage')}
-      >
+      <StyledInfoIcon onClick={() => setPage('InfoPage')}>
         <Icon name="Info" />
       </StyledInfoIcon>
     </StyledDomainsPage>
