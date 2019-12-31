@@ -27,7 +27,7 @@ export default function InfoPage({ setPage }) {
           <StyledIconLink size="24px" href="https://github.com/kmcgamer">
             <Icon name="Github" />
           </StyledIconLink>
-          <StyledIconLink size="24px" href="https://twitter.com/KMCGamer">
+          <StyledIconLink size="24px" href="https://twitter.com/TwoNineTwo_">
             <Icon name="Twitter" />
           </StyledIconLink>
           <StyledIconLink
