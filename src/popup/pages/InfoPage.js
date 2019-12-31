@@ -100,6 +100,6 @@ const StyledIconLink = styled.a`
   }
 
   &:hover {
-    color: dodgerblue;
+    color: #1e90ff;
   }
 `
