@@ -1,4 +1,10 @@
-# Google Domain Filter
+<h1 align="center">
+  <br>
+  <a href="https://github.com/KMCGamer/google-domain-filter"><img src="https://user-images.githubusercontent.com/6385983/71632282-b273ff00-2bdb-11ea-9a62-554cfce1c016.png" alt="Google Domain Filter"></a>
+  <br>
+  Google Domain Filter
+  <br>
+</h1>
 
 Blacklist domains from Google search results!
 
