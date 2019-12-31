@@ -35,7 +35,6 @@ export default function TableEntry({
   const isValid = testUrl(inputText)
 
   return (
-    //TODO: Fix text overflow
     <StyledTableEntry
       ref={tableEntryRef}
       odd={odd}
@@ -43,13 +42,26 @@ export default function TableEntry({
       onMouseLeave={() => setHovered(false)}
       isDisabled={isDisabled}
     >
-      <StyledInput
-        ref={inputRef}
-        value={inputText}
-        onChange={text => setInputText(text)}
-        handleEnterKey={() => _handleSave()}
-        disabled={isDisabled}
-      />
+      {isDisabled ? (
+        <InputDiv
+          onDoubleClick={() => {
+            setIsDisabled(false)
+            setTimeout(() => {
+              inputRef.current.focus()
+            }, 0)
+          }}
+        >
+          {inputText}
+        </InputDiv>
+      ) : (
+        <StyledInput
+          ref={inputRef}
+          value={inputText}
+          onChange={text => setInputText(text)}
+          handleEnterKey={() => _handleSave()}
+        />
+      )}
+
       {!isDisabled && (
         <TableOptions>
           <StyledIcon name="CircleChecked" onClick={() => _handleSave()} />
@@ -123,9 +135,15 @@ const StyledInput = styled(Input)`
   border: none;
   border-radius: 5px;
   padding: 1px 8px;
+`
 
-  &:disabled {
-    background: none;
-    color: #424242;
-  }
+const InputDiv = styled.div`
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  padding: 1px 8px;
+  user-select: none;
+  width: 230px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
