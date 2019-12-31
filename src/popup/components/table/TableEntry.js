@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Input from '../input/Input'
@@ -12,12 +12,14 @@ export default function TableEntry({
   handleSave,
   initialInputText = ''
 }) {
-  const [isHovered, setHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
   const [inputText, setInputText] = useState(initialInputText)
   const [isDisabled, setIsDisabled] = useState(true)
   const tableEntryRef = useRef()
   const inputRef = useRef()
   useOutsideClickHandler(tableEntryRef, isDisabled, resetInput)
+  const isValid = testUrl(inputText)
 
   function resetInput() {
     setInputText(initialInputText)
@@ -32,15 +34,24 @@ export default function TableEntry({
     }
   }
 
-  const isValid = testUrl(inputText)
+  function handleBlur() {
+    setTimeout(() => {
+      if (!tableEntryRef.current.contains(document.activeElement)) {
+        setIsFocused(false)
+      }
+    }, 0)
+  }
 
   return (
     <StyledTableEntry
       ref={tableEntryRef}
       odd={odd}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => handleBlur()}
       isDisabled={isDisabled}
+      tabIndex="0"
     >
       {isDisabled ? (
         <InputDiv
@@ -54,37 +65,47 @@ export default function TableEntry({
           {inputText}
         </InputDiv>
       ) : (
-        <StyledInput
-          ref={inputRef}
-          value={inputText}
-          onChange={text => setInputText(text)}
-          handleEnterKey={() => _handleSave()}
-        />
-      )}
-
-      {!isDisabled && (
-        <TableOptions>
-          <StyledIcon name="CircleChecked" onClick={() => _handleSave()} />
-          <StyledIcon
-            name="CircleX"
-            onClick={() => {
-              resetInput()
-            }}
+        <>
+          <StyledInput
+            ref={inputRef}
+            value={inputText}
+            onChange={text => setInputText(text)}
+            handleEnterKey={() => _handleSave()}
+            tabIndex="0"
           />
-        </TableOptions>
+          <TableOptions>
+            <ButtonIcon onClick={() => _handleSave()}>
+              <Icon name="CircleChecked" />
+            </ButtonIcon>
+            <ButtonIcon
+              onClick={() => {
+                resetInput()
+              }}
+            >
+              <Icon name="CircleX" />
+            </ButtonIcon>
+          </TableOptions>
+        </>
       )}
-      {isDisabled && isHovered && (
+      {isDisabled && (isHovered || isFocused) && (
         <TableOptions>
-          <StyledIcon
-            name="PencilCreate"
+          <ButtonIcon
             onClick={() => {
               setIsDisabled(false)
               setTimeout(() => {
                 inputRef.current.focus()
               }, 0)
             }}
-          />
-          <StyledIcon name="Trash" onClick={() => handleDelete(inputText)} />
+            onBlur={() => handleBlur()}
+          >
+            <Icon name="PencilCreate" />
+          </ButtonIcon>
+          <ButtonIcon
+            onClick={() => handleDelete(inputText)}
+            onBlur={() => handleBlur()}
+          >
+            <Icon name="Trash" />
+          </ButtonIcon>
         </TableOptions>
       )}
     </StyledTableEntry>
@@ -122,11 +143,15 @@ const TableOptions = styled.div`
   }
 `
 
-const StyledIcon = styled(Icon)`
-  cursor: pointer;
-  margin-right: 8px;
+const ButtonIcon = styled.button`
+  background: none;
+  border: none;
   line-height: 0;
+  margin-right: 8px;
+  cursor: pointer;
   font-size: 1rem;
+  color: inherit;
+  padding: 0;
 `
 
 const StyledInput = styled(Input)`

@@ -8,11 +8,9 @@ export default function InfoPage({ setPage }) {
   return (
     <StyledInfoPage>
       <InfoGroup>
-        <StyledIcon
-          name="CircleArrowLeft"
-          size="32px"
-          onClick={() => setPage('DomainsPage')}
-        />
+        <StyledIcon size="32px" onClick={() => setPage('DomainsPage')}>
+          <Icon name="CircleArrowLeft" />
+        </StyledIcon>
       </InfoGroup>
       <InfoGroup>
         <Heading>Google Domain Filter</Heading>
@@ -76,11 +74,14 @@ const Light = styled.div`
   font-size: 14px;
 `
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled.button`
+  background: none;
+  border: none;
+  line-height: 0;
+  color: inherit;
   font-size: ${props => props.size};
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  padding: 0;
 `
 
 const StyledIconLink = styled.a`

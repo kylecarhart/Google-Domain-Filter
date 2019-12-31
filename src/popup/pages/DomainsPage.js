@@ -47,7 +47,12 @@ export default function DomainsPage({ setPage }) {
           icon={<StyledIcon name="Info" />}
         />
       )}
-      <StyledInfoIcon name="Info" onClick={() => setPage('InfoPage')} />
+      <StyledInfoIcon
+        onClick={() => setPage('InfoPage')}
+        onEnter={() => setPage('InfoPage')}
+      >
+        <Icon name="Info" />
+      </StyledInfoIcon>
     </StyledDomainsPage>
   )
 }
@@ -83,14 +88,16 @@ const StyledIcon = styled(Icon)`
   font-size: 1rem;
 `
 
-const StyledInfoIcon = styled(Icon)`
+const StyledInfoIcon = styled.button`
+  background: none;
+  border: none;
+  line-height: 0;
   position: absolute;
   right: 16px;
   bottom: 16px;
   font-size: 16px;
   color: #333;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
 `
