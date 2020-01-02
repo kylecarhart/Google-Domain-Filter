@@ -14,7 +14,8 @@ export default function DomainsPage({ setPage }) {
 
   return (
     <StyledDomainsPage>
-      <StyledSmallHeader>Domain</StyledSmallHeader>
+      <h1 style={{ display: 'none' }}>Domains Input Page</h1>
+      <StyledSmallHeader htmlFor="domain-input">Domain</StyledSmallHeader>
       <StyledInputWithButton
         btnClick={input => {
           if (!domains.includes(input)) {
@@ -23,6 +24,8 @@ export default function DomainsPage({ setPage }) {
           }
         }}
         placeholder="Enter Domains"
+        inputId="domain-input"
+        inputName="domain-input"
       />
       <StyledSmallHeader>Filtered Domains</StyledSmallHeader>
       {domains.length > 0 ? (
@@ -47,7 +50,10 @@ export default function DomainsPage({ setPage }) {
           icon={<StyledIcon name="Info" />}
         />
       )}
-      <StyledInfoIcon onClick={() => setPage('InfoPage')}>
+      <StyledInfoIcon
+        onClick={() => setPage('InfoPage')}
+        aria-label="Go to info page"
+      >
         <Icon name="Info" />
       </StyledInfoIcon>
     </StyledDomainsPage>
@@ -67,7 +73,7 @@ const StyledDomainsPage = styled.div`
   padding: 32px;
 `
 
-const StyledSmallHeader = styled.div`
+const StyledSmallHeader = styled.label`
   text-transform: uppercase;
   font-size: 10px;
   font-weight: 700;

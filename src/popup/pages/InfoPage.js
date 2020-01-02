@@ -7,6 +7,7 @@ import Icon from '../components/icons'
 export default function InfoPage({ setPage }) {
   return (
     <StyledInfoPage>
+      <h1 style={{ display: 'none' }}>Info Page</h1>
       <InfoGroup>
         <StyledIcon size="32px" onClick={() => setPage('DomainsPage')}>
           <Icon name="CircleArrowLeft" />

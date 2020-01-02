@@ -7,10 +7,10 @@ import { testUrl } from '../../../utils'
 import useOutsideClickHandler from '../../hooks/useOutsideClickHandler'
 
 export default function TableEntry({
-  odd = false,
   handleDelete,
   handleSave,
-  initialInputText = ''
+  initialInputText = '',
+  idx
 }) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -45,7 +45,7 @@ export default function TableEntry({
   return (
     <StyledTableEntry
       ref={tableEntryRef}
-      odd={odd}
+      odd={idx % 2 !== 0}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsFocused(true)}
@@ -66,21 +66,29 @@ export default function TableEntry({
         </InputDiv>
       ) : (
         <>
+          <label style={{ display: 'none' }} htmlFor={`domainInput${idx}`}>
+            Domain Edit Input
+          </label>
           <StyledInput
             ref={inputRef}
             value={inputText}
             onChange={text => setInputText(text)}
             handleEnterKey={() => _handleSave()}
-            tabIndex="0"
+            id={`domainInput${idx}`}
+            name={`domainInput${idx}`}
           />
           <TableOptions>
-            <ButtonIcon onClick={() => _handleSave()}>
+            <ButtonIcon
+              onClick={() => _handleSave()}
+              aria-label="Save changes to domain"
+            >
               <Icon name="CircleChecked" />
             </ButtonIcon>
             <ButtonIcon
               onClick={() => {
                 resetInput()
               }}
+              aria-label="Discard changes to domain"
             >
               <Icon name="CircleX" />
             </ButtonIcon>
@@ -97,12 +105,14 @@ export default function TableEntry({
               }, 0)
             }}
             onBlur={() => handleBlur()}
+            aria-label="Edit domain"
           >
             <Icon name="PencilCreate" />
           </ButtonIcon>
           <ButtonIcon
             onClick={() => handleDelete(inputText)}
             onBlur={() => handleBlur()}
+            aria-label="Delete domain"
           >
             <Icon name="Trash" />
           </ButtonIcon>

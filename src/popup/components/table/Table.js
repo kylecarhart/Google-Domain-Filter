@@ -10,9 +10,9 @@ export default function Table({ entries, handleDelete, handleSave }) {
         <TableEntry
           key={entry}
           initialInputText={entry}
-          odd={idx % 2 !== 0}
           handleDelete={() => handleDelete(entry)}
           handleSave={text => handleSave(idx, text)}
+          idx={idx}
         />
       ))}
     </StyledTable>

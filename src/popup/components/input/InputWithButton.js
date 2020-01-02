@@ -10,7 +10,9 @@ export default function InputWithButton({
   initialValue = '',
   placeholder = '',
   btnClick,
-  className
+  className,
+  inputName,
+  inputId
 }) {
   const [inputValue, setInputValue] = useState(initialValue)
   const isValid = testUrl(inputValue)
@@ -28,10 +30,10 @@ export default function InputWithButton({
         onChange={value => setInputValue(value)}
         placeholder={placeholder}
         handleEnterKey={() => _btnClick()}
+        id={inputId}
+        name={inputName}
       />
-      <StyledButton className="button" onClick={() => _btnClick()}>
-        Add
-      </StyledButton>
+      <StyledButton onClick={() => _btnClick()}>Add</StyledButton>
     </StyledInputWithButton>
   )
 }
@@ -40,7 +42,9 @@ InputWithButton.propTypes = {
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
   btnClick: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  inputId: PropTypes.string.isRequired,
+  inputName: PropTypes.string.isRequired
 }
 
 const StyledInputWithButton = styled.div`
