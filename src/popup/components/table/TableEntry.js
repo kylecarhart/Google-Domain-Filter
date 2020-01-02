@@ -66,9 +66,9 @@ export default function TableEntry({
         </InputDiv>
       ) : (
         <>
-          <label style={{ display: 'none' }} htmlFor={`domainInput${idx}`}>
+          <InvisibleAriaElement as="label" htmlFor={`domainInput${idx}`}>
             Domain Edit Input
-          </label>
+          </InvisibleAriaElement>
           <StyledInput
             ref={inputRef}
             value={inputText}
@@ -181,4 +181,15 @@ const InputDiv = styled.div`
   width: 230px;
   text-overflow: ellipsis;
   overflow: hidden;
+`
+
+const InvisibleAriaElement = styled.div`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 `

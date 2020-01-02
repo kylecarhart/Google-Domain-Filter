@@ -7,7 +7,7 @@ import Icon from '../components/icons'
 export default function InfoPage({ setPage }) {
   return (
     <StyledInfoPage>
-      <h1 style={{ display: 'none' }}>Info Page</h1>
+      <InvisibleAriaElement as="h1">Info Page</InvisibleAriaElement>
       <InfoGroup>
         <StyledIcon size="32px" onClick={() => setPage('DomainsPage')}>
           <Icon name="CircleArrowLeft" />
@@ -103,4 +103,14 @@ const StyledIconLink = styled.a`
   &:hover {
     color: #1e90ff;
   }
+`
+const InvisibleAriaElement = styled.div`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 `

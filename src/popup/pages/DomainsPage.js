@@ -14,7 +14,7 @@ export default function DomainsPage({ setPage }) {
 
   return (
     <StyledDomainsPage>
-      <h1 style={{ display: 'none' }}>Domains Input Page</h1>
+      <InvisibleAriaElement as="h1">Domains Input Page</InvisibleAriaElement>
       <StyledSmallHeader htmlFor="domain-input">Domain</StyledSmallHeader>
       <StyledInputWithButton
         btnClick={input => {
@@ -103,4 +103,15 @@ const StyledInfoIcon = styled.button`
   cursor: pointer;
   font-size: 1rem;
   padding: 0;
+`
+
+const InvisibleAriaElement = styled.div`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 `
