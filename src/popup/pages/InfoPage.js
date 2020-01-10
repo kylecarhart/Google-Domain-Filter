@@ -8,37 +8,43 @@ export default function InfoPage({ setPage }) {
   return (
     <StyledInfoPage>
       <InvisibleAriaElement as="h1">Info Page</InvisibleAriaElement>
-      <InfoGroup>
-        <StyledIcon size="32px" onClick={() => setPage('DomainsPage')}>
-          <Icon name="CircleArrowLeft" />
-        </StyledIcon>
-      </InfoGroup>
+      <StyledIcon size="32px" onClick={() => setPage('DomainsPage')}>
+        <Icon name="CircleArrowLeft" />
+      </StyledIcon>
       <InfoGroup>
         <Heading>Google Domain Filter</Heading>
-        <div>Version: 1.0</div>
+        <div>Version 1.0.0</div>
       </InfoGroup>
       <InfoGroup>
         Developed by: <strong>Kyle Carhart</strong>
       </InfoGroup>
       <InfoGroup>
         <div>Connect with me below!</div>
-        <div>
-          <StyledIconLink size="24px" href="https://github.com/kmcgamer">
-            <Icon name="Github" />
-          </StyledIconLink>
-          <StyledIconLink size="24px" href="https://twitter.com/TwoNineTwo_">
-            <Icon name="Twitter" />
-          </StyledIconLink>
-          <StyledIconLink
-            size="24px"
-            href="https://www.linkedin.com/in/kyle-carhart"
-          >
-            <Icon name="LinkedIn" />
-          </StyledIconLink>
-          <StyledIconLink size="24px" href="mailto: KMCGamer@live.com">
-            <Icon name="Mail" />
-          </StyledIconLink>
-        </div>
+        <List>
+          <li>
+            <StyledIconLink size="24px" href="https://github.com/kmcgamer">
+              <Icon name="Github" />
+            </StyledIconLink>
+          </li>
+          <li>
+            <StyledIconLink size="24px" href="https://twitter.com/TwoNineTwo_">
+              <Icon name="Twitter" />
+            </StyledIconLink>
+          </li>
+          <li>
+            <StyledIconLink
+              size="24px"
+              href="https://www.linkedin.com/in/kyle-carhart"
+            >
+              <Icon name="LinkedIn" />
+            </StyledIconLink>
+          </li>
+          <li>
+            <StyledIconLink size="24px" href="mailto: KMCGamer@live.com">
+              <Icon name="Mail" />
+            </StyledIconLink>
+          </li>
+        </List>
       </InfoGroup>
       <Light>If you like this app, drop a rating! Thanks!</Light>
     </StyledInfoPage>
@@ -55,22 +61,23 @@ const StyledInfoPage = styled.div`
   height: 100%;
   flex-direction: column;
   justify-content: center;
-  padding: 32px;
+  align-items: flex-start;
+  padding: 2rem;
 `
 
 const InfoGroup = styled.div`
-  margin-bottom: 16px;
+  margin: 0 0 1rem 0;
   color: #333;
   font-size: 14px;
 `
 
-const Heading = styled.div`
+const Heading = styled.h2`
   font-size: 18px;
   font-weight: 600;
+  margin: 0;
 `
 
-const Light = styled.div`
-  font-style: italic;
+const Light = styled.em`
   color: #7e7e7e;
   font-size: 14px;
 `
@@ -83,14 +90,19 @@ const StyledIcon = styled.button`
   font-size: ${props => props.size};
   cursor: pointer;
   padding: 0;
+  margin-bottom: 1rem;
+
+  &:hover {
+    color: #555;
+  }
 `
 
 const StyledIconLink = styled.a`
   font-size: ${props => props.size};
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
   margin-right: 8px;
+  display: inline-block;
+  line-height: 0;
 
   &:link {
     color: #333;
@@ -113,4 +125,11 @@ const InvisibleAriaElement = styled.div`
   padding: 0;
   position: absolute;
   width: 1px;
+`
+
+const List = styled.div`
+  list-style: none;
+  > li {
+    display: inline-block;
+  }
 `

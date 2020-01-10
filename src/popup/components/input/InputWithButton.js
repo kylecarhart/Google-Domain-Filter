@@ -71,5 +71,14 @@ const StyledButton = styled.button`
 
   &:hover {
     cursor: pointer;
+    background-color: #3071ed;
+  }
+
+  &:focus {
+    background-color: #3071ed;
+  }
+
+  &:active {
+    background-color: #2163e4;
   }
 `

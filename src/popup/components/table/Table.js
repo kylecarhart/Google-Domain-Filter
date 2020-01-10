@@ -25,9 +25,11 @@ Table.propTypes = {
   handleSave: PropTypes.func
 }
 
-const StyledTable = styled.div`
+const StyledTable = styled.ul`
+  list-style: none;
   background: #fff;
   font-size: 14px;
   border-radius: 5px;
   overflow: auto;
+  padding: 0;
 `

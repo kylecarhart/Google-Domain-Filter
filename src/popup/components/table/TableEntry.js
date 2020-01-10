@@ -52,6 +52,7 @@ export default function TableEntry({
       onBlur={() => handleBlur()}
       isDisabled={isDisabled}
       tabIndex="0"
+      onMouseDown={e => e.preventDefault()}
     >
       {isDisabled ? (
         <InputDiv
@@ -129,7 +130,7 @@ TableEntry.propTypes = {
   initialInputText: PropTypes.string
 }
 
-const StyledTableEntry = styled.div.attrs(props => ({
+const StyledTableEntry = styled.li.attrs(props => ({
   background: props.odd ? '#f8f8f8' : '#ffffff'
 }))`
   padding: 8px 8px;
