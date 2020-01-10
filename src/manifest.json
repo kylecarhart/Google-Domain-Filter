@@ -4,6 +4,7 @@
   "author": "Kyle Carhart",
   "version": "1.0",
   "description": "Filter domains from your Google searches.",
+  "homepage_url": "https://github.com/KMCGamer/google-domain-filter",
   "permissions": [
     "storage",
     "activeTab",
@@ -24,7 +25,7 @@
   "background": {
     "scripts": ["./background/index.js"]
   },
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "gsb@carhart.dev",
       "strict_min_version": "53.0"
