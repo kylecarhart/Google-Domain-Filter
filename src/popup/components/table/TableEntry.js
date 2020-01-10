@@ -127,7 +127,8 @@ TableEntry.propTypes = {
   odd: PropTypes.bool,
   handleDelete: PropTypes.func,
   handleSave: PropTypes.func,
-  initialInputText: PropTypes.string
+  initialInputText: PropTypes.string,
+  idx: PropTypes.number
 }
 
 const StyledTableEntry = styled.li.attrs(props => ({
