@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import Icon from '../components/icons'
+import Icon from '../components/icons';
 
 export default function InfoPage({ setPage }) {
   return (
@@ -34,8 +34,7 @@ export default function InfoPage({ setPage }) {
           <li>
             <StyledIconLink
               size="24px"
-              href="https://www.linkedin.com/in/kyle-carhart"
-            >
+              href="https://www.linkedin.com/in/kyle-carhart">
               <Icon name="LinkedIn" />
             </StyledIconLink>
           </li>
@@ -48,12 +47,12 @@ export default function InfoPage({ setPage }) {
       </InfoGroup>
       <Light>If you like this app, drop a rating! Thanks!</Light>
     </StyledInfoPage>
-  )
+  );
 }
 
 InfoPage.propTypes = {
-  setPage: PropTypes.func.isRequired
-}
+  setPage: PropTypes.func.isRequired,
+};
 
 const StyledInfoPage = styled.div`
   background: #eeeeee;
@@ -63,31 +62,31 @@ const StyledInfoPage = styled.div`
   justify-content: center;
   align-items: flex-start;
   padding: 2rem;
-`
+`;
 
 const InfoGroup = styled.div`
   margin: 0 0 1rem 0;
   color: #333;
   font-size: 14px;
-`
+`;
 
 const Heading = styled.h2`
   font-size: 18px;
   font-weight: 600;
   margin: 0;
-`
+`;
 
 const Light = styled.em`
   color: #7e7e7e;
   font-size: 14px;
-`
+`;
 
 const StyledIcon = styled.button`
   background: none;
   border: none;
   line-height: 0;
   color: inherit;
-  font-size: ${props => props.size};
+  font-size: ${(props) => props.size};
   cursor: pointer;
   padding: 0;
   margin-bottom: 1rem;
@@ -95,10 +94,10 @@ const StyledIcon = styled.button`
   &:hover {
     color: #555;
   }
-`
+`;
 
 const StyledIconLink = styled.a`
-  font-size: ${props => props.size};
+  font-size: ${(props) => props.size};
   cursor: pointer;
   margin-right: 8px;
   display: inline-block;
@@ -115,7 +114,7 @@ const StyledIconLink = styled.a`
   &:hover {
     color: #1e90ff;
   }
-`
+`;
 const InvisibleAriaElement = styled.div`
   border: 0;
   clip: rect(0 0 0 0);
@@ -125,11 +124,11 @@ const InvisibleAriaElement = styled.div`
   padding: 0;
   position: absolute;
   width: 1px;
-`
+`;
 
 const List = styled.div`
   list-style: none;
   > li {
     display: inline-block;
   }
-`
+`;

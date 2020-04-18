@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --env.mode=development --env.watch",
+    "watch": "webpack --env.mode=development --env.watch",
     "build": "webpack --env.mode=production",
-    "start:firefox": "web-ext run --source-dir ./dist/ --firefox=firefoxdeveloperedition",
+    "dev": "web-ext run -t firefox-desktop --firefox=firefoxdeveloperedition -t chromium -u google.com --source-dir ./dist/",
     "clean": "rimraf dist"
   },
   "author": "Kyle Carhart",
@@ -15,6 +15,8 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/firefox-webext-browser": "^70.0.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "copy-webpack-plugin": "^5.1.1",
@@ -27,6 +29,7 @@
     "rimraf": "^3.0.2",
     "style-loader": "^1.1.4",
     "web-ext": "^3.2.1",
+    "webextension-polyfill": "^0.6.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },

@@ -1,26 +1,26 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import Icon from '../components/icons'
-import InputWithButton from '../components/input/InputWithButton'
-import Table from '../components/table/Table'
-import Tip from '../components/tip/Tip'
-import useStorage from '../hooks/useStorage'
-import { DOMAIN_STORAGE_KEY } from '../../DomainRepository'
+import Icon from '../components/icons';
+import InputWithButton from '../components/input/InputWithButton';
+import Table from '../components/table/Table';
+import Tip from '../components/tip/Tip';
+import useStorage from '../hooks/useStorage';
+import { DOMAIN_STORAGE_KEY } from '../../DomainRepository';
 
 export default function DomainsPage({ setPage }) {
-  const [domains, setDomains] = useStorage(DOMAIN_STORAGE_KEY, [])
+  const [domains, setDomains] = useStorage(DOMAIN_STORAGE_KEY, []);
 
   return (
     <StyledDomainsPage>
       <InvisibleAriaElement as="h1">Domains Input Page</InvisibleAriaElement>
       <StyledSmallHeader htmlFor="domain-input">Domain</StyledSmallHeader>
       <StyledInputWithButton
-        btnClick={input => {
+        btnClick={(input) => {
           if (!domains.includes(input)) {
-            setDomains([input, ...domains])
-            return true
+            setDomains([input, ...domains]);
+            return true;
           }
         }}
         placeholder="Enter Domains"
@@ -31,15 +31,15 @@ export default function DomainsPage({ setPage }) {
       {domains.length > 0 ? (
         <Table
           entries={domains}
-          handleDelete={domain =>
-            setDomains(domains.filter(elem => elem !== domain))
+          handleDelete={(domain) =>
+            setDomains(domains.filter((elem) => elem !== domain))
           }
           handleSave={(idx, domain) => {
             if (!domains.includes(domain)) {
               setDomains(
                 domains.map((elem, _idx) => (idx === _idx ? domain : elem))
-              )
-              return true
+              );
+              return true;
             }
           }}
         />
@@ -52,17 +52,16 @@ export default function DomainsPage({ setPage }) {
       )}
       <StyledInfoIcon
         onClick={() => setPage('InfoPage')}
-        aria-label="Go to info page"
-      >
+        aria-label="Go to info page">
         <Icon name="Info" />
       </StyledInfoIcon>
     </StyledDomainsPage>
-  )
+  );
 }
 
 DomainsPage.propTypes = {
-  setPage: PropTypes.func.isRequired
-}
+  setPage: PropTypes.func.isRequired,
+};
 
 const StyledDomainsPage = styled.div`
   background: #eeeeee;
@@ -71,7 +70,7 @@ const StyledDomainsPage = styled.div`
   flex-direction: column;
   align-items: stretch;
   padding: 32px;
-`
+`;
 
 const StyledSmallHeader = styled.label`
   text-transform: uppercase;
@@ -80,16 +79,16 @@ const StyledSmallHeader = styled.label`
   letter-spacing: 0.035em;
   margin-bottom: 8px;
   color: #707070;
-`
+`;
 
 const StyledInputWithButton = styled(InputWithButton)`
   margin-bottom: 16px;
-`
+`;
 
 const StyledIcon = styled(Icon)`
   line-height: 0;
   font-size: 1rem;
-`
+`;
 
 const StyledInfoIcon = styled.button`
   background: none;
@@ -103,7 +102,7 @@ const StyledInfoIcon = styled.button`
   cursor: pointer;
   font-size: 1rem;
   padding: 0;
-`
+`;
 
 const InvisibleAriaElement = styled.div`
   border: 0;
@@ -114,4 +113,4 @@ const InvisibleAriaElement = styled.div`
   padding: 0;
   position: absolute;
   width: 1px;
-`
+`;

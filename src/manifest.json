@@ -18,12 +18,12 @@
   "content_scripts": [
     {
       "matches": ["*://*.google.com/search?*"],
-      "js": ["./content/index.js"],
+      "js": ["./browser-polyfill.min.js", "./content/index.js"],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "scripts": ["./background/index.js"]
+    "scripts": ["./browser-polyfill.min.js", "./background/index.js"]
   },
   "browser_specific_settings": {
     "gecko": {

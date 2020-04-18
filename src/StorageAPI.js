@@ -6,12 +6,12 @@ export function set(items) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.set(items, () => {
       if (chrome.runtime.lastError) {
-        reject(chrome.runtime.lastError.string)
+        reject(chrome.runtime.lastError.string);
       } else {
-        resolve(items)
+        resolve(items);
       }
-    })
-  })
+    });
+  });
 }
 
 /*
@@ -20,12 +20,12 @@ export function set(items) {
  */
 export function get(keys) {
   return new Promise((resolve, reject) => {
-    chrome.storage.sync.get(keys, res => {
+    chrome.storage.sync.get(keys, (res) => {
       if (chrome.runtime.lastError) {
-        reject(chrome.runtime.lastError.string)
+        reject(chrome.runtime.lastError.string);
       } else {
-        resolve(res)
+        resolve(res);
       }
-    })
-  })
+    });
+  });
 }

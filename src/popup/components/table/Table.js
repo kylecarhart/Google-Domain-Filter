@@ -1,7 +1,7 @@
-import React from 'react'
-import TableEntry from './TableEntry'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from 'react';
+import TableEntry from './TableEntry';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function Table({ entries, handleDelete, handleSave }) {
   return (
@@ -11,19 +11,19 @@ export default function Table({ entries, handleDelete, handleSave }) {
           key={entry}
           initialInputText={entry}
           handleDelete={() => handleDelete(entry)}
-          handleSave={text => handleSave(idx, text)}
+          handleSave={(text) => handleSave(idx, text)}
           idx={idx}
         />
       ))}
     </StyledTable>
-  )
+  );
 }
 
 Table.propTypes = {
   entries: PropTypes.arrayOf(PropTypes.string),
   handleDelete: PropTypes.func,
-  handleSave: PropTypes.func
-}
+  handleSave: PropTypes.func,
+};
 
 const StyledTable = styled.ul`
   list-style: none;
@@ -32,4 +32,4 @@ const StyledTable = styled.ul`
   border-radius: 5px;
   overflow: auto;
   padding: 0;
-`
+`;

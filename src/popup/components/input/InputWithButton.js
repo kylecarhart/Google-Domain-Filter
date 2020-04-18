@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import Input from '../input/Input'
+import Input from '../input/Input';
 
-import { testUrl } from '../../../utils'
+import { testUrl } from '../../../utils';
 
 export default function InputWithButton({
   initialValue = '',
@@ -12,22 +12,22 @@ export default function InputWithButton({
   btnClick,
   className,
   inputName,
-  inputId
+  inputId,
 }) {
-  const [inputValue, setInputValue] = useState(initialValue)
-  const isValid = testUrl(inputValue)
+  const [inputValue, setInputValue] = useState(initialValue);
+  const isValid = testUrl(inputValue);
 
   const _btnClick = () => {
     if (isValid && btnClick(inputValue)) {
-      setInputValue('')
+      setInputValue('');
     }
-  }
+  };
 
   return (
     <StyledInputWithButton className={className}>
       <StyledInput
         value={inputValue}
-        onChange={value => setInputValue(value)}
+        onChange={(value) => setInputValue(value)}
         placeholder={placeholder}
         handleEnterKey={() => _btnClick()}
         id={inputId}
@@ -35,7 +35,7 @@ export default function InputWithButton({
       />
       <StyledButton onClick={() => _btnClick()}>Add</StyledButton>
     </StyledInputWithButton>
-  )
+  );
 }
 
 InputWithButton.propTypes = {
@@ -44,21 +44,21 @@ InputWithButton.propTypes = {
   btnClick: PropTypes.func,
   className: PropTypes.string,
   inputId: PropTypes.string.isRequired,
-  inputName: PropTypes.string.isRequired
-}
+  inputName: PropTypes.string.isRequired,
+};
 
 const StyledInputWithButton = styled.div`
   display: flex;
   justify-content: stretch;
   align-items: stretch;
-`
+`;
 const StyledInput = styled(Input)`
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 5px 0px 0px 5px;
   outline: none;
   border: none;
-`
+`;
 
 const StyledButton = styled.button`
   background-color: #4f86f0;
@@ -81,4 +81,4 @@ const StyledButton = styled.button`
   &:active {
     background-color: #2163e4;
   }
-`
+`;

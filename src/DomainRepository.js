@@ -1,13 +1,13 @@
-import { get } from './StorageAPI'
+import { get } from './StorageAPI';
 
-export const DOMAIN_STORAGE_KEY = 'domains'
+export const DOMAIN_STORAGE_KEY = 'domains';
 
 export function getDomains() {
   return get(DOMAIN_STORAGE_KEY).then(
-    res => res[DOMAIN_STORAGE_KEY],
-    rej => {
-      console.log(rej)
-      return []
+    (res) => res[DOMAIN_STORAGE_KEY],
+    (rej) => {
+      console.log(rej);
+      return [];
     }
-  )
+  );
 }

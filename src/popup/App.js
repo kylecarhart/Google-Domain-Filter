@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import DomainsPage from './pages/DomainsPage'
-import InfoPage from './pages/InfoPage'
+import React, { useState } from 'react';
+import DomainsPage from './pages/DomainsPage';
+import InfoPage from './pages/InfoPage';
 
 export default function App() {
-  const [page, setPage] = useState('DomainsPage')
+  const [page, setPage] = useState('DomainsPage');
 
   switch (page) {
     case 'DomainsPage':
-      return <DomainsPage setPage={setPage} />
+      return <DomainsPage setPage={setPage} />;
     case 'InfoPage':
-      return <InfoPage setPage={setPage} />
+      return <InfoPage setPage={setPage} />;
     default:
-      return <div>Default Page</div>
+      return <div>Default Page</div>;
   }
 }
