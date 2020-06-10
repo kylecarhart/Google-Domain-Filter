@@ -10,7 +10,8 @@
   "env": {
     "es6": true,
     "webextensions": true,
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "rules": {
     "no-console": "warn",
