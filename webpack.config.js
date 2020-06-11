@@ -20,6 +20,9 @@ module.exports = (env) => {
     // Remove eval() from javascript
     devtool: 'none',
     watch: env.watch ? true : false,
+    resolve: {
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    },
     module: {
       rules: [
         // Transpile javascript and typescript ES6 -> ES5

@@ -4,23 +4,13 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
-  margin: 0;
-  width: 370px;
-  height: 430px;
-}
-
-#root {
-  height: 100%;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-input,
-button {
-  font-family: inherit;
+  font-size: inherit;
+  height: 300px;
+  width: 400px;
 }

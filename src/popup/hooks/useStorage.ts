@@ -1,28 +1,25 @@
 import { useState, useEffect } from 'react';
-import { get, set } from '../../StorageAPI';
 
-/*
- * Hook for persisting data to chrome storage
- * @param {string} key
- * @param {*} initialValue
- */
-export default function useStorage(key, initialValue) {
+export default function useStorage(
+  key: string,
+  initialValue: any
+): [any, Function] {
   const [storedValue, setStoredValue] = useState(initialValue);
 
   useEffect(() => {
-    get(key).then((res) => {
-      if (res[key]) {
-        setStoredValue(res[key]);
+    browser.storage.sync.get(key).then((storage) => {
+      if (storage[key]) {
+        setStoredValue(storage[key]);
       }
     });
   }, [key]);
 
-  const setValue = (value) => {
+  const setValue = async (value: any) => {
     try {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value; // allows for lazy state initialization
+      await browser.storage.sync.set({ [key]: valueToStore });
       setStoredValue(valueToStore);
-      set({ [key]: valueToStore });
     } catch (error) {
       console.log(error);
     }

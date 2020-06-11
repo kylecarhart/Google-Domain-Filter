@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --env.mode=development --env.watch",
+    "watch": "npm run clean && webpack --env.mode=development --env.watch",
     "build": "webpack --env.mode=production",
     "dev": "web-ext run -t firefox-desktop --firefox=firefoxdeveloperedition -t chromium -u google.com --source-dir ./dist/",
     "clean": "rimraf dist"
@@ -17,6 +17,9 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
     "@types/firefox-webext-browser": "^70.0.1",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/styled-components": "^5.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "copy-webpack-plugin": "^5.1.1",
@@ -34,6 +37,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
