@@ -1,4 +1,4 @@
-import { QUERY_PARAM_NAME, STORAGE_DOMAINS_KEY } from '../common/constants';
+import { QUERY_PARAM_NAME, STORAGE_DOMAINS_KEY } from '../core/constants';
 
 // Listen for changes to domains
 browser.storage.onChanged.addListener((change) => {
@@ -6,10 +6,10 @@ browser.storage.onChanged.addListener((change) => {
     return;
   }
 
-  let domains: string[] = change[STORAGE_DOMAINS_KEY].newValue;
+  let domains = change[STORAGE_DOMAINS_KEY].newValue;
   // Get all links on the page related to a google search
-  document.querySelectorAll('.g .r > a').forEach((node: HTMLAnchorElement) => {
-    const closestNode: HTMLElement = node.closest('.g');
+  document.querySelectorAll('.g .r > a').forEach((node) => {
+    const closestNode = node.closest('.g');
     if (domains.length > 0) {
       for (let i = 0; i < domains.length; i++) {
         if (node.href.includes(domains[i])) {
@@ -33,7 +33,7 @@ const observer = new MutationObserver(function (mutations) {
 
   for (let i = 0; i < mutations.length; i++) {
     for (let j = 0; j < mutations[i].addedNodes.length; j++) {
-      let node: HTMLElement = mutations[i].addedNodes[j];
+      let node = mutations[i].addedNodes[j];
 
       // Fix search input
       if (node.data === ' ') {
@@ -70,7 +70,7 @@ const observer = new MutationObserver(function (mutations) {
   }
 
   // Given an array of domains, filter the domains out of the string (preceded by '-site:')
-  function filterDomainsFromString(string: string, domains: string[]): string {
+  function filterDomainsFromString(string, domains) {
     return string
       .split(' ')
       .filter((word) => !domains.includes(word.replace('-site:', '')))

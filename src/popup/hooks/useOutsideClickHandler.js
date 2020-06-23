@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
-export default function useOutsideClickHandler(
-  ref,
-  disabled: boolean,
-  callback: Function
-) {
+export default function useOutsideClickHandler(ref, disabled, callback) {
   useEffect(() => {
     const handleClick = (e) => {
       if (!ref.current.contains(e.target) && !disabled) {

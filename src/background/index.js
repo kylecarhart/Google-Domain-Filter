@@ -1,4 +1,4 @@
-import { STORAGE_DOMAINS_KEY, QUERY_PARAM_NAME } from '../common/constants';
+import { STORAGE_DOMAINS_KEY, QUERY_PARAM_NAME } from '../core/constants';
 
 (async () => {
   let domains = await browser.storage.sync
@@ -21,11 +21,9 @@ import { STORAGE_DOMAINS_KEY, QUERY_PARAM_NAME } from '../common/constants';
       const params = url.searchParams;
 
       // Add the sites to the query if it doesn't contain them already
-      if (
-        !domains.every((domain: string) => params.get('q').includes(domain))
-      ) {
+      if (!domains.every((domain) => params.get('q').includes(domain))) {
         const domainString = domains
-          .map((domain: string) => `-site:${domain}`)
+          .map((domain) => `-site:${domain}`)
           .join(' ');
         params.set('q', `${params.get('q')} ${domainString}`);
       }
@@ -48,14 +46,10 @@ import { STORAGE_DOMAINS_KEY, QUERY_PARAM_NAME } from '../common/constants';
   /**
    *  Update domains when storage domains change
    */
-  browser.storage.onChanged.addListener((changes: Object) => {
+  browser.storage.onChanged.addListener((changes) => {
     if (!changes[STORAGE_DOMAINS_KEY]) {
       return;
     }
     domains = changes[STORAGE_DOMAINS_KEY].newValue;
   });
 })();
-
-function asdf(a: string) {}
-
-asdf(1);

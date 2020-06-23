@@ -8,7 +8,7 @@ module.exports = (env) => {
     mode: env.mode,
     // One entry point for each part of an extension
     entry: {
-      background: './src/background/index.ts',
+      background: './src/background/',
       content: './src/content',
       popup: './src/popup/',
     },
@@ -21,13 +21,13 @@ module.exports = (env) => {
     devtool: 'none',
     watch: env.watch ? true : false,
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      extensions: ['.js', '.jsx'],
     },
     module: {
       rules: [
-        // Transpile javascript and typescript ES6 -> ES5
+        // Transpile javascript ES6 -> ES5
         {
-          test: /\.(jsx?|tsx?)$/,
+          test: /\.(jsx?)$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',

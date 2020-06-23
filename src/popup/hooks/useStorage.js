@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useStorage(
-  key: string,
-  initialValue: any
-): [any, Function] {
+export default function useStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(initialValue);
 
   useEffect(() => {
@@ -14,7 +11,7 @@ export default function useStorage(
     });
   }, [key]);
 
-  const setValue = async (value: any) => {
+  const setValue = async (value) => {
     try {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value; // allows for lazy state initialization
