@@ -7,6 +7,8 @@
     "watch": "npm run clean && webpack --env.mode=development --env.watch",
     "build": "webpack --env.mode=production",
     "dev": "web-ext run -t firefox-desktop --firefox=firefoxdeveloperedition -t chromium -u google.com --source-dir ./dist/",
+    "dev:firefox": "web-ext run -t firefox-desktop --firefox=firefoxdeveloperedition -u google.com --source-dir ./dist/",
+    "dev:chrome": "web-ext run -t chromium -u google.com --source-dir ./dist/",
     "clean": "rimraf dist"
   },
   "author": "Kyle Carhart",
