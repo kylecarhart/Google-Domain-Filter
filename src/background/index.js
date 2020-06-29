@@ -1,11 +1,8 @@
 import { STORAGE_DOMAINS_KEY, QUERY_PARAM_NAME } from '../core/constants';
+import { FilterListStorage } from '../core/storage';
 
 (async () => {
-  let domains = await browser.storage.sync
-    .get(STORAGE_DOMAINS_KEY)
-    .then((storage) => {
-      return storage[STORAGE_DOMAINS_KEY];
-    });
+  let domains = FilterListStorage.getAllDomains();
 
   /**
    * Listen for google requests and redirect
