@@ -9,12 +9,7 @@ const NavBar = () => {
     <Nav>
       <NavButton
         text="Blacklist"
-        tipText={
-          <HelpText>
-            Your <b>blacklist</b> will remove search results containing domains
-            in this list.
-          </HelpText>
-        }
+        tipText="Remove search results containing domains in this list."
         selected={selected === 'Blacklist'}
         onClick={(selection) => {
           setSelected(selection);
@@ -22,13 +17,8 @@ const NavBar = () => {
       />
       <NavButton
         text="Preference list"
+        tipText="Prioritize search results from domains in this list."
         selected={selected === 'Preference list'}
-        tipText={
-          <HelpText>
-            Your <b>preference list</b> will prioritize search results from
-            domains in this list.
-          </HelpText>
-        }
         onClick={(selection) => {
           setSelected(selection);
         }}
@@ -41,8 +31,4 @@ const Nav = styled.nav`
   display: flex;
 `;
 
-const HelpText = styled.span`
-  color: white;
-  font-size: 0.75rem;
-`;
 export default NavBar;

@@ -41,6 +41,14 @@ const Button = styled.button`
     props.selected
       ? 'inset 0 -2px 0 0 #318BF5, 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);'
       : 'inset 0px 0px 0px 1px #DBDBDB'};
+
+  &:hover {
+    background: ${(props) => (props.selected ? '' : '#f2f2f2')};
+  }
+
+  &:active {
+    background: ${(props) => (props.selected ? '' : '#e8e8e8')};
+  }
 `;
 
 const Text = styled.span`

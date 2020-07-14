@@ -8,13 +8,9 @@ function NavTip({ text }) {
   return (
     <StyledTippy
       content={text}
-      delay={300}
-      render={(attrs) => (
-        <TipBox className="box" tabIndex="-1" {...attrs}>
-          My tippy box
-          <Arrow data-popper-arrow="" />
-        </TipBox>
-      )}>
+      delay={[300, 0]}
+      arrow={true}
+      placement="bottom">
       <Icon />
     </StyledTippy>
   );
@@ -25,14 +21,33 @@ NavTip.propTypes = {
 };
 
 const StyledTippy = styled(Tippy)`
-  background: rgba(0, 0, 0, 0.75);
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
   border-radius: 3px;
-  padding: 8px 16px;
-  width: 200px;
+  font-size: 14px;
+  line-height: 1.4;
+  outline: 0;
+  width: 190px;
+  padding: 6px 14px;
 
-  /* Styling the arrow for different placements */
-  &[data-placement^='top'] > .tippy-arrow::before {
-    border-top-color: purple;
+  .tippy-arrow {
+    top: 0;
+    width: 16px;
+    height: 16px;
+    color: rgba(0, 0, 0, 0.75);
+
+    &:before {
+      content: '';
+      position: absolute;
+      border-color: transparent;
+      border-style: solid;
+      top: -7px;
+      left: 0;
+      border-width: 0 8px 8px;
+      border-bottom-color: initial;
+      transform-origin: center bottom;
+    }
   }
 `;
 
@@ -40,33 +55,6 @@ const Icon = styled(SvgHelpCircle)`
   &:focus {
     outline: none;
   }
-`;
-
-const Arrow = styled.div`
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  z-index: -1;
-
-  &::before {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    z-index: -1;
-    content: '';
-    transform: rotate(45deg);
-    background: #333;
-    bottom: 22px;
-  }
-`;
-
-const TipBox = styled.div`
-  background: #333;
-  color: white;
-  font-weight: bold;
-  padding: 4px 8px;
-  font-size: 13px;
-  border-radius: 4px;
 `;
 
 export default NavTip;

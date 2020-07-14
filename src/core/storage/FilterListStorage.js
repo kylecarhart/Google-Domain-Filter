@@ -1,10 +1,10 @@
-export const FILTER_LIST_STORAGE_KEY = 'preference_list';
+export const FILTER_LIST_STORAGE_KEY = 'filter_list';
 
 async function getAllDomains() {
   try {
     let storage = await browser.storage.sync.get(FILTER_LIST_STORAGE_KEY);
     let domains = storage[FILTER_LIST_STORAGE_KEY];
-    return domains;
+    return domains ? domains : [];
   } catch (error) {
     console.log(error);
   }
