@@ -41,6 +41,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "reset-css": "^5.0.1",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "validator": "^13.1.1"
   }
 }

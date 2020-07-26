@@ -1,12 +1,15 @@
-import { STORAGE_DOMAINS_KEY, QUERY_PARAM_NAME } from '../core/constants';
-import { FilterListStorage } from '../core/storage';
+(async function () {
+  const storage = await browser.storage.sync.get('domains');
+  let domains = storage.domains || []; // default to empty array
 
-(async () => {
-  let domains = FilterListStorage.getAllDomains();
+  // Update domains when storage domains change
+  browser.storage.onChanged.addListener((storage) => {
+    if (storage.domains) {
+      domains = storage.domains.newValue;
+    }
+  });
 
-  /**
-   * Listen for google requests and redirect
-   */
+  // Listen for google requests and redirect
   browser.webRequest.onBeforeRequest.addListener(
     (details) => {
       // If there are no domains, don't bother redirecting
@@ -16,20 +19,12 @@ import { FilterListStorage } from '../core/storage';
 
       const url = new URL(details.url);
       const params = url.searchParams;
+      const filterString = domains.map((domain) => `-site:${domain}`).join(' ');
 
       // Add the sites to the query if it doesn't contain them already
+      // This avoids the infinite request loop.
       if (!domains.every((domain) => params.get('q').includes(domain))) {
-        const domainString = domains
-          .map((domain) => `-site:${domain}`)
-          .join(' ');
-        params.set('q', `${params.get('q')} ${domainString}`);
-      }
-
-      // Pass the domains along in a separate query param if the url doesn't already have them
-      if (!params.get(QUERY_PARAM_NAME)) {
-        params.set(QUERY_PARAM_NAME, domains.join(' '));
-      } else {
-        return; // Escape the redirect otherwise
+        params.set('q', `${params.get('q')} ${filterString}`);
       }
 
       return {
@@ -39,14 +34,4 @@ import { FilterListStorage } from '../core/storage';
     { urls: ['*://*.google.com/search?*'] },
     ['blocking']
   );
-
-  /**
-   *  Update domains when storage domains change
-   */
-  browser.storage.onChanged.addListener((changes) => {
-    if (!changes[STORAGE_DOMAINS_KEY]) {
-      return;
-    }
-    domains = changes[STORAGE_DOMAINS_KEY].newValue;
-  });
 })();

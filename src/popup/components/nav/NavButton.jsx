@@ -29,7 +29,7 @@ const Button = styled.button`
   justify-content: center;
   flex: 1;
   text-align: center;
-  font-size: 0.875rem;
+  font-size: 1rem;
   padding: 0.75rem 0;
   cursor: pointer;
   border-radius: 0;

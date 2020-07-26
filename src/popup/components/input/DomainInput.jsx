@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from '../button';
-import { FilterListStorage } from '../../../core/storage';
 
-function DomainInput(props) {
+function DomainInput({ addDomain }) {
   const [inputText, setInputText] = useState('');
 
   return (
@@ -18,7 +17,7 @@ function DomainInput(props) {
       />
       <Button
         onClick={() => {
-          FilterListStorage.addDomain(inputText);
+          addDomain(inputText);
         }}>
         Add
       </Button>
@@ -26,7 +25,9 @@ function DomainInput(props) {
   );
 }
 
-DomainInput.propTypes = {};
+DomainInput.propTypes = {
+  addDomain: PropTypes.func.isRequired,
+};
 
 const Input = styled.input`
   color: #333;
@@ -34,7 +35,7 @@ const Input = styled.input`
   border: none;
   border-radius: 2px;
   background-color: white;
-  font-size: 12px;
+  font-size: 14px;
   padding: 6px 16px;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
 

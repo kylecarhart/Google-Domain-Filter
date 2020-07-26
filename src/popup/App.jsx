@@ -1,14 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
+import useStorage from './hooks/useStorage';
 import { NavBar } from './components/nav';
 import { DomainInputBar } from './components/input';
-import styled from 'styled-components';
+import { List } from './components/list';
 
 export default function App() {
+  const [domains, setDomains] = useStorage('domains', []);
+
   return (
     <>
       <NavBar />
       <Main>
-        <DomainInputBar />
+        <DomainInputBar
+          addDomain={(domain) => {
+            if (!domains.includes(domain)) {
+              setDomains([...domains, domain]);
+            }
+          }}
+        />
+        <List domains={domains} />
       </Main>
     </>
   );
