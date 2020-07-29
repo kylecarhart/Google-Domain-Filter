@@ -6,6 +6,13 @@ import { Button } from '../button';
 function DomainInput({ addDomain }) {
   const [inputText, setInputText] = useState('');
 
+  const handleAddDomain = () => {
+    const wasAdded = !!addDomain(inputText);
+    if (wasAdded) {
+      setInputText('');
+    }
+  };
+
   return (
     <div>
       <Input
@@ -14,10 +21,15 @@ function DomainInput({ addDomain }) {
         onChange={(e) => {
           setInputText(e.target.value);
         }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleAddDomain();
+          }
+        }}
       />
       <Button
         onClick={() => {
-          addDomain(inputText);
+          handleAddDomain();
         }}>
         Add
       </Button>

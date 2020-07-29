@@ -4,22 +4,43 @@ import useStorage from './hooks/useStorage';
 import { NavBar } from './components/nav';
 import { DomainInputBar } from './components/input';
 import { List } from './components/list';
+import validator from 'validator';
 
 export default function App() {
   const [domains, setDomains] = useStorage('domains', []);
+
+  const addDomain = (domain) => {
+    if (!domains.includes(domain) && validator.isFQDN(domain)) {
+      return setDomains([...domains, domain]);
+    }
+  };
+
+  const deleteDomain = (domain) => {
+    setDomains(domains.filter((_domain) => _domain !== domain));
+  };
+
+  const editDomain = (fromDomain, toDomain) => {
+    setDomains(
+      domains.map((domain) => {
+        if (domain === fromDomain) {
+          return toDomain;
+        } else {
+          return domain;
+        }
+      })
+    );
+  };
 
   return (
     <>
       <NavBar />
       <Main>
-        <DomainInputBar
-          addDomain={(domain) => {
-            if (!domains.includes(domain)) {
-              setDomains([...domains, domain]);
-            }
-          }}
+        <DomainInputBar addDomain={addDomain} />
+        <List
+          domains={domains}
+          deleteDomain={deleteDomain}
+          editDomain={editDomain}
         />
-        <List domains={domains} />
       </Main>
     </>
   );
