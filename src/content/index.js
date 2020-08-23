@@ -1,15 +1,15 @@
 function storageChangeListener(storage) {
-  let domains = [];
-  if (storage.domains) {
-    domains = storage.domains.newValue;
+  let filterList = [];
+  if (storage.filterList) {
+    filterList = storage.filterList.newValue;
   }
 
   // Get all links on the page related to a google search
   document.querySelectorAll('.g .r > a').forEach((node) => {
     const closestNode = node.closest('.g');
 
-    for (let i = 0; i < domains.length; i++) {
-      if (node.href.includes(domains[i])) {
+    for (let i = 0; i < filterList.length; i++) {
+      if (node.href.includes(filterList[i])) {
         closestNode.style.display = 'none';
         break;
       }
@@ -43,14 +43,14 @@ function handleMutations(mutations, filterString) {
 
 // Start google domain filtering script
 (async function () {
-  const storage = await browser.storage.sync.get('domains');
-  const domains = storage.domains || [];
+  const storage = await browser.storage.sync.get('filterList');
+  const filterList = storage.filterList || [];
 
-  if (domains.length === 0) {
+  if (filterList.length === 0) {
     return; // No domains to filter, break out early.
   }
 
-  const filterString = domains.map((domain) => `-site:${domain}`).join(' ');
+  const filterString = filterList.map((domain) => `-site:${domain}`).join(' ');
 
   // Remove filterString from title
   const title = document.querySelector('title');

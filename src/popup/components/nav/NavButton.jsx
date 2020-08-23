@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import NavTip from './NavTip';
 
-function NavButton({ text, tipText, selected, onClick }) {
+function NavButton({ text, navId, tipText, selected, setSelected }) {
   return (
     <Button
       selected={selected}
       onClick={() => {
-        onClick(text);
+        setSelected(navId);
       }}>
       <Text>{text}</Text>
       <NavTip text={tipText} />
@@ -18,9 +18,10 @@ function NavButton({ text, tipText, selected, onClick }) {
 
 NavButton.propTypes = {
   text: PropTypes.string.isRequired,
+  navId: PropTypes.string.isRequired,
   tipText: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
+  setSelected: PropTypes.func.isRequired,
 };
 
 const Button = styled.button`

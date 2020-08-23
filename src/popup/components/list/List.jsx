@@ -2,19 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ListItem from './ListItem';
+import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 
-function List({ domains, deleteDomain, editDomain }) {
+function List({
+  domains,
+  deleteDomain,
+  editDomain,
+  reorderDomains,
+  isDraggable,
+}) {
+  function onDragEnd(result) {
+    console.log(result);
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    } else if (destination.index === source.index) {
+      return;
+    }
+
+    reorderDomains(draggableId, source, destination);
+  }
+
   return (
-    <StyledList>
-      {domains.map((domain) => (
-        <ListItem
-          key={domain}
-          domain={domain}
-          deleteDomain={deleteDomain}
-          editDomain={editDomain}
-        />
-      ))}
-    </StyledList>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId={'list'}>
+        {(provided) => (
+          <StyledList ref={provided.innerRef} {...provided.droppableProps}>
+            {domains.map((domain, idx) => (
+              <ListItem
+                key={domain}
+                index={idx}
+                domain={domain}
+                deleteDomain={deleteDomain}
+                editDomain={editDomain}
+                isDraggable={isDraggable}
+              />
+            ))}
+            {provided.placeholder}
+          </StyledList>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }
 
@@ -22,6 +51,8 @@ List.propTypes = {
   domains: PropTypes.arrayOf(PropTypes.string),
   deleteDomain: PropTypes.func.isRequired,
   editDomain: PropTypes.func.isRequired,
+  reorderDomains: PropTypes.func.isRequired,
+  isDraggable: PropTypes.bool.isRequired,
 };
 
 const StyledList = styled.ul`

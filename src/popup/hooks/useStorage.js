@@ -15,10 +15,12 @@ export default function useStorage(key, initialValue) {
     try {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value; // allows for lazy state initialization
-      await browser.storage.sync.set({ [key]: valueToStore });
       setStoredValue(valueToStore);
+      await browser.storage.sync.set({ [key]: valueToStore });
     } catch (error) {
       console.log(error);
+      setStoredValue(storedValue);
+      browser.storage.sync.set({ [key]: value });
     }
   };
 
