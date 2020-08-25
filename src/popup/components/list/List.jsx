@@ -9,7 +9,7 @@ function List({
   deleteDomain,
   editDomain,
   reorderDomains,
-  isDraggable,
+  isDragDisabled,
 }) {
   function onDragEnd(result) {
     console.log(result);
@@ -36,7 +36,7 @@ function List({
                 domain={domain}
                 deleteDomain={deleteDomain}
                 editDomain={editDomain}
-                isDraggable={isDraggable}
+                isDragDisabled={isDragDisabled}
               />
             ))}
             {provided.placeholder}
@@ -52,7 +52,7 @@ List.propTypes = {
   deleteDomain: PropTypes.func.isRequired,
   editDomain: PropTypes.func.isRequired,
   reorderDomains: PropTypes.func.isRequired,
-  isDraggable: PropTypes.bool.isRequired,
+  isDragDisabled: PropTypes.bool.isRequired,
 };
 
 const StyledList = styled.ul`

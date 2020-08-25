@@ -1,5 +1,10 @@
+import React from 'react';
 import ListPage from './ListPage';
 
-const PreferenceListPage = ListPage('preferenceList', true);
+function PreferenceListPage() {
+  return <ListPage storageKey="preferenceList" isDragDisabled={false} />;
+}
+
+PreferenceListPage.propTypes = {};
 
 export default PreferenceListPage;

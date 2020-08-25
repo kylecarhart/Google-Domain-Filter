@@ -1,22 +1,24 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { SvgPencil, SvgClose, SvgTrash, SvgSave } from '../../icons';
+import { DragHandleIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
-
-function ListItem({ domain, deleteDomain, editDomain, index, isDraggable }) {
+function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled }) {
   const [inputText, setInputText] = useState(domain);
   const [isEditing, setIsEditing] = useState(false);
 
   const inputRef = useRef();
 
   return (
-    <Draggable draggableId={domain} index={index} isDragDisabled={!isDraggable}>
-      {(provided) => (
+    <Draggable
+      draggableId={domain}
+      index={index}
+      isDragDisabled={isDragDisabled}>
+      {(provided, snapshot) => (
         <StyledListItem
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}>
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging}>
           <Input
             ref={inputRef}
             value={inputText}
@@ -30,38 +32,11 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDraggable }) {
               }
             }}
           />
-          <IconGroup>
-            {isEditing ? (
-              <IconGroup>
-                <Icon
-                  onClick={() => {
-                    editDomain(domain, inputText);
-                  }}>
-                  <SvgSave />
-                </Icon>
-                <Icon
-                  onClick={() => {
-                    setIsEditing(false);
-                  }}>
-                  <SvgClose />
-                </Icon>
-              </IconGroup>
-            ) : (
-              <Icon
-                onClick={() => {
-                  setIsEditing(true);
-                  inputRef.current.focus();
-                }}>
-                <SvgPencil />
-              </Icon>
-            )}
-            <Icon
-              onClick={() => {
-                deleteDomain(domain);
-              }}>
-              <SvgTrash />
-            </Icon>
-          </IconGroup>
+          {!isDragDisabled && (
+            <DragHandle {...provided.dragHandleProps}>
+              <DragHandleIcon />
+            </DragHandle>
+          )}
         </StyledListItem>
       )}
     </Draggable>
@@ -73,7 +48,7 @@ ListItem.propTypes = {
   deleteDomain: PropTypes.func.isRequired,
   editDomain: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  isDraggable: PropTypes.bool.isRequired,
+  isDragDisabled: PropTypes.bool.isRequired,
 };
 
 const StyledListItem = styled.li`
@@ -83,11 +58,13 @@ const StyledListItem = styled.li`
   color: #333;
   font-size: 14px;
   padding: 8px 16px;
-  border-bottom: 1px solid #f7f7f7;
+  border-bottom: ${(props) => (props.isDragging ? '' : '1px solid #f7f7f7')};
+  background: #fff;
+  box-shadow: ${(props) =>
+    props.isDragging ? '0px 0px 15px rgba(0,0,0,.1)' : 'none'};
   &:last-child {
     border: none;
   }
-  background: #fff;
 `;
 
 const Input = styled.input`
@@ -97,14 +74,8 @@ const Input = styled.input`
   border: none;
 `;
 
-const IconGroup = styled.div`
-  display: flex;
-`;
-
-const Icon = styled.div`
-  margin: 0px 8px;
-  cursor: pointer;
-  color: #ababab;
+const DragHandle = styled.div`
+  color: #bbb;
 `;
 
 export default ListItem;
