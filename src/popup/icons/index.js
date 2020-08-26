@@ -1,15 +1,5 @@
-import SvgHelpCircle from './SvgHelpCircle';
-import SvgClose from './SvgClose';
-import SvgPencil from './SvgPencil';
-import SvgTrash from './SvgTrash';
-import SvgSave from './SvgSave';
+import HelpCircleIcon from './HelpCircleIcon';
 import DragHandleIcon from './DragHandleIcon';
+import MoreIcon from './MoreIcon';
 
-export {
-  SvgHelpCircle,
-  SvgClose,
-  SvgPencil,
-  SvgTrash,
-  SvgSave,
-  DragHandleIcon,
-};
+export { HelpCircleIcon, DragHandleIcon, MoreIcon };

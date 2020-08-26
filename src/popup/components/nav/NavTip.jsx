@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react';
 import styled from 'styled-components';
-import { SvgHelpCircle } from '../../icons';
+import { HelpCircleIcon } from '../../icons';
 
 function NavTip({ text }) {
   return (
@@ -51,7 +51,7 @@ const StyledTippy = styled(Tippy)`
   }
 `;
 
-const Icon = styled(SvgHelpCircle)`
+const Icon = styled(HelpCircleIcon)`
   &:focus {
     outline: none;
   }

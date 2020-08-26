@@ -27,7 +27,7 @@ function List({
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={'list'}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
             {domains.map((domain, idx) => (
               <ListItem
@@ -37,6 +37,7 @@ function List({
                 deleteDomain={deleteDomain}
                 editDomain={editDomain}
                 isDragDisabled={isDragDisabled}
+                isDraggingOver={snapshot.isDraggingOver}
               />
             ))}
             {provided.placeholder}
@@ -58,7 +59,7 @@ List.propTypes = {
 const StyledList = styled.ul`
   padding: 0;
   margin: 8px 0px;
-  border-radius: 2px;
+  border-radius: 3px;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
   height: 190px;
   overflow-y: scroll;

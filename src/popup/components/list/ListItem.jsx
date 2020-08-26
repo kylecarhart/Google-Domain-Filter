@@ -1,11 +1,19 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DragHandleIcon } from '../../icons';
+import { DragHandleIcon, MoreIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
-function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled }) {
+function ListItem({
+  domain,
+  deleteDomain,
+  editDomain,
+  index,
+  isDragDisabled,
+  isDraggingOver,
+}) {
   const [inputText, setInputText] = useState(domain);
   const [isEditing, setIsEditing] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const inputRef = useRef();
 
@@ -18,7 +26,13 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled }) {
         <StyledListItem
           {...provided.draggableProps}
           ref={provided.innerRef}
-          isDragging={snapshot.isDragging}>
+          isDragging={snapshot.isDragging}
+          onMouseEnter={() => {
+            setIsHovering(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovering(false);
+          }}>
           <Input
             ref={inputRef}
             value={inputText}
@@ -32,6 +46,7 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled }) {
               }
             }}
           />
+          {isHovering && !isDraggingOver && <StyledMoreIcon />}
           {!isDragDisabled && (
             <DragHandle {...provided.dragHandleProps}>
               <DragHandleIcon />
@@ -49,6 +64,7 @@ ListItem.propTypes = {
   editDomain: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   isDragDisabled: PropTypes.bool.isRequired,
+  isDraggingOver: PropTypes.bool.isRequired,
 };
 
 const StyledListItem = styled.li`
@@ -62,6 +78,7 @@ const StyledListItem = styled.li`
   background: #fff;
   box-shadow: ${(props) =>
     props.isDragging ? '0px 0px 15px rgba(0,0,0,.1)' : 'none'};
+
   &:last-child {
     border: none;
   }
@@ -76,6 +93,13 @@ const Input = styled.input`
 
 const DragHandle = styled.div`
   color: #bbb;
+`;
+
+const StyledMoreIcon = styled(MoreIcon)`
+  color: #ababab;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 8px;
 `;
 
 export default ListItem;
