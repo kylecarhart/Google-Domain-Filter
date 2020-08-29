@@ -1,4 +1,4 @@
-import useOutsideClickHandler from './useOutsideClickHandler';
+import useOutsideClick from './useOutsideClick';
 import useStorage from './useStorage';
 
-export { useOutsideClickHandler, useStorage };
+export { useOutsideClick, useStorage };

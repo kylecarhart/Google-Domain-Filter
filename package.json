@@ -35,12 +35,14 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@popperjs/core": "^2.4.4",
     "@tippyjs/react": "^4.1.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
+    "react-popper": "^2.2.3",
     "reset-css": "^5.0.1",
     "styled-components": "^4.4.1",
     "validator": "^13.1.1"

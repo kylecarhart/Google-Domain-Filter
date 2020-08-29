@@ -34,8 +34,12 @@ function List({
                 key={domain}
                 index={idx}
                 domain={domain}
-                deleteDomain={deleteDomain}
-                editDomain={editDomain}
+                deleteDomain={() => {
+                  deleteDomain(domain);
+                }}
+                editDomain={(newDomain) => {
+                  editDomain(domain, newDomain);
+                }}
                 isDragDisabled={isDragDisabled}
                 isDraggingOver={snapshot.isDraggingOver}
               />
