@@ -148,6 +148,7 @@ const Input = styled.input`
   flex: 1;
   outline: none;
   border: none;
+  height: 18px;
 `;
 
 const DragHandle = styled.div`
