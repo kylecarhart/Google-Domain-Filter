@@ -13,4 +13,9 @@ body {
   font-size: inherit;
   height: 300px;
   width: 400px;
+  overflow: auto;
+}
+
+#root {
+  height: 100%;
 }

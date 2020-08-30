@@ -18,13 +18,20 @@ export default function App() {
   };
 
   return (
-    <>
+    <AppWrapper>
       <NavBar selected={selected} setSelected={setSelected} />
-      <Main>{currentPage()}</Main>
-    </>
+      <Page>{currentPage()}</Page>
+    </AppWrapper>
   );
 }
 
-const Main = styled.main`
+const AppWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const Page = styled.div`
   padding: 24px;
+  flex: 1;
 `;

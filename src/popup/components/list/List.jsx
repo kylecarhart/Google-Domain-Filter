@@ -12,7 +12,6 @@ function List({
   isDragDisabled,
 }) {
   function onDragEnd(result) {
-    console.log(result);
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -65,8 +64,9 @@ const StyledList = styled.ul`
   margin: 8px 0px;
   border-radius: 3px;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
-  height: 190px;
-  overflow-y: scroll;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  height: 0px;
 `;
 
 export default List;

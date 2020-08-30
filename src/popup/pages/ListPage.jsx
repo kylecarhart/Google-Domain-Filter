@@ -4,6 +4,7 @@ import { useStorage } from '../hooks';
 import validator from 'validator';
 import { DomainInputBar } from '../components/input';
 import { List } from '../components/list';
+import styled from 'styled-components';
 
 function ListPage({ storageKey, isDragDisabled }) {
   const [filterList, setFilterList] = useStorage(storageKey, []);
@@ -57,7 +58,7 @@ function ListPage({ storageKey, isDragDisabled }) {
   };
 
   return (
-    <>
+    <Page>
       <DomainInputBar addDomain={addDomain} />
       <List
         domains={filterList}
@@ -66,9 +67,15 @@ function ListPage({ storageKey, isDragDisabled }) {
         reorderDomains={reorderDomains}
         isDragDisabled={isDragDisabled}
       />
-    </>
+    </Page>
   );
 }
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
 
 ListPage.propTypes = {
   storageKey: PropTypes.string.isRequired,
