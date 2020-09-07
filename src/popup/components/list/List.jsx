@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ListItem from './ListItem';
@@ -11,6 +11,8 @@ function List({
   reorderDomains,
   isDragDisabled,
 }) {
+  const [isDragging, setIsDragging] = useState(false);
+
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
@@ -21,10 +23,15 @@ function List({
     }
 
     reorderDomains(draggableId, source, destination);
+    setIsDragging(false);
+  }
+
+  function onDragStart() {
+    setIsDragging(true);
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <Droppable droppableId={'list'}>
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>

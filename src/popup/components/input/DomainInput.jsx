@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from '../button';
 
-function DomainInput({ addDomain }) {
+function DomainInput({ addDomain, ...props }) {
   const [inputText, setInputText] = useState('');
 
   const handleAddDomain = () => {
@@ -14,7 +14,7 @@ function DomainInput({ addDomain }) {
   };
 
   return (
-    <div>
+    <StyledDomainInput {...props}>
       <Input
         placeholder="Enter domain"
         value={inputText}
@@ -28,18 +28,23 @@ function DomainInput({ addDomain }) {
         }}
       />
       <Button
+        type="primary"
         onClick={() => {
           handleAddDomain();
         }}>
         Add
       </Button>
-    </div>
+    </StyledDomainInput>
   );
 }
 
 DomainInput.propTypes = {
   addDomain: PropTypes.func.isRequired,
 };
+
+const StyledDomainInput = styled.div`
+  display: flex;
+`;
 
 const Input = styled.input`
   color: #333;
@@ -50,6 +55,8 @@ const Input = styled.input`
   font-size: 14px;
   padding: 6px 16px;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
+  width: 0;
+  flex: 1 1 auto;
 
   &::placeholder {
     color: #b8b8b8;

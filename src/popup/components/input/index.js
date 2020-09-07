@@ -1,3 +1,4 @@
-import DomainInputBar from './DomainInput';
+import DomainInput from './DomainInput';
+import DomainInputBar from './DomainInputBar';
 
-export { DomainInputBar };
+export { DomainInput, DomainInputBar };
