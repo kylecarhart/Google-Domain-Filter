@@ -38,7 +38,6 @@ const defaultStyle = css`
 const StyledButton = styled.button`
   cursor: pointer;
   border: none;
-  outline: none;
   padding: 6px 16px;
   border-radius: 2px;
   font-size: 14px;

@@ -27,7 +27,6 @@ const StyledTippy = styled(Tippy)`
   border-radius: 3px;
   font-size: 14px;
   line-height: 1.4;
-  outline: 0;
   width: 190px;
   padding: 6px 14px;
 

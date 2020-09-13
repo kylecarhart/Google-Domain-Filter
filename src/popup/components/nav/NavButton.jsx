@@ -35,7 +35,6 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 0;
   border: none;
-  outline: none;
   background: ${(props) => (props.selected ? '#fff' : '#eee')};
   color: ${(props) => (props.selected ? '#318BF5' : '#333')};
   box-shadow: ${(props) =>
@@ -45,10 +44,6 @@ const Button = styled.button`
 
   &:hover {
     background: ${(props) => (props.selected ? '' : '#f2f2f2')};
-  }
-
-  &:active {
-    background: ${(props) => (props.selected ? '' : '#e8e8e8')};
   }
 `;
 

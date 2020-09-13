@@ -11,8 +11,6 @@ function List({
   reorderDomains,
   isDragDisabled,
 }) {
-  const [isDragging, setIsDragging] = useState(false);
-
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
@@ -23,15 +21,10 @@ function List({
     }
 
     reorderDomains(draggableId, source, destination);
-    setIsDragging(false);
-  }
-
-  function onDragStart() {
-    setIsDragging(true);
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={'list'}>
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
