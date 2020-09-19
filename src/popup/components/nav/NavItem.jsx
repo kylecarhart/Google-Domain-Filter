@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import NavTip from './NavTip';
 
-function NavButton({ text, navId, tipText, selected, setSelected }) {
+function NavItem({ text, navId, tipText, selected, setSelected }) {
   return (
     <Button
       selected={selected}
@@ -16,7 +16,7 @@ function NavButton({ text, navId, tipText, selected, setSelected }) {
   );
 }
 
-NavButton.propTypes = {
+NavItem.propTypes = {
   text: PropTypes.string.isRequired,
   navId: PropTypes.string.isRequired,
   tipText: PropTypes.string.isRequired,
@@ -24,7 +24,7 @@ NavButton.propTypes = {
   setSelected: PropTypes.func.isRequired,
 };
 
-const Button = styled.button`
+const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,4 +51,4 @@ const Text = styled.span`
   margin-right: 0.5rem;
 `;
 
-export default NavButton;
+export default NavItem;

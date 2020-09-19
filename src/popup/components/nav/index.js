@@ -1,5 +1,5 @@
 import NavBar from './NavBar';
-import NavButton from './NavButton';
+import NavItem from './NavItem';
 import NavTip from './NavTip';
 
-export { NavBar, NavButton, NavTip };
+export { NavBar, NavItem, NavTip };
