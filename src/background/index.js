@@ -27,6 +27,8 @@
       // This avoids the infinite request loop.
       if (!filterList.every((domain) => params.get('q').includes(domain))) {
         params.set('q', `${params.get('q')} ${filterString}`);
+      } else {
+        return;
       }
 
       return {
