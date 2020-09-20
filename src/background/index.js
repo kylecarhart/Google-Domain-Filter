@@ -1,3 +1,9 @@
+import tlds from './tlds';
+
+/*
+ * Handles redirecting google queries based on the filter list.
+ */
+
 (async function () {
   const storage = await browser.storage.sync.get('filterList');
   let filterList = storage.filterList || []; // default to empty array
@@ -35,7 +41,7 @@
         redirectUrl: url.toString(), // Redirect
       };
     },
-    { urls: ['*://*.google.com/search?*'] },
+    { urls: tlds.map((tld) => `*://*.google.${tld}/search?*`) },
     ['blocking']
   );
 })();
