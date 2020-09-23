@@ -1,4 +1,4 @@
-import tlds from './tlds';
+import { tlds } from '../tlds.json';
 
 /*
  * Handles redirecting google queries based on the filter list.
@@ -18,6 +18,8 @@ import tlds from './tlds';
   // Listen for google requests and redirect
   browser.webRequest.onBeforeRequest.addListener(
     (details) => {
+      console.log('ran');
+
       // If there are no domains, don't bother redirecting
       if (filterList.length === 0) {
         return;

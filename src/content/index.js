@@ -23,12 +23,13 @@ function handleMutations(mutations, filterString) {
       switch (addedNode.nodeType) {
         case 1: // Element
           if (addedNode.tagName === 'INPUT') {
-            if (addedNode.getAttribute('value')) {
-              addedNode.setAttribute(
-                'value',
-                addedNode.getAttribute('value').replace(filterString, '').trim()
-              );
-            }
+            // console.log(addedNode.value);
+            // if (addedNode.getAttribute('value')) {
+            //   addedNode.setAttribute(
+            //     'value',
+            //     addedNode.getAttribute('value').replace(filterString, '').trim()
+            //   );
+            // }
           }
           break;
         case 3: // Text
@@ -43,6 +44,7 @@ function handleMutations(mutations, filterString) {
 
 // Start google domain filtering script
 (async function () {
+  console.log('ran');
   const storage = await browser.storage.sync.get('filterList');
   const filterList = storage.filterList || [];
 
@@ -51,13 +53,6 @@ function handleMutations(mutations, filterString) {
   }
 
   const filterString = filterList.map((domain) => `-site:${domain}`).join(' ');
-
-  // Remove filterString from title
-  const title = document.querySelector('title');
-  title.innerHTML = `${title.innerHTML.substring(
-    0,
-    title.innerHTML.indexOf(filterString)
-  )} - Google Search`;
 
   // Mutate google search as the DOM builds
   const observer = new MutationObserver((mutations) => {
@@ -72,6 +67,14 @@ function handleMutations(mutations, filterString) {
   document.addEventListener('DOMContentLoaded', () => {
     observer.disconnect();
   });
+
+  // Remove filterString from title
+  const title = document.querySelector('title');
+  title.text = title.text.replace(` ${filterString}`, '');
+
+  // Remove filterString from input
+  const input = document.querySelector('input[name="q"]');
+  input.value = input.value.substring(0, input.value.indexOf(filterString) - 1);
 
   // Listen for changes to domains
   browser.storage.onChanged.addListener(storageChangeListener);
