@@ -18,8 +18,6 @@ import { tlds } from '../tlds.json';
   // Listen for google requests and redirect
   browser.webRequest.onBeforeRequest.addListener(
     (details) => {
-      console.log('ran');
-
       // If there are no domains, don't bother redirecting
       if (filterList.length === 0) {
         return;
@@ -43,7 +41,10 @@ import { tlds } from '../tlds.json';
         redirectUrl: url.toString(), // Redirect
       };
     },
-    { urls: tlds.map((tld) => `*://*.google.${tld}/search?*`) },
+    {
+      urls: tlds.map((tld) => `*://*.google.${tld}/search?*`),
+      types: ['main_frame'],
+    },
     ['blocking']
   );
 })();

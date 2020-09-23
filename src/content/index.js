@@ -44,7 +44,6 @@ function handleMutations(mutations, filterString) {
 
 // Start google domain filtering script
 (async function () {
-  console.log('ran');
   const storage = await browser.storage.sync.get('filterList');
   const filterList = storage.filterList || [];
 

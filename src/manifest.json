@@ -9,7 +9,8 @@
     "storage",
     "activeTab",
     "webRequest",
-    "*://*.google.com/",
+    "https://*/*",
+    "http://*/*",
     "webRequestBlocking"
   ],
   "browser_action": {
