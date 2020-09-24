@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
-const tlds = require('./src/tlds.json');
+const { tlds } = require('./src/tlds.json');
 
 module.exports = (env) => {
   return {
@@ -59,26 +59,28 @@ module.exports = (env) => {
       }),
       // Copy manifest.json
       new CopyPlugin([
+        // Generate manifest
         {
           from: './src/manifest.json',
           to: '.',
           transform: (content) => {
-            var manifest = JSON.parse(content.toString());
+            const manifest = JSON.parse(content.toString());
 
-            // make any modifications you like, such as
-            manifest.content_scripts[0].matches = tlds.tlds.map(
-              (tld) => `*://*.google.${tld}/search?*`
-            );
+            const matchPatterns = tlds.map((tld) => `*://*.google.${tld}/search?*`);
 
-            // pretty print to JSON with two spaces
-            const manifest_JSON = JSON.stringify(manifest, null, 2);
-            return manifest_JSON;
+            // Allow webRequest to intercept on all google tlds
+            manifest.permissions.push(...matchPatterns);
+
+            // Allow content scripts to run on all google tlds
+            manifest.content_scripts[0].matches.push(...matchPatterns);
+
+            const manifestJSON = JSON.stringify(manifest, null, 2);
+            return manifestJSON;
           },
         },
-        { from: './src/static/*', to: './static', flatten: true },
+        { from: './src/static/*', to: './static', flatten: true }, // Copy static files (imgs)
         {
-          from:
-            'node_modules/webextension-polyfill/dist/browser-polyfill.min.js',
+          from: 'node_modules/webextension-polyfill/dist/browser-polyfill.min.js', // https://github.com/mozilla/webextension-polyfill
         },
       ]),
       // Inject version number

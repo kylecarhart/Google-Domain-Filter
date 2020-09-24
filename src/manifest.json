@@ -5,20 +5,13 @@
   "version": "1.0",
   "description": "Filter domains from your Google searches.",
   "homepage_url": "https://github.com/KMCGamer/google-domain-filter",
-  "permissions": [
-    "storage",
-    "activeTab",
-    "webRequest",
-    "https://*/*",
-    "http://*/*",
-    "webRequestBlocking"
-  ],
+  "permissions": ["storage", "activeTab", "webRequest", "webRequestBlocking"],
   "browser_action": {
     "default_popup": "./popup/index.html"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.google.com/search?*"],
+      "matches": [],
       "js": ["./browser-polyfill.min.js", "./content/index.js"],
       "run_at": "document_start"
     }
