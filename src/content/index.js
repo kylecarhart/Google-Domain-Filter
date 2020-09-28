@@ -1,3 +1,5 @@
+import Observer from './Observer';
+
 function storageChangeListener(storage) {
   let filterList = [];
   if (storage.filterList) {
@@ -17,31 +19,6 @@ function storageChangeListener(storage) {
   });
 }
 
-function handleMutations(mutations, filterString) {
-  mutations.forEach((mutation) => {
-    mutation.addedNodes.forEach((addedNode) => {
-      switch (addedNode.nodeType) {
-        case 1: // Element
-          if (addedNode.tagName === 'INPUT') {
-            // console.log(addedNode.value);
-            // if (addedNode.getAttribute('value')) {
-            //   addedNode.setAttribute(
-            //     'value',
-            //     addedNode.getAttribute('value').replace(filterString, '').trim()
-            //   );
-            // }
-          }
-          break;
-        case 3: // Text
-          addedNode.nodeValue = addedNode.nodeValue.replace(filterString, '');
-          break;
-        default:
-          break;
-      }
-    });
-  });
-}
-
 // Start google domain filtering script
 (async function () {
   const storage = await browser.storage.sync.get('filterList');
@@ -54,14 +31,8 @@ function handleMutations(mutations, filterString) {
   const filterString = filterList.map((domain) => `-site:${domain}`).join(' ');
 
   // Mutate google search as the DOM builds
-  const observer = new MutationObserver((mutations) => {
-    handleMutations(mutations, filterString);
-  });
-
-  observer.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
-  });
+  const observer = new Observer(filterString);
+  observer.observe();
 
   document.addEventListener('DOMContentLoaded', () => {
     observer.disconnect();
