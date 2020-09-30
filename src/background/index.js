@@ -1,4 +1,5 @@
 import { tlds } from '../tlds.json';
+import { toExcludeQuery } from '../utils';
 
 /*
  * Handles redirecting google queries based on the filter list.
@@ -25,9 +26,7 @@ import { tlds } from '../tlds.json';
 
       const url = new URL(details.url);
       const params = url.searchParams;
-      const filterString = filterList
-        .map((domain) => `-site:${domain}`)
-        .join(' ');
+      const filterString = filterList.map(toExcludeQuery).join(' ');
 
       // Add the sites to the query if it doesn't contain them already
       // This avoids the infinite request loop.
