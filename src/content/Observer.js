@@ -1,6 +1,11 @@
 const TEXT_NODE = 3;
 
-export default class Observer {
+/** Class representing a Mutation Observer */
+class Observer {
+  /**
+   * Create a mutation observer.
+   * @param {string} filterString - The string to remove from the DOM.
+   */
   constructor(filterString) {
     this.filterString = filterString;
     this.observer = new MutationObserver((mutations) => {
@@ -18,6 +23,9 @@ export default class Observer {
     });
   }
 
+  /**
+   * Tell the observer to start listening.
+   */
   observe() {
     this.observer.observe(document.documentElement, {
       childList: true,
@@ -25,7 +33,12 @@ export default class Observer {
     });
   }
 
+  /**
+   * Tell the observer to disconnect.
+   */
   disconnect() {
     this.observer.disconnect();
   }
 }
+
+export { Observer };

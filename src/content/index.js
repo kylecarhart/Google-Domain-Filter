@@ -1,24 +1,6 @@
 import { toExcludeQuery } from '../utils';
-import Observer from './Observer';
-
-function storageChangeListener(storage) {
-  let filterList = [];
-  if (storage.filterList) {
-    filterList = storage.filterList.newValue;
-  }
-
-  // Get all links on the page related to a google search
-  document.querySelectorAll('.g .r > a').forEach((node) => {
-    const closestNode = node.closest('.g');
-
-    for (let i = 0; i < filterList.length; i++) {
-      if (node.href.includes(filterList[i])) {
-        closestNode.style.display = 'none';
-        break;
-      }
-    }
-  });
-}
+import { Observer } from './Observer';
+import { removeFromInput, removeFromTitle, storageChangeListener } from './mutations';
 
 // Start google domain filtering script
 (async function () {
@@ -39,14 +21,9 @@ function storageChangeListener(storage) {
     observer.disconnect();
   });
 
-  // Remove filterString from title
-  const title = document.querySelector('title');
-  title.text = title.text.replace(` ${filterString}`, '');
+  removeFromTitle(` ${filterString}`);
+  removeFromInput(filterString);
 
-  // Remove filterString from input
-  const input = document.querySelector('input[name="q"]');
-  input.value = input.value.substring(0, input.value.indexOf(filterString) - 1);
-
-  // Listen for changes to domains
+  // Listen for changes to domains and remove them from the DOM
   browser.storage.onChanged.addListener(storageChangeListener);
 })();
