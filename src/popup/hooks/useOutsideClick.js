@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 
-export default function useOutsideClick(ref, callback, disabled = false) {
+/**
+ * Listens for a click outside the ref and fires the callback.
+ * @param {*} ref - React ref.
+ * @param {function} callback
+ * @param {boolean} [disabled=false] - Toggle to fire callback.
+ */
+function useOutsideClick(ref, callback, disabled = false) {
   useEffect(() => {
     let element = ref;
 
@@ -22,3 +28,5 @@ export default function useOutsideClick(ref, callback, disabled = false) {
     };
   }, [ref, callback, disabled]);
 }
+
+export { useOutsideClick };
