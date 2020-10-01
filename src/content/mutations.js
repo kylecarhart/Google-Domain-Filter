@@ -3,7 +3,6 @@
  * @param {Object} storage - Browser storage object.
  */
 function storageChangeListener(storage) {
-  console.log(storage);
   let filterList = [];
   if (storage.filterList) {
     filterList = storage.filterList.newValue;
