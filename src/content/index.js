@@ -29,7 +29,7 @@ function storageChangeListener(storage) {
     return; // No domains to filter, break out early.
   }
 
-  const filterString = filterList.map(toExcludeQuery).join(' ');
+  const filterString = toExcludeQuery(...filterList);
 
   // Mutate google search as the DOM builds
   const observer = new Observer(filterString);
