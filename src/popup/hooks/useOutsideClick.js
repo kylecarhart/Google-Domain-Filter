@@ -16,7 +16,7 @@ function useOutsideClick(ref, callback, disabled = false) {
 
     const handleClick = (e) => {
       if (element && !element.contains(e.target) && !disabled) {
-        callback();
+        callback(e);
       }
     };
 

@@ -7,8 +7,10 @@ import { useOutsideClick } from '../../hooks';
 function DropdownMenu({ referenceElement, placement = 'bottom-end', onOutsideClick, children }) {
   const [popperElement, setPopperElement] = useState(null);
 
-  useOutsideClick(popperElement, () => {
-    onOutsideClick();
+  useOutsideClick(popperElement, (e) => {
+    if (e.target != referenceElement) {
+      onOutsideClick(e);
+    }
   });
 
   const { styles, attributes } = usePopper(referenceElement, popperElement, {

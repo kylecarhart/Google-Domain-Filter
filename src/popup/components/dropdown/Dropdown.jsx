@@ -12,7 +12,7 @@ function Dropdown({ trigger, items }) {
     return React.cloneElement(triggerElement, {
       ref: setReferenceElement,
       onClick: () => {
-        setIsMenuShowing(true);
+        setIsMenuShowing((isMenuShowing) => !isMenuShowing);
       },
     });
   };
