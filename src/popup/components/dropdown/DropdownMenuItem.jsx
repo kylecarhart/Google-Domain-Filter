@@ -2,16 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function DropdownMenuItem({ onClick, children }) {
-  return (
-    <StyledDropdownMenuItem onClick={onClick}>
-      {children}
-    </StyledDropdownMenuItem>
-  );
+function DropdownMenuItem({ onClick, text }) {
+  return <StyledDropdownMenuItem onClick={onClick}>{text}</StyledDropdownMenuItem>;
 }
 
 DropdownMenuItem.propTypes = {
-  children: PropTypes.any,
+  text: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 

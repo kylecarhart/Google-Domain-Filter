@@ -3,30 +3,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { DragHandleIcon, MoreIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
-import { DropdownMenu, DropdownMenuItem } from '../dropdown/';
+import { Dropdown, DropdownMenu, DropdownMenuItem } from '../dropdown/';
+import ListItemOptions from './ListItemOptions';
 
-function ListItem({
-  domain,
-  deleteDomain,
-  editDomain,
-  index,
-  isDragDisabled,
-  isDraggingOver,
-}) {
+function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled, isDraggingOver }) {
   const [inputText, setInputText] = useState(domain);
   const [isHovering, setIsHovering] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isMenuShowing, setIsMenuShowing] = useState(false);
-
-  const [referenceElement, setReferenceElement] = useState(null);
 
   const inputRef = useRef(null);
 
   return (
-    <Draggable
-      draggableId={domain}
-      index={index}
-      isDragDisabled={isDragDisabled}>
+    <Draggable draggableId={domain} index={index} isDragDisabled={isDragDisabled}>
       {(provided, snapshot) => (
         <StyledListItem
           {...provided.draggableProps}
@@ -52,38 +40,13 @@ function ListItem({
             }}
           />
 
-          <MoreButtonWrapper
-            type="button"
-            ref={setReferenceElement}
-            isVisible={(isHovering && !isDraggingOver) || isMenuShowing}
-            onClick={() => {
-              setIsMenuShowing(true);
-            }}>
-            <MoreIcon />
-          </MoreButtonWrapper>
-
-          {isMenuShowing && (
-            <DropdownMenu
-              referenceElement={referenceElement}
-              onOutsideClick={() => {
-                setIsMenuShowing(false);
-              }}>
-              <DropdownMenuItem
-                onClick={() => {
-                  setIsEditing(true);
-                  setIsMenuShowing(false);
-                  inputRef.current.focus();
-                }}>
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  deleteDomain();
-                }}>
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenu>
-          )}
+          <ListItemOptions
+            setIsEditing={setIsEditing}
+            inputRef={inputRef}
+            deleteDomain={deleteDomain}
+            isHovering={isHovering}
+            isDraggingOver={isDraggingOver}
+          />
 
           {!isDragDisabled && (
             <DragHandle {...provided.dragHandleProps}>
@@ -114,8 +77,7 @@ const StyledListItem = styled.li`
   padding: 8px 16px;
   border-bottom: ${({ isDragging }) => (isDragging ? '' : '1px solid #f7f7f7')};
   background: #fff;
-  box-shadow: ${({ isDragging }) =>
-    isDragging ? '0px 0px 15px rgba(0,0,0,.1)' : 'none'};
+  box-shadow: ${({ isDragging }) => (isDragging ? '0px 0px 15px rgba(0,0,0,.1)' : 'none')};
 
   &:last-child {
     border: none;
@@ -136,19 +98,6 @@ const Input = styled.input`
 const DragHandle = styled.div`
   color: #bbb;
   margin: 0 8px;
-`;
-
-const MoreButtonWrapper = styled.button`
-  color: #ababab;
-  font-size: 18px;
-  margin: 0 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  line-height: 0;
-
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
 export default ListItem;
