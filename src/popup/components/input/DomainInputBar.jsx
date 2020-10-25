@@ -2,18 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DomainInput } from '.';
 import styled from 'styled-components';
-import { Button } from '../button';
+import InputSettingsDropdown from './InputSettingsDropdown';
 
-function DomainInputBar({ addDomain }) {
+function DomainInputBar({ addDomain, sortDomains }) {
   return (
     <StyledDomainInputBar>
       <StyledDomainInput addDomain={addDomain} />
-      <Button
-        onClick={() => {
-          console.log('clicked');
-        }}>
-        Settings
-      </Button>
+      <InputSettingsDropdown sortDomains={sortDomains} />
     </StyledDomainInputBar>
   );
 }

@@ -48,6 +48,24 @@ function ListPage({ storageKey, isDragDisabled }) {
     }
   };
 
+  const sortDomains = () => {
+    setFilterList((list) => {
+      return [...list].sort(function (a, b) {
+        const domainA = a.toUpperCase(); // ignore upper and lowercase
+        const domainB = b.toUpperCase(); // ignore upper and lowercase
+        if (domainA < domainB) {
+          return -1;
+        }
+        if (domainA > domainB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+    });
+  };
+
   const reorderDomains = (domain, source, destination) => {
     setFilterList((oldList) => {
       const tempList = Array.from(oldList);
@@ -59,7 +77,7 @@ function ListPage({ storageKey, isDragDisabled }) {
 
   return (
     <Page>
-      <DomainInputBar addDomain={addDomain} />
+      <DomainInputBar addDomain={addDomain} sortDomains={sortDomains} />
       <List
         domains={filterList}
         deleteDomain={deleteDomain}

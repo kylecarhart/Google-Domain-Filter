@@ -4,12 +4,7 @@ import styled from 'styled-components';
 import { usePopper } from 'react-popper';
 import { useOutsideClick } from '../../hooks';
 
-function DropdownMenu({
-  referenceElement,
-  placement = 'bottom-end',
-  onOutsideClick,
-  children,
-}) {
+function DropdownMenu({ referenceElement, placement = 'bottom-end', onOutsideClick, children }) {
   const [popperElement, setPopperElement] = useState(null);
 
   useOutsideClick(popperElement, () => {
@@ -32,10 +27,7 @@ function DropdownMenu({
   });
 
   return (
-    <StyledDropdownMenu
-      ref={setPopperElement}
-      style={styles.popper}
-      {...attributes.popper}>
+    <StyledDropdownMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
       {children}
     </StyledDropdownMenu>
   );
@@ -54,6 +46,8 @@ const StyledDropdownMenu = styled.ul`
   border-radius: 3px;
   padding: 0;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.06), 0px 1px 20px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  font-size: 14px;
 
   &[data-popper-reference-hidden='true'] {
     visibility: hidden;

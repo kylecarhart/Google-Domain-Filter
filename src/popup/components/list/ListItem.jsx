@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DragHandleIcon, MoreIcon } from '../../icons';
+import { DragHandleIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
-import { Dropdown, DropdownMenu, DropdownMenuItem } from '../dropdown/';
 import ListItemOptions from './ListItemOptions';
 
 function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled, isDraggingOver }) {

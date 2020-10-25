@@ -48,11 +48,3 @@ Dropdown.propTypes = {
 };
 
 export default Dropdown;
-
-// return React.cloneElement(child, {
-//   key: idx,
-//   onClick: () => {
-//     child.props.onClick();
-//     setIsMenuShowing(false);
-//   },
-// });
