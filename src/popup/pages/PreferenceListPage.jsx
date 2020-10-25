@@ -2,7 +2,7 @@ import React from 'react';
 import ListPage from './ListPage';
 
 function PreferenceListPage() {
-  return <ListPage storageKey="preferenceList" isDragDisabled={false} />;
+  return <ListPage storageKey="preferenceList" isDragEnabled={true} />;
 }
 
 PreferenceListPage.propTypes = {};

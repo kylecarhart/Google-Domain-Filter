@@ -5,7 +5,7 @@ import { DragHandleIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
 import ListItemOptions from './ListItemOptions';
 
-function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled, isDraggingOver }) {
+function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDraggingOver }) {
   const [inputText, setInputText] = useState(domain);
   const [isHovering, setIsHovering] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +13,7 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled, isD
   const inputRef = useRef(null);
 
   return (
-    <Draggable draggableId={domain} index={index} isDragDisabled={isDragDisabled}>
+    <Draggable draggableId={domain} index={index} isDragDisabled={!isDragEnabled}>
       {(provided, snapshot) => (
         <StyledListItem
           {...provided.draggableProps}
@@ -47,7 +47,7 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragDisabled, isD
             isDraggingOver={isDraggingOver}
           />
 
-          {!isDragDisabled && (
+          {isDragEnabled && (
             <DragHandle {...provided.dragHandleProps}>
               <DragHandleIcon />
             </DragHandle>
@@ -63,7 +63,7 @@ ListItem.propTypes = {
   deleteDomain: PropTypes.func.isRequired,
   editDomain: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  isDragDisabled: PropTypes.bool.isRequired,
+  isDragEnabled: PropTypes.bool.isRequired,
   isDraggingOver: PropTypes.bool.isRequired,
 };
 

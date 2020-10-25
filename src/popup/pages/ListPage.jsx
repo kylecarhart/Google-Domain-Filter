@@ -6,7 +6,7 @@ import { DomainInputBar } from '../components/input';
 import { List } from '../components/list';
 import styled from 'styled-components';
 
-function ListPage({ storageKey, isDragDisabled }) {
+function ListPage({ storageKey, isDragEnabled }) {
   const [filterList, setFilterList] = useStorage(storageKey, []);
 
   const domainIsValid = (domain) => {
@@ -83,7 +83,7 @@ function ListPage({ storageKey, isDragDisabled }) {
         deleteDomain={deleteDomain}
         editDomain={editDomain}
         reorderDomains={reorderDomains}
-        isDragDisabled={isDragDisabled}
+        isDragEnabled={isDragEnabled}
       />
     </Page>
   );
@@ -97,7 +97,7 @@ const Page = styled.div`
 
 ListPage.propTypes = {
   storageKey: PropTypes.string.isRequired,
-  isDragDisabled: PropTypes.bool.isRequired,
+  isDragEnabled: PropTypes.bool.isRequired,
 };
 
 export default ListPage;

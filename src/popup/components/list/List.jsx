@@ -4,13 +4,7 @@ import styled from 'styled-components';
 import ListItem from './ListItem';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 
-function List({
-  domains,
-  deleteDomain,
-  editDomain,
-  reorderDomains,
-  isDragDisabled,
-}) {
+function List({ domains, deleteDomain, editDomain, reorderDomains, isDragEnabled }) {
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
@@ -39,7 +33,7 @@ function List({
                 editDomain={(newDomain) => {
                   editDomain(domain, newDomain);
                 }}
-                isDragDisabled={isDragDisabled}
+                isDragEnabled={isDragEnabled}
                 isDraggingOver={snapshot.isDraggingOver}
               />
             ))}
@@ -56,7 +50,7 @@ List.propTypes = {
   deleteDomain: PropTypes.func.isRequired,
   editDomain: PropTypes.func.isRequired,
   reorderDomains: PropTypes.func.isRequired,
-  isDragDisabled: PropTypes.bool.isRequired,
+  isDragEnabled: PropTypes.bool.isRequired,
 };
 
 const StyledList = styled.ul`
