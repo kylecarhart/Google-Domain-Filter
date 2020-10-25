@@ -2,21 +2,13 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-const Button = forwardRef(({ onClick, type, children, ...props }, ref) => {
+function Button({ children, onClick, type = 'default', ...props }, ref) {
   return (
     <StyledButton ref={ref} onClick={onClick} type={type} {...props}>
       {children}
     </StyledButton>
   );
-});
-
-// function Button({ children, onClick, type = 'default', ...props }) {
-//   return (
-//     <StyledButton onClick={onClick} type={type} {...props}>
-//       {children}
-//     </StyledButton>
-//   );
-// }
+}
 
 Button.propTypes = {
   children: PropTypes.any,
@@ -55,4 +47,4 @@ const StyledButton = styled.button`
   ${({ type }) => (type === 'primary' ? primaryStyle : defaultStyle)}
 `;
 
-export default Button;
+export default React.forwardRef(Button);
