@@ -6,11 +6,7 @@ import { HelpCircleIcon } from '../../icons';
 
 function NavTip({ text }) {
   return (
-    <StyledTippy
-      content={text}
-      delay={[300, 0]}
-      arrow={true}
-      placement="bottom">
+    <StyledTippy content={text} delay={[300, 0]} arrow={true} placement="bottom">
       <Icon />
     </StyledTippy>
   );
