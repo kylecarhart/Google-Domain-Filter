@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function SvgTrash(props) {
+function TrashIcon(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" {...props}>
       <rect x={32} y={48} width={448} height={80} rx={32} ry={32} />
@@ -9,4 +9,4 @@ function SvgTrash(props) {
   );
 }
 
-export default SvgTrash;
+export default TrashIcon;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function SvgClose(props) {
+function CloseIcon(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 512 512" {...props}>
       <path
@@ -11,4 +11,4 @@ function SvgClose(props) {
   );
 }
 
-export default SvgClose;
+export default CloseIcon;

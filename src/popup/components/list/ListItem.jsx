@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DragHandleIcon } from '../../icons';
+import { CloseIcon, DragHandleIcon, SaveIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
 import ListItemOptions from './ListItemOptions';
+import { IconButton } from '../button';
 
 function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDraggingOver }) {
   const [inputText, setInputText] = useState(domain);
@@ -38,6 +39,23 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
               }
             }}
           />
+          {isEditing && (
+            <>
+              <StyledIconButton
+                onClick={() => {
+                  editDomain(inputText);
+                }}>
+                <SaveIcon />
+              </StyledIconButton>
+              <StyledIconButton
+                onClick={() => {
+                  setInputText(domain);
+                  setIsEditing(false);
+                }}>
+                <CloseIcon />
+              </StyledIconButton>
+            </>
+          )}
 
           <ListItemOptions
             setIsEditing={setIsEditing}
@@ -97,6 +115,10 @@ const Input = styled.input`
 const DragHandle = styled.div`
   color: #bbb;
   margin: 0 8px;
+`;
+
+const StyledIconButton = styled(IconButton)`
+  color: #ababab;
 `;
 
 export default ListItem;
