@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function IconButton({ children, ...props }) {
-  return <Button {...props}>{children}</Button>;
+function IconButton({ children, ...props }, ref) {
+  return (
+    <Button ref={ref} {...props}>
+      {children}
+    </Button>
+  );
 }
-
-IconButton.propTypes = {
-  children: PropTypes.any,
-};
 
 const Button = styled.button`
   margin: 0;
@@ -16,6 +15,7 @@ const Button = styled.button`
   border: 0;
   cursor: pointer;
   background: none;
+  line-height: 0;
 `;
 
-export default IconButton;
+export default React.forwardRef(IconButton);

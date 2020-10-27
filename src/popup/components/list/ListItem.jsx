@@ -18,6 +18,11 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
     setIsEditing(false);
   };
 
+  const startEdit = () => {
+    setIsEditing(true);
+    inputRef.current.focus();
+  };
+
   return (
     <Draggable draggableId={domain} index={index} isDragDisabled={!isDragEnabled}>
       {(provided, snapshot) => (
@@ -63,13 +68,11 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
           )}
 
           <ListItemOptions
+            showTrigger={isHovering && !isDraggingOver}
+            startEdit={startEdit}
             cancelEdit={cancelEdit}
             isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            inputRef={inputRef}
             deleteDomain={deleteDomain}
-            isHovering={isHovering}
-            isDraggingOver={isDraggingOver}
           />
 
           {isDragEnabled && (

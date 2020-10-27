@@ -1,5 +1,4 @@
-import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 function Button({ children, onClick, type = 'default', ...props }, ref) {
@@ -9,13 +8,6 @@ function Button({ children, onClick, type = 'default', ...props }, ref) {
     </StyledButton>
   );
 }
-
-Button.propTypes = {
-  children: PropTypes.any,
-  onClick: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  className: PropTypes.string,
-};
 
 const primaryStyle = css`
   color: #fff;

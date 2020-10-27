@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Dropdown } from '../dropdown';
 import styled from 'styled-components';
 import { MoreIcon } from '../../icons';
+import { IconButton } from '../button';
 
-function ListItemOptions({ isEditing, setIsEditing, inputRef, deleteDomain, isHovering, isDraggingOver, cancelEdit }) {
+function ListItemOptions({ isEditing, startEdit, deleteDomain, cancelEdit, showTrigger }) {
   const editOption = {
     text: 'Edit',
     onClick: () => {
-      setIsEditing(true);
-      inputRef.current.focus();
+      startEdit();
     },
   };
 
@@ -30,9 +30,9 @@ function ListItemOptions({ isEditing, setIsEditing, inputRef, deleteDomain, isHo
   return (
     <Dropdown
       trigger={(isMenuShowing) => (
-        <MoreButtonWrapper isVisible={(isHovering && !isDraggingOver) || isMenuShowing}>
+        <StyledIconButton isVisible={showTrigger || isMenuShowing}>
           <MoreIcon />
-        </MoreButtonWrapper>
+        </StyledIconButton>
       )}
       items={[isEditing ? cancelEditOption : editOption, deleteOption]}
     />
@@ -40,22 +40,16 @@ function ListItemOptions({ isEditing, setIsEditing, inputRef, deleteDomain, isHo
 }
 
 ListItemOptions.propTypes = {
-  setIsEditing: PropTypes.func.isRequired,
-  inputRef: PropTypes.object.isRequired,
+  startEdit: PropTypes.func.isRequired,
+  cancelEdit: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
   deleteDomain: PropTypes.func.isRequired,
-  isHovering: PropTypes.bool.isRequired,
-  isDraggingOver: PropTypes.bool.isRequired,
+  showTrigger: PropTypes.bool.isRequired,
 };
 
-const MoreButtonWrapper = styled.button`
+const StyledIconButton = styled(IconButton)`
   color: #ababab;
   font-size: 18px;
-  margin: 0 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  line-height: 0;
 
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
