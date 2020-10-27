@@ -13,6 +13,11 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
 
   const inputRef = useRef(null);
 
+  const cancelEdit = () => {
+    setInputText(domain);
+    setIsEditing(false);
+  };
+
   return (
     <Draggable draggableId={domain} index={index} isDragDisabled={!isDragEnabled}>
       {(provided, snapshot) => (
@@ -58,6 +63,8 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
           )}
 
           <ListItemOptions
+            cancelEdit={cancelEdit}
+            isEditing={isEditing}
             setIsEditing={setIsEditing}
             inputRef={inputRef}
             deleteDomain={deleteDomain}

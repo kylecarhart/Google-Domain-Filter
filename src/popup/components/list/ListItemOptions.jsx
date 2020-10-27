@@ -4,7 +4,29 @@ import { Dropdown } from '../dropdown';
 import styled from 'styled-components';
 import { MoreIcon } from '../../icons';
 
-function ListItemOptions({ setIsEditing, inputRef, deleteDomain, isHovering, isDraggingOver }) {
+function ListItemOptions({ isEditing, setIsEditing, inputRef, deleteDomain, isHovering, isDraggingOver, cancelEdit }) {
+  const editOption = {
+    text: 'Edit',
+    onClick: () => {
+      setIsEditing(true);
+      inputRef.current.focus();
+    },
+  };
+
+  const cancelEditOption = {
+    text: 'Cancel Edit',
+    onClick: () => {
+      cancelEdit();
+    },
+  };
+
+  const deleteOption = {
+    text: 'Delete',
+    onClick: () => {
+      deleteDomain();
+    },
+  };
+
   return (
     <Dropdown
       trigger={(isMenuShowing) => (
@@ -12,21 +34,7 @@ function ListItemOptions({ setIsEditing, inputRef, deleteDomain, isHovering, isD
           <MoreIcon />
         </MoreButtonWrapper>
       )}
-      items={[
-        {
-          text: 'Edit',
-          onClick: () => {
-            setIsEditing(true);
-            inputRef.current.focus();
-          },
-        },
-        {
-          text: 'Delete',
-          onClick: () => {
-            deleteDomain();
-          },
-        },
-      ]}
+      items={[isEditing ? cancelEditOption : editOption, deleteOption]}
     />
   );
 }
