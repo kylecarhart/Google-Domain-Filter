@@ -8,7 +8,7 @@ function DropdownMenu({ referenceElement, placement = 'bottom-end', onOutsideCli
   const [popperElement, setPopperElement] = useState(null);
 
   useOutsideClick(popperElement, (e) => {
-    if (e.target != referenceElement) {
+    if (!referenceElement.contains(e.target)) {
       onOutsideClick(e);
     }
   });
