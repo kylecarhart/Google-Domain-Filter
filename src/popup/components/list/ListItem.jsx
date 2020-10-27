@@ -48,6 +48,10 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
                 editDomain(inputText);
               }
             }}
+            onDoubleClick={() => {
+              startEdit();
+              inputRef.current.setSelectionRange(-1, -1); // set cursor to end
+            }}
           />
           {isEditing && (
             <>
@@ -59,8 +63,7 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
               </StyledIconButton>
               <StyledIconButton
                 onClick={() => {
-                  setInputText(domain);
-                  setIsEditing(false);
+                  cancelEdit();
                 }}>
                 <CloseIcon />
               </StyledIconButton>
