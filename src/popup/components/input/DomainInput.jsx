@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from '../button';
+import DomainContext from '../../context/DomainContext';
+import validator from 'validator';
 
-function DomainInput({ addDomain, ...props }) {
+function DomainInput({ ...props }) {
   const [inputText, setInputText] = useState('');
+  const [domainList, setDomainList] = useContext(DomainContext);
 
-  const handleAddDomain = () => {
-    const wasAdded = !!addDomain(inputText);
-    if (wasAdded) {
+  const addDomain = () => {
+    if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
+      setDomainList((domainList) => [...domainList, inputText]);
       setInputText('');
     }
   };
@@ -23,14 +26,14 @@ function DomainInput({ addDomain, ...props }) {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            handleAddDomain();
+            addDomain();
           }
         }}
       />
       <Button
         type="primary"
         onClick={() => {
-          handleAddDomain();
+          addDomain();
         }}>
         Add
       </Button>

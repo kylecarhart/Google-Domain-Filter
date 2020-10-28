@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
+import DomainContext from '../../context/DomainContext';
+import validator from 'validator';
 
-function List({ domains, deleteDomain, editDomain, reorderDomains, isDragEnabled }) {
+function List({ isDragEnabled }) {
+  const [domainList, setDomainList] = useContext(DomainContext);
+
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
@@ -17,12 +21,42 @@ function List({ domains, deleteDomain, editDomain, reorderDomains, isDragEnabled
     reorderDomains(draggableId, source, destination);
   }
 
+  const deleteDomain = (domain) => {
+    setDomainList(domainList.filter((_domain) => _domain !== domain));
+  };
+
+  const editDomain = (fromDomain, toDomain) => {
+    if (fromDomain === toDomain) {
+      return;
+    }
+    if (validator.isFQDN(toDomain) && !domainList.includes(toDomain)) {
+      setDomainList((filterList) => {
+        return filterList.map((domain) => {
+          if (domain === fromDomain) {
+            return toDomain;
+          } else {
+            return domain;
+          }
+        });
+      });
+    }
+  };
+
+  const reorderDomains = (domain, source, destination) => {
+    setDomainList((oldList) => {
+      const tempList = Array.from(oldList);
+      tempList.splice(source.index, 1);
+      tempList.splice(destination.index, 0, domain);
+      return tempList;
+    });
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={'list'}>
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
-            {domains.map((domain, idx) => (
+            {domainList.map((domain, idx) => (
               <ListItem
                 key={domain}
                 index={idx}

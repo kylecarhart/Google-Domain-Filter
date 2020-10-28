@@ -4,11 +4,11 @@ import { DomainInput } from '.';
 import styled from 'styled-components';
 import InputSettingsDropdown from './InputSettingsDropdown';
 
-function DomainInputBar({ addDomain, sortDomains }) {
+function DomainInputBar() {
   return (
     <StyledDomainInputBar>
-      <StyledDomainInput addDomain={addDomain} />
-      <InputSettingsDropdown sortDomains={sortDomains} />
+      <StyledDomainInput />
+      <InputSettingsDropdown />
     </StyledDomainInputBar>
   );
 }
