@@ -23,14 +23,7 @@ function InputSettingsDropdown() {
 
   return (
     <Dropdown
-      trigger={() => (
-        <Button
-          onClick={() => {
-            console.log('clicked');
-          }}>
-          Settings
-        </Button>
-      )}
+      trigger={() => <Button>Settings</Button>}
       items={[
         {
           text: 'Sort',
