@@ -1,5 +1,5 @@
 import React from 'react';
 
-const DomainContext = React.createContext({});
+const DomainContext = React.createContext([[], () => {}]);
 
 export default DomainContext;
