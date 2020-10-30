@@ -10,7 +10,7 @@ function ListPage({ storageKey, isDragEnabled }) {
   const [domainList, setDomainList] = useStorage(storageKey, []);
 
   return (
-    <DomainContext.Provider value={[domainList, setDomainList]}>
+    <DomainContext.Provider value={[domainList, setDomainList, isDragEnabled]}>
       <Page>
         <DomainInputBar />
         <List isDragEnabled={isDragEnabled} />

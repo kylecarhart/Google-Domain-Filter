@@ -1,13 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import DomainContext from '../../context/DomainContext';
-import validator from 'validator';
+import { usePrevious } from '../../hooks';
 
 function List({ isDragEnabled }) {
   const [domainList, setDomainList] = useContext(DomainContext);
+  const prevDomainList = usePrevious(domainList);
+
+  const testList = domainList.map((domain) => ({
+    domain,
+    ref: React.createRef(),
+  }));
+
+  useEffect(() => {
+    if (testList.length - prevDomainList.length === 1) {
+      // let diff = testList[testList.length - 1];
+      // diff.ref.current.scrollIntoView();
+      console.log('ADDING 1!');
+    }
+  }, [prevDomainList, testList]);
 
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
@@ -20,27 +34,6 @@ function List({ isDragEnabled }) {
 
     reorderDomains(draggableId, source, destination);
   }
-
-  const deleteDomain = (domain) => {
-    setDomainList(domainList.filter((_domain) => _domain !== domain));
-  };
-
-  const editDomain = (fromDomain, toDomain) => {
-    if (fromDomain === toDomain) {
-      return;
-    }
-    if (validator.isFQDN(toDomain) && !domainList.includes(toDomain)) {
-      setDomainList((filterList) => {
-        return filterList.map((domain) => {
-          if (domain === fromDomain) {
-            return toDomain;
-          } else {
-            return domain;
-          }
-        });
-      });
-    }
-  };
 
   const reorderDomains = (domain, source, destination) => {
     setDomainList((oldList) => {
@@ -56,17 +49,12 @@ function List({ isDragEnabled }) {
       <Droppable droppableId={'list'}>
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
-            {domainList.map((domain, idx) => (
+            {testList.map(({ domain, ref }, idx) => (
               <ListItem
+                ref={ref}
                 key={domain}
                 index={idx}
                 domain={domain}
-                deleteDomain={() => {
-                  deleteDomain(domain);
-                }}
-                editDomain={(newDomain) => {
-                  editDomain(domain, newDomain);
-                }}
                 isDragEnabled={isDragEnabled}
                 isDraggingOver={snapshot.isDraggingOver}
               />
@@ -80,10 +68,6 @@ function List({ isDragEnabled }) {
 }
 
 List.propTypes = {
-  domains: PropTypes.arrayOf(PropTypes.string),
-  deleteDomain: PropTypes.func.isRequired,
-  editDomain: PropTypes.func.isRequired,
-  reorderDomains: PropTypes.func.isRequired,
   isDragEnabled: PropTypes.bool.isRequired,
 };
 

@@ -29,4 +29,4 @@ function useOutsideClick(ref, callback, disabled = false) {
   }, [ref, callback, disabled]);
 }
 
-export { useOutsideClick };
+export default useOutsideClick;

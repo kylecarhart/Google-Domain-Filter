@@ -7,11 +7,24 @@ import validator from 'validator';
 
 function DomainInput({ ...props }) {
   const [inputText, setInputText] = useState('');
-  const [domainList, setDomainList] = useContext(DomainContext);
+  const [domainList, setDomainList, isDragEnabled] = useContext(DomainContext);
 
   const addDomain = () => {
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
-      setDomainList((domainList) => [...domainList, inputText]);
+      if (!isDragEnabled) {
+        setDomainList((domainList) =>
+          [...domainList, inputText].sort(function (a, b) {
+            if (a.toUpperCase() < b.toUpperCase()) {
+              return -1;
+            } else if (a.toUpperCase() > b.toUpperCase()) {
+              return 1;
+            }
+            return 0;
+          })
+        );
+      } else {
+        setDomainList((domainList) => [inputText, ...domainList]);
+      }
       setInputText('');
     }
   };
@@ -41,9 +54,7 @@ function DomainInput({ ...props }) {
   );
 }
 
-DomainInput.propTypes = {
-  addDomain: PropTypes.func.isRequired,
-};
+DomainInput.propTypes = {};
 
 const StyledDomainInput = styled.div`
   display: flex;

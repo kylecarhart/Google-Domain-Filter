@@ -31,4 +31,4 @@ function useStorage(key, initialValue) {
   return [storedValue, setValue];
 }
 
-export { useStorage };
+export default useStorage;

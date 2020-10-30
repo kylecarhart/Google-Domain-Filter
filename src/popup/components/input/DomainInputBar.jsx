@@ -13,9 +13,7 @@ function DomainInputBar() {
   );
 }
 
-DomainInputBar.propTypes = {
-  addDomain: PropTypes.func.isRequired,
-};
+DomainInputBar.propTypes = {};
 
 const StyledDomainInputBar = styled.div`
   display: flex;

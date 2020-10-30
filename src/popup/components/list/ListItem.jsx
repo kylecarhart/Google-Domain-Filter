@@ -1,12 +1,15 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { CloseIcon, DragHandleIcon, SaveIcon } from '../../icons';
 import { Draggable } from 'react-beautiful-dnd';
 import ListItemOptions from './ListItemOptions';
 import { IconButton } from '../button';
+import DomainContext from '../../context/DomainContext';
+import validator from 'validator';
 
-function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDraggingOver }) {
+function ListItem({ domain, index, isDragEnabled, isDraggingOver }, ref) {
+  const [domainList, setDomainList] = useContext(DomainContext);
+
   const [inputText, setInputText] = useState(domain);
   const [isHovering, setIsHovering] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -23,80 +26,90 @@ function ListItem({ domain, deleteDomain, editDomain, index, isDragEnabled, isDr
     inputRef.current.focus();
   };
 
+  const editDomain = () => {
+    if (domain === inputText) {
+      return;
+    }
+    if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
+      setDomainList((filterList) => {
+        return filterList.map((domain) => {
+          if (domain === domain) {
+            return inputText;
+          } else {
+            return domain;
+          }
+        });
+      });
+    }
+  };
+
   return (
     <Draggable draggableId={domain} index={index} isDragDisabled={!isDragEnabled}>
       {(provided, snapshot) => (
-        <StyledListItem
-          {...provided.draggableProps}
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-          onMouseEnter={() => {
-            setIsHovering(true);
-          }}
-          onMouseLeave={() => {
-            setIsHovering(false);
-          }}>
-          <Input
-            ref={inputRef}
-            value={inputText}
-            readOnly={!isEditing}
-            onChange={(e) => {
-              setInputText(e.target.value);
+        <div ref={ref}>
+          <StyledListItem
+            {...provided.draggableProps}
+            ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
+            onMouseEnter={() => {
+              setIsHovering(true);
             }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                editDomain(inputText);
-              }
-            }}
-            onDoubleClick={() => {
-              startEdit();
-              inputRef.current.setSelectionRange(-1, -1); // set cursor to end
-            }}
-          />
-          {isEditing && (
-            <>
-              <StyledIconButton
-                onClick={() => {
-                  editDomain(inputText);
-                }}>
-                <SaveIcon />
-              </StyledIconButton>
-              <StyledIconButton
-                onClick={() => {
-                  cancelEdit();
-                }}>
-                <CloseIcon />
-              </StyledIconButton>
-            </>
-          )}
+            onMouseLeave={() => {
+              setIsHovering(false);
+            }}>
+            <Input
+              ref={inputRef}
+              value={inputText}
+              readOnly={!isEditing}
+              onChange={(e) => {
+                setInputText(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  editDomain();
+                }
+              }}
+              onDoubleClick={() => {
+                startEdit();
+                inputRef.current.setSelectionRange(-1, -1); // set cursor to end
+              }}
+            />
+            {isEditing && (
+              <>
+                <StyledIconButton
+                  onClick={() => {
+                    editDomain();
+                  }}>
+                  <SaveIcon />
+                </StyledIconButton>
+                <StyledIconButton
+                  onClick={() => {
+                    cancelEdit();
+                  }}>
+                  <CloseIcon />
+                </StyledIconButton>
+              </>
+            )}
 
-          <ListItemOptions
-            showTrigger={isHovering && !isDraggingOver}
-            startEdit={startEdit}
-            cancelEdit={cancelEdit}
-            isEditing={isEditing}
-            deleteDomain={deleteDomain}
-          />
+            <ListItemOptions
+              domain={domain}
+              showTrigger={isHovering && !isDraggingOver}
+              startEdit={startEdit}
+              cancelEdit={cancelEdit}
+              isEditing={isEditing}
+            />
 
-          {isDragEnabled && (
-            <DragHandle {...provided.dragHandleProps}>
-              <DragHandleIcon />
-            </DragHandle>
-          )}
-        </StyledListItem>
+            {isDragEnabled && (
+              <DragHandle {...provided.dragHandleProps}>
+                <DragHandleIcon />
+              </DragHandle>
+            )}
+          </StyledListItem>
+        </div>
       )}
     </Draggable>
   );
 }
-
-ListItem.propTypes = {
-  domain: PropTypes.string.isRequired,
-  deleteDomain: PropTypes.func.isRequired,
-  editDomain: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  isDragEnabled: PropTypes.bool.isRequired,
-  isDraggingOver: PropTypes.bool.isRequired,
-};
 
 const StyledListItem = styled.li`
   display: flex;
@@ -134,4 +147,4 @@ const StyledIconButton = styled(IconButton)`
   color: #ababab;
 `;
 
-export default ListItem;
+export default React.forwardRef(ListItem);

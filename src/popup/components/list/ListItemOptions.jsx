@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown } from '../dropdown';
 import styled from 'styled-components';
 import { MoreIcon } from '../../icons';
 import { IconButton } from '../button';
+import DomainContext from '../../context/DomainContext';
 
-function ListItemOptions({ isEditing, startEdit, deleteDomain, cancelEdit, showTrigger }) {
+function ListItemOptions({ domain, isEditing, startEdit, cancelEdit, showTrigger }) {
+  const [domainList, setDomainList] = useContext(DomainContext);
+
   const editOption = {
     text: 'Edit',
     onClick: () => {
@@ -23,7 +26,7 @@ function ListItemOptions({ isEditing, startEdit, deleteDomain, cancelEdit, showT
   const deleteOption = {
     text: 'Delete',
     onClick: () => {
-      deleteDomain();
+      setDomainList(domainList.filter((_domain) => _domain !== domain));
     },
   };
 
@@ -43,7 +46,6 @@ ListItemOptions.propTypes = {
   startEdit: PropTypes.func.isRequired,
   cancelEdit: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  deleteDomain: PropTypes.func.isRequired,
   showTrigger: PropTypes.bool.isRequired,
 };
 
