@@ -15,13 +15,13 @@ function List({ isDragEnabled }) {
     ref: React.createRef(),
   }));
 
+  // Scroll to the domain added
   useEffect(() => {
     if (testList.length - prevDomainList.length === 1) {
-      // let diff = testList[testList.length - 1];
-      // diff.ref.current.scrollIntoView();
-      console.log('ADDING 1!');
+      let diff = domainList.filter((domain) => !prevDomainList.includes(domain))[0];
+      testList[domainList.indexOf(diff)].ref.current.scrollIntoView();
     }
-  }, [prevDomainList, testList]);
+  }, [prevDomainList, testList, domainList]);
 
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
