@@ -15,10 +15,10 @@ function InputSettingsDropdown() {
           text: 'Disable Filter',
           onClick: () => {},
         },
-        {
-          text: 'Switch to Whitelist',
-          onClick: () => {},
-        },
+        // {
+        //   text: 'Switch to Whitelist',
+        //   onClick: () => {},
+        // },
       ]}
     />
   );
