@@ -6,7 +6,7 @@ import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import DomainContext from '../../context/DomainContext';
 import { usePrevious } from '../../hooks';
 
-function List({ isDragEnabled }) {
+function List({ isListAutoSorted }) {
   const [domainList, setDomainList] = useContext(DomainContext);
   const prevDomainList = usePrevious(domainList);
 
@@ -15,13 +15,16 @@ function List({ isDragEnabled }) {
     ref: React.createRef(),
   }));
 
-  // Scroll to the domain added
+  // Scroll to the domain added or edited
   useEffect(() => {
-    if (testList.length - prevDomainList.length === 1) {
-      let diff = domainList.filter((domain) => !prevDomainList.includes(domain))[0];
-      testList[domainList.indexOf(diff)].ref.current.scrollIntoView();
+    if (isListAutoSorted) {
+      const diff = domainList.filter((domain) => !prevDomainList.includes(domain))[0];
+
+      if (testList[domainList.indexOf(diff)]) {
+        testList[domainList.indexOf(diff)].ref.current.scrollIntoView();
+      }
     }
-  }, [prevDomainList, testList, domainList]);
+  }, [prevDomainList, testList, domainList, isListAutoSorted]);
 
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
@@ -55,7 +58,7 @@ function List({ isDragEnabled }) {
                 key={domain}
                 index={idx}
                 domain={domain}
-                isDragEnabled={isDragEnabled}
+                isListAutoSorted={isListAutoSorted}
                 isDraggingOver={snapshot.isDraggingOver}
               />
             ))}
@@ -68,7 +71,7 @@ function List({ isDragEnabled }) {
 }
 
 List.propTypes = {
-  isDragEnabled: PropTypes.bool.isRequired,
+  isListAutoSorted: PropTypes.bool.isRequired,
 };
 
 const StyledList = styled.ul`

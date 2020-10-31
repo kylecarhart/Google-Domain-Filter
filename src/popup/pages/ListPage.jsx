@@ -6,14 +6,14 @@ import { List } from '../components/list';
 import styled from 'styled-components';
 import DomainContext from '../context/DomainContext';
 
-function ListPage({ storageKey, isDragEnabled }) {
+function ListPage({ storageKey, isListAutoSorted }) {
   const [domainList, setDomainList] = useStorage(storageKey, []);
 
   return (
-    <DomainContext.Provider value={[domainList, setDomainList, isDragEnabled]}>
+    <DomainContext.Provider value={[domainList, setDomainList, isListAutoSorted]}>
       <Page>
         <DomainInputBar />
-        <List isDragEnabled={isDragEnabled} />
+        <List isListAutoSorted={isListAutoSorted} />
       </Page>
     </DomainContext.Provider>
   );
@@ -27,7 +27,7 @@ const Page = styled.div`
 
 ListPage.propTypes = {
   storageKey: PropTypes.string.isRequired,
-  isDragEnabled: PropTypes.bool.isRequired,
+  isListAutoSorted: PropTypes.bool.isRequired,
 };
 
 export default ListPage;

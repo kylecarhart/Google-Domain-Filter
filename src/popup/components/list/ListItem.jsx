@@ -6,8 +6,9 @@ import ListItemOptions from './ListItemOptions';
 import { IconButton } from '../button';
 import DomainContext from '../../context/DomainContext';
 import validator from 'validator';
+import { sortLexIgnoreCase } from '../../../utils';
 
-function ListItem({ domain, index, isDragEnabled, isDraggingOver }, ref) {
+function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
   const [domainList, setDomainList] = useContext(DomainContext);
 
   const [inputText, setInputText] = useState(domain);
@@ -32,19 +33,25 @@ function ListItem({ domain, index, isDragEnabled, isDraggingOver }, ref) {
     }
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
       setDomainList((domainList) => {
-        return domainList.map((_domain) => {
+        const editedList = domainList.map((_domain) => {
           if (_domain === domain) {
             return inputText;
           } else {
             return _domain;
           }
         });
+
+        if (isListAutoSorted) {
+          return sortLexIgnoreCase(editedList);
+        }
+
+        return editedList;
       });
     }
   };
 
   return (
-    <Draggable draggableId={domain} index={index} isDragDisabled={!isDragEnabled}>
+    <Draggable draggableId={domain} index={index} isDragDisabled={isListAutoSorted}>
       {(provided, snapshot) => (
         <div ref={ref}>
           <StyledListItem
@@ -99,7 +106,7 @@ function ListItem({ domain, index, isDragEnabled, isDraggingOver }, ref) {
               isEditing={isEditing}
             />
 
-            {isDragEnabled && (
+            {!isListAutoSorted && (
               <DragHandle {...provided.dragHandleProps}>
                 <DragHandleIcon />
               </DragHandle>

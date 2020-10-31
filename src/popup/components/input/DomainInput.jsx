@@ -8,11 +8,11 @@ import { sortLexIgnoreCase } from '../../../utils';
 
 function DomainInput({ ...props }) {
   const [inputText, setInputText] = useState('');
-  const [domainList, setDomainList, isPreferenceList] = useContext(DomainContext);
+  const [domainList, setDomainList, isListAutoSorted] = useContext(DomainContext);
 
   const addDomain = () => {
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
-      if (!isPreferenceList) {
+      if (isListAutoSorted) {
         setDomainList((domainList) => sortLexIgnoreCase([...domainList, inputText]));
       } else {
         setDomainList((domainList) => [inputText, ...domainList]);
