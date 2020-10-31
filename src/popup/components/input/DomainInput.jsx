@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from '../button';
 import DomainContext from '../../context/DomainContext';
 import validator from 'validator';
-import { sortLexIgnoreCase } from '../../utils';
+import { sortLexIgnoreCase } from '../../../utils';
 
 function DomainInput({ ...props }) {
   const [inputText, setInputText] = useState('');
