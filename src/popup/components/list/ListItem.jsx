@@ -31,12 +31,12 @@ function ListItem({ domain, index, isDragEnabled, isDraggingOver }, ref) {
       return;
     }
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
-      setDomainList((filterList) => {
-        return filterList.map((domain) => {
-          if (domain === domain) {
+      setDomainList((domainList) => {
+        return domainList.map((_domain) => {
+          if (_domain === domain) {
             return inputText;
           } else {
-            return domain;
+            return _domain;
           }
         });
       });
