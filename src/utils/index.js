@@ -24,16 +24,31 @@ export function toIncludeQuery(...domains) {
 
 /**
  * Sort an array of strings lexicographically while ignoring case.
- * @param {[string]} list - An array of strings.
+ * @param {[string]} arr - An array of strings.
  * @param {boolean} dir - Direction. Default true for ascending.
  */
-export function sortLexIgnoreCase(list, dir = ASC) {
-  return [...list].sort(function (a, b) {
+export function sortLexIgnoreCase(arr, dir = ASC) {
+  return [...arr].sort(function (a, b) {
     if (a.toUpperCase() < b.toUpperCase()) {
       return dir ? -1 : 1;
     } else if (a.toUpperCase() > b.toUpperCase()) {
       return dir ? 1 : -1;
     }
     return 0;
+  });
+}
+
+/**
+ * Searches an array of strings and replaces all occurances of from with to.
+ * @param {[string]} arr  - An array of strings.
+ * @param {string} from - The string you want to change from.
+ * @param {string} to - The string you want to change to.
+ */
+export function replaceStringInArray(arr, from, to) {
+  arr.map((str) => {
+    if (str === from) {
+      return to;
+    }
+    return str;
   });
 }

@@ -6,7 +6,7 @@ import ListItemOptions from './ListItemOptions';
 import { IconButton } from '../button';
 import DomainContext from '../../context/DomainContext';
 import validator from 'validator';
-import { sortLexIgnoreCase } from '../../../utils';
+import { replaceStringInArray, sortLexIgnoreCase } from '../../../utils';
 
 function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
   const [domainList, setDomainList] = useContext(DomainContext);
@@ -33,13 +33,7 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
     }
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
       setDomainList((domainList) => {
-        const editedList = domainList.map((_domain) => {
-          if (_domain === domain) {
-            return inputText;
-          } else {
-            return _domain;
-          }
-        });
+        const editedList = replaceStringInArray(domainList, domain, inputText);
 
         if (isListAutoSorted) {
           return sortLexIgnoreCase(editedList);
