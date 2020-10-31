@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-function Button({ children, onClick, type = 'default', ...props }, ref) {
+function Button({ children, ...props }, ref) {
   return (
-    <StyledButton ref={ref} onClick={onClick} type={type} {...props}>
+    <StyledButton ref={ref} {...props}>
       {children}
     </StyledButton>
   );
