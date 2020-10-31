@@ -4,24 +4,16 @@ import styled from 'styled-components';
 import { Button } from '../button';
 import DomainContext from '../../context/DomainContext';
 import validator from 'validator';
+import { sortLexIgnoreCase } from '../../utils';
 
 function DomainInput({ ...props }) {
   const [inputText, setInputText] = useState('');
-  const [domainList, setDomainList, isDragEnabled] = useContext(DomainContext);
+  const [domainList, setDomainList, isPreferenceList] = useContext(DomainContext);
 
   const addDomain = () => {
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
-      if (!isDragEnabled) {
-        setDomainList((domainList) =>
-          [...domainList, inputText].sort(function (a, b) {
-            if (a.toUpperCase() < b.toUpperCase()) {
-              return -1;
-            } else if (a.toUpperCase() > b.toUpperCase()) {
-              return 1;
-            }
-            return 0;
-          })
-        );
+      if (!isPreferenceList) {
+        setDomainList((domainList) => sortLexIgnoreCase([...domainList, inputText]));
       } else {
         setDomainList((domainList) => [inputText, ...domainList]);
       }
