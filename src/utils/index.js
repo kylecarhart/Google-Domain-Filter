@@ -45,7 +45,7 @@ export function sortLexIgnoreCase(arr, dir = ASC) {
  * @param {string} to - The string you want to change to.
  */
 export function replaceStringInArray(arr, from, to) {
-  arr.map((str) => {
+  return arr.map((str) => {
     if (str === from) {
       return to;
     }
