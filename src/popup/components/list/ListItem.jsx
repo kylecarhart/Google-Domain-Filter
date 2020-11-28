@@ -1,16 +1,16 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { CloseIcon, DragHandleIcon, SaveIcon } from "../../icons";
 import { Draggable } from "react-beautiful-dnd";
 import ListItemOptions from "./ListItemOptions";
 import { IconButton } from "../button";
-import DomainContext from "../../context/DomainContext";
 import validator from "validator";
 import { replaceStringInArray, sortLexIgnoreCase } from "../../../utils";
 
-function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
-  const [domainList, setDomainList] = useContext(DomainContext);
-
+function ListItem(
+  { domain, index, isListAutoSorted, isDraggingOver, setDomains },
+  ref
+) {
   const [inputText, setInputText] = useState(domain);
   const [isHovering, setIsHovering] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -28,20 +28,23 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
   };
 
   const editDomain = () => {
-    if (domain === inputText) {
+    if (domain === inputText || !validator.isFQDN(inputText)) {
       return;
     }
-    if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
-      setDomainList((domainList) => {
-        const editedList = replaceStringInArray(domainList, domain, inputText);
 
-        if (isListAutoSorted) {
-          return sortLexIgnoreCase(editedList);
-        }
+    setDomains((domainList) => {
+      if (domainList.includes(inputText)) {
+        return null;
+      }
 
-        return editedList;
-      });
-    }
+      const editedList = replaceStringInArray(domainList, domain, inputText);
+
+      if (isListAutoSorted) {
+        return sortLexIgnoreCase(editedList);
+      }
+
+      return editedList;
+    });
   };
 
   return (
@@ -101,6 +104,7 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
 
             <ListItemOptions
               domain={domain}
+              setDomains={setDomains}
               showTrigger={isHovering && !isDraggingOver}
               startEdit={startEdit}
               cancelEdit={cancelEdit}

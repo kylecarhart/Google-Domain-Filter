@@ -1,16 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import ListItem from "./ListItem";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
-import DomainContext from "../../context/DomainContext";
 import { usePrevious } from "../../hooks";
 
-function List({ isListAutoSorted }) {
-  const [domainList, setDomainList] = useContext(DomainContext);
-  const prevDomainList = usePrevious(domainList);
+function List({ domains, setDomains, isListAutoSorted }) {
+  const prevDomainList = usePrevious(domains);
 
-  const testList = domainList.map((domain) => ({
+  const testList = domains.map((domain) => ({
     domain,
     ref: React.createRef(),
   }));
@@ -18,15 +16,15 @@ function List({ isListAutoSorted }) {
   // Scroll to the domain added or edited
   useEffect(() => {
     if (isListAutoSorted) {
-      const diff = domainList.filter(
+      const diff = domains.filter(
         (domain) => !prevDomainList.includes(domain)
       )[0];
 
-      if (testList[domainList.indexOf(diff)]) {
-        testList[domainList.indexOf(diff)].ref.current.scrollIntoView();
+      if (testList[domains.indexOf(diff)]) {
+        testList[domains.indexOf(diff)].ref.current.scrollIntoView();
       }
     }
-  }, [prevDomainList, testList, domainList, isListAutoSorted]);
+  }, [prevDomainList, testList, domains, isListAutoSorted]);
 
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
@@ -41,7 +39,7 @@ function List({ isListAutoSorted }) {
   }
 
   const reorderDomains = (domain, source, destination) => {
-    setDomainList((oldList) => {
+    setDomains((oldList) => {
       const tempList = Array.from(oldList);
       tempList.splice(source.index, 1);
       tempList.splice(destination.index, 0, domain);
@@ -62,6 +60,7 @@ function List({ isListAutoSorted }) {
                 domain={domain}
                 isListAutoSorted={isListAutoSorted}
                 isDraggingOver={snapshot.isDraggingOver}
+                setDomains={setDomains}
               />
             ))}
             {provided.placeholder}
@@ -73,6 +72,8 @@ function List({ isListAutoSorted }) {
 }
 
 List.propTypes = {
+  domains: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setDomains: PropTypes.func.isRequired,
   isListAutoSorted: PropTypes.bool.isRequired,
 };
 

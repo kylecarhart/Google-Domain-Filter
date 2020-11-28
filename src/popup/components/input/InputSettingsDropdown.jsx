@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "../button";
 import { Dropdown } from "../dropdown";
-import DomainContext from "../../context/DomainContext";
 
 function InputSettingsDropdown() {
-  const [domainList, setDomainList] = useContext(DomainContext);
-
   return (
     <Dropdown
       trigger={() => <Button>Settings</Button>}

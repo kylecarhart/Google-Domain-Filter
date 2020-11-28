@@ -1,25 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Button } from "../button";
-import DomainContext from "../../context/DomainContext";
 import validator from "validator";
 import { sortLexIgnoreCase } from "../../../utils";
 
-function DomainInput({ ...props }) {
+function DomainInput({ domains, setDomains, isListAutoSorted, ...props }) {
   const [inputText, setInputText] = useState("");
-  const [domainList, setDomainList, isListAutoSorted] = useContext(
-    DomainContext
-  );
 
   const addDomain = () => {
-    if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
+    if (validator.isFQDN(inputText) && !domains.includes(inputText)) {
       if (isListAutoSorted) {
-        setDomainList((domainList) =>
+        setDomains((domainList) =>
           sortLexIgnoreCase([...domainList, inputText])
         );
       } else {
-        setDomainList((domainList) => [inputText, ...domainList]);
+        setDomains((domainList) => [inputText, ...domainList]);
       }
       setInputText("");
     }
@@ -51,7 +47,11 @@ function DomainInput({ ...props }) {
   );
 }
 
-DomainInput.propTypes = {};
+DomainInput.propTypes = {
+  domains: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setDomains: PropTypes.func.isRequired,
+  isListAutoSorted: PropTypes.bool.isRequired,
+};
 
 const StyledDomainInput = styled.div`
   display: flex;
