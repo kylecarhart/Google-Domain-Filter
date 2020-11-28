@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { usePopper } from 'react-popper';
-import { useOutsideClick } from '../../hooks';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { usePopper } from "react-popper";
+import { useOutsideClick } from "../../hooks";
 
-function DropdownMenu({ referenceElement, placement = 'bottom-end', onOutsideClick, children }) {
+function DropdownMenu({
+  referenceElement,
+  placement = "bottom-end",
+  onOutsideClick,
+  children,
+}) {
   const [popperElement, setPopperElement] = useState(null);
 
   useOutsideClick(popperElement, (e) => {
@@ -17,19 +22,23 @@ function DropdownMenu({ referenceElement, placement = 'bottom-end', onOutsideCli
     placement,
     modifiers: [
       {
-        name: 'offset',
+        name: "offset",
         options: {
           offset: [0, 10],
         },
       },
       {
-        name: 'hide',
+        name: "hide",
       },
     ],
   });
 
   return (
-    <StyledDropdownMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+    <StyledDropdownMenu
+      ref={setPopperElement}
+      style={styles.popper}
+      {...attributes.popper}
+    >
       {children}
     </StyledDropdownMenu>
   );
@@ -51,7 +60,7 @@ const StyledDropdownMenu = styled.ul`
   margin: 0;
   font-size: 14px;
 
-  &[data-popper-reference-hidden='true'] {
+  &[data-popper-reference-hidden="true"] {
     visibility: hidden;
     pointer-events: none;
   }

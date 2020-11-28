@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { DomainInput } from '.';
-import styled from 'styled-components';
-import InputSettingsDropdown from './InputSettingsDropdown';
+import React from "react";
+import PropTypes from "prop-types";
+import { DomainInput } from ".";
+import styled from "styled-components";
+import InputSettingsDropdown from "./InputSettingsDropdown";
 
 function DomainInputBar() {
   return (

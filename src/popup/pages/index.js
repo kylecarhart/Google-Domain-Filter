@@ -1,4 +1,4 @@
-import FilterListPage from './FilterListPage';
-import PreferenceListPage from './PreferenceListPage';
+import FilterListPage from "./FilterListPage";
+import PreferenceListPage from "./PreferenceListPage";
 
 export { FilterListPage, PreferenceListPage };

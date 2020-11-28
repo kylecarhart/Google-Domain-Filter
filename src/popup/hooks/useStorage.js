@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 /**
  * Automatically retrieves and sets values in storage of specified key.
@@ -18,7 +18,8 @@ function useStorage(key, initialValue) {
 
   const setValue = async (value) => {
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value; // allows for lazy state initialization
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value; // allows for lazy state initialization
       setStoredValue(valueToStore);
       await browser.storage.sync.set({ [key]: valueToStore });
     } catch (error) {

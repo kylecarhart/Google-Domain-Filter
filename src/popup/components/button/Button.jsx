@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
+import React from "react";
+import styled, { css } from "styled-components";
 
 function Button({ children, ...props }, ref) {
   return (
@@ -36,7 +36,7 @@ const StyledButton = styled.button`
   margin-left: 8px;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
 
-  ${({ type }) => (type === 'primary' ? primaryStyle : defaultStyle)}
+  ${({ type }) => (type === "primary" ? primaryStyle : defaultStyle)}
 `;
 
 export default React.forwardRef(Button);

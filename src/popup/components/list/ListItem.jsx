@@ -1,12 +1,12 @@
-import React, { useState, useRef, useContext } from 'react';
-import styled from 'styled-components';
-import { CloseIcon, DragHandleIcon, SaveIcon } from '../../icons';
-import { Draggable } from 'react-beautiful-dnd';
-import ListItemOptions from './ListItemOptions';
-import { IconButton } from '../button';
-import DomainContext from '../../context/DomainContext';
-import validator from 'validator';
-import { replaceStringInArray, sortLexIgnoreCase } from '../../../utils';
+import React, { useState, useRef, useContext } from "react";
+import styled from "styled-components";
+import { CloseIcon, DragHandleIcon, SaveIcon } from "../../icons";
+import { Draggable } from "react-beautiful-dnd";
+import ListItemOptions from "./ListItemOptions";
+import { IconButton } from "../button";
+import DomainContext from "../../context/DomainContext";
+import validator from "validator";
+import { replaceStringInArray, sortLexIgnoreCase } from "../../../utils";
 
 function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
   const [domainList, setDomainList] = useContext(DomainContext);
@@ -45,7 +45,11 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
   };
 
   return (
-    <Draggable draggableId={domain} index={index} isDragDisabled={isListAutoSorted}>
+    <Draggable
+      draggableId={domain}
+      index={index}
+      isDragDisabled={isListAutoSorted}
+    >
       {(provided, snapshot) => (
         <div ref={ref}>
           <StyledListItem
@@ -57,7 +61,8 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
             }}
             onMouseLeave={() => {
               setIsHovering(false);
-            }}>
+            }}
+          >
             <Input
               ref={inputRef}
               value={inputText}
@@ -66,7 +71,7 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
                 setInputText(e.target.value);
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   editDomain();
                 }
               }}
@@ -80,13 +85,15 @@ function ListItem({ domain, index, isListAutoSorted, isDraggingOver }, ref) {
                 <StyledIconButton
                   onClick={() => {
                     editDomain();
-                  }}>
+                  }}
+                >
                   <SaveIcon />
                 </StyledIconButton>
                 <StyledIconButton
                   onClick={() => {
                     cancelEdit();
-                  }}>
+                  }}
+                >
                   <CloseIcon />
                 </StyledIconButton>
               </>
@@ -119,9 +126,10 @@ const StyledListItem = styled.li`
   color: #333;
   font-size: 14px;
   padding: 8px 16px;
-  border-bottom: ${({ isDragging }) => (isDragging ? '' : '1px solid #f7f7f7')};
+  border-bottom: ${({ isDragging }) => (isDragging ? "" : "1px solid #f7f7f7")};
   background: #fff;
-  box-shadow: ${({ isDragging }) => (isDragging ? '0px 0px 15px rgba(0,0,0,.1)' : 'none')};
+  box-shadow: ${({ isDragging }) =>
+    isDragging ? "0px 0px 15px rgba(0,0,0,.1)" : "none"};
 
   &:last-child {
     border: none;

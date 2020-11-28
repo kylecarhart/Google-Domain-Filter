@@ -13,7 +13,10 @@ class Observer {
         mutation.addedNodes.forEach((addedNode) => {
           switch (addedNode.nodeType) {
             case TEXT_NODE:
-              addedNode.nodeValue = addedNode.nodeValue.replace(this.filterString, '');
+              addedNode.nodeValue = addedNode.nodeValue.replace(
+                this.filterString,
+                ""
+              );
               break;
             default:
               break;

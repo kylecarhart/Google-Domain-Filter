@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { DropdownMenu, DropdownMenuItem } from '.';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { DropdownMenu, DropdownMenuItem } from ".";
 
 function Dropdown({ trigger, items }) {
   const [referenceElement, setReferenceElement] = useState(null);
@@ -25,7 +25,8 @@ function Dropdown({ trigger, items }) {
           referenceElement={referenceElement}
           onOutsideClick={() => {
             setIsMenuShowing(false);
-          }}>
+          }}
+        >
           {items.map((item, idx) => (
             <DropdownMenuItem
               key={idx}

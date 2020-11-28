@@ -1,11 +1,11 @@
-import { tlds } from '../tlds.json';
-import { toExcludeQuery } from '../utils';
+import { tlds } from "../tlds.json";
+import { toExcludeQuery } from "../utils";
 
 /**
  * Handles redirecting google queries based on the filter list.
  */
 (async function () {
-  const storage = await browser.storage.sync.get('filterList');
+  const storage = await browser.storage.sync.get("filterList");
   let filterList = storage.filterList || []; // default to empty array
 
   // Update domains when storage domains change
@@ -29,8 +29,8 @@ import { toExcludeQuery } from '../utils';
 
       // Add the sites to the query if it doesn't contain them already
       // This avoids the infinite request loop.
-      if (!filterList.every((domain) => params.get('q').includes(domain))) {
-        params.set('q', `${params.get('q')} ${filterString}`);
+      if (!filterList.every((domain) => params.get("q").includes(domain))) {
+        params.set("q", `${params.get("q")} ${filterString}`);
       } else {
         return;
       }
@@ -41,8 +41,8 @@ import { toExcludeQuery } from '../utils';
     },
     {
       urls: tlds.map((tld) => `*://*.google.${tld}/search?*`),
-      types: ['main_frame'],
+      types: ["main_frame"],
     },
-    ['blocking']
+    ["blocking"]
   );
 })();

@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { NavBar } from './components/nav';
-import { FilterListPage, PreferenceListPage } from './pages';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { NavBar } from "./components/nav";
+import { FilterListPage, PreferenceListPage } from "./pages";
 
 export default function App() {
-  const [selected, setSelected] = useState('filterList');
+  const [selected, setSelected] = useState("filterList");
 
   const currentPage = () => {
     switch (selected) {
-      case 'filterList':
+      case "filterList":
         return <FilterListPage />;
-      case 'preferenceList':
+      case "preferenceList":
         return <PreferenceListPage />;
       default:
         break;

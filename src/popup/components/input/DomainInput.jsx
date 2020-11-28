@@ -1,23 +1,27 @@
-import React, { useContext, useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Button } from '../button';
-import DomainContext from '../../context/DomainContext';
-import validator from 'validator';
-import { sortLexIgnoreCase } from '../../../utils';
+import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { Button } from "../button";
+import DomainContext from "../../context/DomainContext";
+import validator from "validator";
+import { sortLexIgnoreCase } from "../../../utils";
 
 function DomainInput({ ...props }) {
-  const [inputText, setInputText] = useState('');
-  const [domainList, setDomainList, isListAutoSorted] = useContext(DomainContext);
+  const [inputText, setInputText] = useState("");
+  const [domainList, setDomainList, isListAutoSorted] = useContext(
+    DomainContext
+  );
 
   const addDomain = () => {
     if (validator.isFQDN(inputText) && !domainList.includes(inputText)) {
       if (isListAutoSorted) {
-        setDomainList((domainList) => sortLexIgnoreCase([...domainList, inputText]));
+        setDomainList((domainList) =>
+          sortLexIgnoreCase([...domainList, inputText])
+        );
       } else {
         setDomainList((domainList) => [inputText, ...domainList]);
       }
-      setInputText('');
+      setInputText("");
     }
   };
 
@@ -30,7 +34,7 @@ function DomainInput({ ...props }) {
           setInputText(e.target.value);
         }}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === "Enter") {
             addDomain();
           }
         }}
@@ -39,7 +43,8 @@ function DomainInput({ ...props }) {
         type="primary"
         onClick={() => {
           addDomain();
-        }}>
+        }}
+      >
         Add
       </Button>
     </StyledDomainInput>

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import NavTip from './NavTip';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import NavTip from "./NavTip";
 
 function NavItem({ text, navId, tipText, selected, setSelected }) {
   return (
@@ -9,7 +9,8 @@ function NavItem({ text, navId, tipText, selected, setSelected }) {
       selected={selected}
       onClick={() => {
         setSelected(navId);
-      }}>
+      }}
+    >
       <Text>{text}</Text>
       <NavTip text={tipText} />
     </Button>
@@ -35,15 +36,15 @@ const Button = styled.div`
   cursor: pointer;
   border-radius: 0;
   border: none;
-  background: ${(props) => (props.selected ? '#fff' : '#eee')};
-  color: ${(props) => (props.selected ? '#318BF5' : '#333')};
+  background: ${(props) => (props.selected ? "#fff" : "#eee")};
+  color: ${(props) => (props.selected ? "#318BF5" : "#333")};
   box-shadow: ${(props) =>
     props.selected
-      ? 'inset 0 -2px 0 0 #318BF5, 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);'
-      : 'inset 0px 0px 0px 1px #DBDBDB'};
+      ? "inset 0 -2px 0 0 #318BF5, 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);"
+      : "inset 0px 0px 0px 1px #DBDBDB"};
 
   &:hover {
-    background: ${(props) => (props.selected ? '' : '#f2f2f2')};
+    background: ${(props) => (props.selected ? "" : "#f2f2f2")};
   }
 `;
 

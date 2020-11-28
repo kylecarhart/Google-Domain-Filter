@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import ListItem from './ListItem';
-import { Droppable, DragDropContext } from 'react-beautiful-dnd';
-import DomainContext from '../../context/DomainContext';
-import { usePrevious } from '../../hooks';
+import React, { useContext, useEffect } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import ListItem from "./ListItem";
+import { Droppable, DragDropContext } from "react-beautiful-dnd";
+import DomainContext from "../../context/DomainContext";
+import { usePrevious } from "../../hooks";
 
 function List({ isListAutoSorted }) {
   const [domainList, setDomainList] = useContext(DomainContext);
@@ -18,7 +18,9 @@ function List({ isListAutoSorted }) {
   // Scroll to the domain added or edited
   useEffect(() => {
     if (isListAutoSorted) {
-      const diff = domainList.filter((domain) => !prevDomainList.includes(domain))[0];
+      const diff = domainList.filter(
+        (domain) => !prevDomainList.includes(domain)
+      )[0];
 
       if (testList[domainList.indexOf(diff)]) {
         testList[domainList.indexOf(diff)].ref.current.scrollIntoView();
@@ -49,7 +51,7 @@ function List({ isListAutoSorted }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId={'list'}>
+      <Droppable droppableId={"list"}>
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
             {testList.map(({ domain, ref }, idx) => (

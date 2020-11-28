@@ -1,10 +1,14 @@
-import { toExcludeQuery } from '../utils';
-import { Observer } from './Observer';
-import { removeFromInput, removeFromTitle, storageChangeListener } from './mutations';
+import { toExcludeQuery } from "../utils";
+import { Observer } from "./Observer";
+import {
+  removeFromInput,
+  removeFromTitle,
+  storageChangeListener,
+} from "./mutations";
 
 // Start google domain filtering script
 (async function () {
-  const storage = await browser.storage.sync.get('filterList');
+  const storage = await browser.storage.sync.get("filterList");
   const filterList = storage.filterList || [];
 
   if (filterList.length === 0) {
@@ -17,7 +21,7 @@ import { removeFromInput, removeFromTitle, storageChangeListener } from './mutat
   const observer = new Observer(filterString);
   observer.observe();
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     observer.disconnect();
   });
 

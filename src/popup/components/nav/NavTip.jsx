@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Tippy from '@tippyjs/react';
-import styled from 'styled-components';
-import { HelpCircleIcon } from '../../icons';
+import React from "react";
+import PropTypes from "prop-types";
+import Tippy from "@tippyjs/react";
+import styled from "styled-components";
+import { HelpCircleIcon } from "../../icons";
 
 function NavTip({ text }) {
   return (
-    <StyledTippy content={text} delay={[300, 0]} arrow={true} placement="bottom">
+    <StyledTippy
+      content={text}
+      delay={[300, 0]}
+      arrow={true}
+      placement="bottom"
+    >
       <Icon />
     </StyledTippy>
   );
@@ -33,7 +38,7 @@ const StyledTippy = styled(Tippy)`
     color: rgba(0, 0, 0, 0.75);
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       border-color: transparent;
       border-style: solid;

@@ -1,5 +1,5 @@
-const EXCLUDE_QUERY = '-site';
-const INCLUDE_QUERY = '+site';
+const EXCLUDE_QUERY = "-site";
+const INCLUDE_QUERY = "+site";
 
 export const ASC = true;
 export const DESC = false;
@@ -10,7 +10,7 @@ export const DESC = false;
  * @return {string} A domain exclusion query string.
  */
 export function toExcludeQuery(...domains) {
-  return domains.map((domain) => `${EXCLUDE_QUERY}:${domain}`).join(' ');
+  return domains.map((domain) => `${EXCLUDE_QUERY}:${domain}`).join(" ");
 }
 
 /**
@@ -19,7 +19,7 @@ export function toExcludeQuery(...domains) {
  * @return {string} A domain inclusion query string.
  */
 export function toIncludeQuery(...domains) {
-  return domains.map((domain) => `${INCLUDE_QUERY}:${domain}`).join(' ');
+  return domains.map((domain) => `${INCLUDE_QUERY}:${domain}`).join(" ");
 }
 
 /**

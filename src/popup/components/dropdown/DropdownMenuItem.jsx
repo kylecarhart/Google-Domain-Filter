@@ -1,9 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 function DropdownMenuItem({ onClick, text }) {
-  return <StyledDropdownMenuItem onClick={onClick}>{text}</StyledDropdownMenuItem>;
+  return (
+    <StyledDropdownMenuItem onClick={onClick}>{text}</StyledDropdownMenuItem>
+  );
 }
 
 DropdownMenuItem.propTypes = {

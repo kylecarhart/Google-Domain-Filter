@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 /**
  * Listens for a click outside the ref and fires the callback.
@@ -21,10 +21,10 @@ function useOutsideClick(ref, callback, disabled = false) {
     };
 
     if (!disabled) {
-      document.addEventListener('mousedown', handleClick);
+      document.addEventListener("mousedown", handleClick);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener("mousedown", handleClick);
     };
   }, [ref, callback, disabled]);
 }

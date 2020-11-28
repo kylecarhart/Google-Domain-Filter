@@ -9,12 +9,12 @@ function storageChangeListener(storage) {
   }
 
   // Get all links on the page related to a google search
-  document.querySelectorAll('.g .rc a:not([class])').forEach((node) => {
-    const closestNode = node.closest('.g');
+  document.querySelectorAll(".g .rc a:not([class])").forEach((node) => {
+    const closestNode = node.closest(".g");
 
     for (let i = 0; i < filterList.length; i++) {
       if (node.href.includes(filterList[i])) {
-        closestNode.style.display = 'none';
+        closestNode.style.display = "none";
         break;
       }
     }
@@ -26,8 +26,8 @@ function storageChangeListener(storage) {
  * @param {string} string
  */
 function removeFromTitle(string) {
-  const title = document.querySelector('title');
-  title.text = title.text.replace(string, '');
+  const title = document.querySelector("title");
+  title.text = title.text.replace(string, "");
 }
 
 /**
