@@ -6,8 +6,8 @@
   "scripts": {
     "watch": "npm run clean && webpack --env.mode=development --env.watch",
     "build": "webpack --env.mode=production",
-    "start": "web-ext run -t firefox-desktop -t chromium -u google.com --source-dir ./dist/",
-    "start:firefox": "web-ext run -t firefox-desktop -u google.com --source-dir ./dist/",
+    "start": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -t chromium -u google.com --source-dir ./dist/",
+    "start:firefox": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -u google.com --source-dir ./dist/",
     "start:chrome": "web-ext run -t chromium -u google.com --source-dir ./dist/",
     "clean": "rimraf dist"
   },
@@ -29,7 +29,7 @@
     "html-webpack-plugin": "^3.2.0",
     "rimraf": "^3.0.2",
     "style-loader": "^1.2.1",
-    "web-ext": "^4.3.0",
+    "web-ext": "^5.4.0",
     "webextension-polyfill": "^0.6.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
