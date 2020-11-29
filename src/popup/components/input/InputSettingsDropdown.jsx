@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "../button";
-import { Dropdown } from "../Dropdown";
+import Dropdown from "../Dropdown";
 
 function InputSettingsDropdown() {
   return (
