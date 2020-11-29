@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Dropdown } from "../dropdown";
+import { Dropdown } from "../Dropdown";
 import styled from "styled-components";
 import { MoreIcon } from "../../icons";
 import { IconButton } from "../button";
