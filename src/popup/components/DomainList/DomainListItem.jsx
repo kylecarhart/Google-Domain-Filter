@@ -2,12 +2,12 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { CloseIcon, DragHandleIcon, SaveIcon } from "../../icons";
 import { Draggable } from "react-beautiful-dnd";
-import ListItemOptions from "./ListItemOptions";
+import DomainListItemOptions from "./DomainListItemOptions";
 import { IconButton } from "../button";
 import validator from "validator";
 import { replaceStringInArray, sortLexIgnoreCase } from "../../../utils";
 
-function ListItem(
+function DomainListItem(
   { domain, index, isListAutoSorted, isDraggingOver, setDomains },
   ref
 ) {
@@ -102,7 +102,7 @@ function ListItem(
               </>
             )}
 
-            <ListItemOptions
+            <DomainListItemOptions
               domain={domain}
               setDomains={setDomains}
               showTrigger={isHovering && !isDraggingOver}
@@ -160,4 +160,4 @@ const StyledIconButton = styled(IconButton)`
   color: #ababab;
 `;
 
-export default React.forwardRef(ListItem);
+export default React.forwardRef(DomainListItem);

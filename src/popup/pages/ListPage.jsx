@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useStorage } from "../hooks";
 import { DomainInputBar } from "../components/input";
-import { List } from "../components/list";
+import { DomainList } from "../components/DomainList";
 import styled from "styled-components";
 
 function ListPage({ storageKey, isListAutoSorted }) {
@@ -15,7 +15,7 @@ function ListPage({ storageKey, isListAutoSorted }) {
         setDomains={setDomains}
         isListAutoSorted={isListAutoSorted}
       />
-      <List
+      <DomainList
         domains={domains}
         setDomains={setDomains}
         isListAutoSorted={isListAutoSorted}

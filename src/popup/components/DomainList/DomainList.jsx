@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import ListItem from "./ListItem";
+import DomainListItem from "./DomainListItem";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
 import { usePrevious } from "../../hooks";
 
-function List({ domains, setDomains, isListAutoSorted }) {
+function DomainList({ domains, setDomains, isListAutoSorted }) {
   const prevDomainList = usePrevious(domains);
 
   const testList = domains.map((domain) => ({
@@ -53,7 +53,7 @@ function List({ domains, setDomains, isListAutoSorted }) {
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
             {testList.map(({ domain, ref }, idx) => (
-              <ListItem
+              <DomainListItem
                 ref={ref}
                 key={domain}
                 index={idx}
@@ -71,7 +71,7 @@ function List({ domains, setDomains, isListAutoSorted }) {
   );
 }
 
-List.propTypes = {
+DomainList.propTypes = {
   domains: PropTypes.arrayOf(PropTypes.string).isRequired,
   setDomains: PropTypes.func.isRequired,
   isListAutoSorted: PropTypes.bool.isRequired,
@@ -87,4 +87,4 @@ const StyledList = styled.ul`
   height: 0px;
 `;
 
-export default List;
+export default DomainList;
