@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Button } from "../button";
+import { Button } from "../../Button";
 import validator from "validator";
-import { sortLexIgnoreCase } from "../../../utils";
+import { sortLexIgnoreCase } from "../../../../utils";
 
 function DomainInput({ domains, setDomains, isListAutoSorted, ...props }) {
   const [inputText, setInputText] = useState("");

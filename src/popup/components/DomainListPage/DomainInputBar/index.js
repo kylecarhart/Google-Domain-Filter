@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { DomainInput } from ".";
+import DomainInput from "./DomainInput";
 import styled from "styled-components";
 import InputSettingsDropdown from "./InputSettingsDropdown";
 

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import DomainListItem from "./DomainListItem";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
-import { usePrevious } from "../../hooks";
+import { usePrevious } from "../../../hooks";
 
 function DomainList({ domains, setDomains, isListAutoSorted }) {
   const prevDomainList = usePrevious(domains);

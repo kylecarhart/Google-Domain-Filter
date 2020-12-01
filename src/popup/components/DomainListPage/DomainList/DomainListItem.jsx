@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import { CloseIcon, DragHandleIcon, SaveIcon } from "../../icons";
+import { CloseIcon, DragHandleIcon, SaveIcon } from "../../../icons";
 import { Draggable } from "react-beautiful-dnd";
 import DomainListItemOptions from "./DomainListItemOptions";
-import { IconButton } from "../button";
+import { IconButton } from "../../Button";
 import validator from "validator";
-import { replaceStringInArray, sortLexIgnoreCase } from "../../../utils";
+import { replaceStringInArray, sortLexIgnoreCase } from "../../../../utils";
 
 function DomainListItem(
   { domain, index, isListAutoSorted, isDraggingOver, setDomains },
