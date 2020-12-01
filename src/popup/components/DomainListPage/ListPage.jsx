@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useStorage } from "../hooks";
-import { DomainInputBar } from "../components/DomainInput";
-import DomainList from "../components/DomainList";
+import { useStorage } from "../../hooks";
+import { DomainInputBar } from "../../components/DomainInput";
+import DomainList from "../../components/DomainList";
 import styled from "styled-components";
 
 function ListPage({ storageKey, isListAutoSorted }) {

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { NavBar } from "./components/nav";
-import { FilterListPage, PreferenceListPage } from "./pages";
+import {
+  FilterListPage,
+  PreferenceListPage,
+} from "./components/DomainListPage";
 
 export default function App() {
   const [selected, setSelected] = useState("filterList");
