@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NavBar } from "./components/nav";
+import Navbar from "./components/Navbar";
 import {
   FilterListPage,
   PreferenceListPage,
@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <AppWrapper>
-      <NavBar selected={selected} setSelected={setSelected} />
+      <Navbar selected={selected} setSelected={setSelected} />
       <Page>{currentPage()}</Page>
     </AppWrapper>
   );

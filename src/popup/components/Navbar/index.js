@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavItem } from ".";
+import NavItem from "./NavItem";
 import styled from "styled-components";
 
-const NavBar = ({ selected, setSelected }) => {
+const Navbar = ({ selected, setSelected }) => {
   return (
     <Nav>
       <NavItem
@@ -24,7 +24,7 @@ const NavBar = ({ selected, setSelected }) => {
   );
 };
 
-NavBar.propTypes = {
+Navbar.propTypes = {
   selected: PropTypes.string.isRequired,
   setSelected: PropTypes.func.isRequired,
 };
@@ -33,4 +33,4 @@ const Nav = styled.nav`
   display: flex;
 `;
 
-export default NavBar;
+export default Navbar;
