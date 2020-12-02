@@ -35,14 +35,14 @@ function DomainInput({ domains, setDomains, isListAutoSorted, ...props }) {
           }
         }}
       />
-      <Button
+      <StyledButton
         type="primary"
         onClick={() => {
           addDomain();
         }}
       >
         Add
-      </Button>
+      </StyledButton>
     </StyledDomainInput>
   );
 }
@@ -53,19 +53,25 @@ DomainInput.propTypes = {
   isListAutoSorted: PropTypes.bool.isRequired,
 };
 
+const StyledButton = styled(Button)`
+  margin-left: 0;
+  border-radius: 0 3px 3px 0;
+`;
+
 const StyledDomainInput = styled.div`
   display: flex;
+  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
 const Input = styled.input`
   color: #333;
   outline: none;
   border: none;
-  border-radius: 3px;
+  border-radius: 3px 0 0 3px;
   background-color: white;
   font-size: 14px;
   padding: 6px 16px;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
+
   width: 0;
   flex: 1 1 auto;
 
