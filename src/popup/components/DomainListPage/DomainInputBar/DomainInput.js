@@ -71,7 +71,6 @@ const Input = styled.input`
   background-color: white;
   font-size: 14px;
   padding: 6px 16px;
-
   width: 0;
   flex: 1 1 auto;
 
