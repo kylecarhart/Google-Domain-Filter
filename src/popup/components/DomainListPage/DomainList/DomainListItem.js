@@ -2,10 +2,12 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { CloseIcon, DragHandleIcon, SaveIcon } from "../../../icons";
 import { Draggable } from "react-beautiful-dnd";
-import DomainListItemOptions from "./DomainListItemOptions";
+import DomainListItemDropdown from "./DomainListItemDropdown";
 import { IconButton } from "../../Button";
 import validator from "validator";
 import { replaceStringInArray, sortLexIgnoreCase } from "../../../../utils";
+import DomainListItemInput from "./DomainListItemInput";
+import DomainListItemEditOptions from "./DomainListItemEditOptions";
 
 function DomainListItem(
   { domain, index, isListAutoSorted, isDraggingOver, setDomains },
@@ -66,43 +68,21 @@ function DomainListItem(
               setIsHovering(false);
             }}
           >
-            <Input
+            <DomainListItemInput
               ref={inputRef}
-              value={inputText}
-              readOnly={!isEditing}
-              onChange={(e) => {
-                setInputText(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  editDomain();
-                }
-              }}
-              onDoubleClick={() => {
-                startEdit();
-                inputRef.current.setSelectionRange(-1, -1); // set cursor to end
-              }}
+              textState={[inputText, setInputText]}
+              isEditingState={[isEditing, setIsEditing]}
+              editDomain={editDomain}
             />
+
             {isEditing && (
-              <>
-                <StyledIconButton
-                  onClick={() => {
-                    editDomain();
-                  }}
-                >
-                  <SaveIcon />
-                </StyledIconButton>
-                <StyledIconButton
-                  onClick={() => {
-                    cancelEdit();
-                  }}
-                >
-                  <CloseIcon />
-                </StyledIconButton>
-              </>
+              <DomainListItemEditOptions
+                editDomain={editDomain}
+                cancelEdit={cancelEdit}
+              />
             )}
 
-            <DomainListItemOptions
+            <DomainListItemDropdown
               domain={domain}
               setDomains={setDomains}
               showTrigger={isHovering && !isDraggingOver}
@@ -140,24 +120,9 @@ const StyledListItem = styled.li`
   }
 `;
 
-const Input = styled.input`
-  flex: 1;
-  height: 18px;
-
-  &:read-only {
-    outline: none;
-    background: none;
-    border: none;
-  }
-`;
-
 const DragHandle = styled.div`
   color: #bbb;
   margin: 0 8px;
-`;
-
-const StyledIconButton = styled(IconButton)`
-  color: #ababab;
 `;
 
 export default React.forwardRef(DomainListItem);

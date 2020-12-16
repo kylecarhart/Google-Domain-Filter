@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { MoreIcon } from "../../../icons";
 import { IconButton } from "../../Button";
 
-function DomainListItemOptions({
+function DomainListItemDropdown({
   domain,
   isEditing,
   startEdit,
@@ -48,7 +48,7 @@ function DomainListItemOptions({
   );
 }
 
-DomainListItemOptions.propTypes = {
+DomainListItemDropdown.propTypes = {
   domain: PropTypes.string.isRequired,
   startEdit: PropTypes.func.isRequired,
   cancelEdit: PropTypes.func.isRequired,
@@ -64,4 +64,4 @@ const StyledIconButton = styled(IconButton)`
   visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
 `;
 
-export default DomainListItemOptions;
+export default DomainListItemDropdown;
