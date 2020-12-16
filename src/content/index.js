@@ -3,15 +3,18 @@ import { Observer } from "./Observer";
 import {
   removeFromInput,
   removeFromTitle,
-  removeDomainsFromResults,
+  removeResults,
+  highlightResults,
 } from "./mutations";
 
 // Start google domain filtering script
 (async function () {
-  const storage = await browser.storage.sync.get("filterList");
-  const filterList = storage.filterList || [];
+  const storage = await browser.storage.sync.get();
 
-  if (filterList.length === 0) {
+  const filterList = storage.filterList || [];
+  const preferenceList = storage.preferenceList || [];
+
+  if (filterList.length === 0 && preferenceList.length === 0) {
     return; // No domains to filter, break out early.
   }
 
@@ -23,6 +26,7 @@ import {
 
   document.addEventListener("DOMContentLoaded", () => {
     observer.disconnect();
+    highlightResults(preferenceList);
   });
 
   removeFromTitle(` ${filterString}`);
@@ -31,6 +35,6 @@ import {
   // Listen for changes to domains and remove them from the DOM
   browser.storage.onChanged.addListener((storage) => {
     let filterList = storage.filterList ? storage.filterList.newValue : [];
-    removeDomainsFromResults(filterList);
+    removeResults(filterList);
   });
 })();

@@ -2,15 +2,34 @@
  * Remove domains from the Google search results.
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
-function removeDomainsFromResults(input) {
-  console.log("here", input);
+function removeResults(input) {
   let domainArr = Array.isArray(input) ? input : [input];
 
   // Get all links on the page related to a google search
-  document.querySelectorAll(".g").forEach((node) => {
+  document.querySelectorAll(".g .rc .yuRUbf a").forEach((node) => {
+    const parent = node.closest(".g");
     for (let i = 0; i < domainArr.length; i++) {
       if (node.innerHTML.includes(domainArr[i])) {
-        node.style.display = "none";
+        parent.style.display = "none";
+        break;
+      }
+    }
+  });
+}
+
+/**
+ * Remove domains from the Google search results.
+ * @param {[string] | string} input - Domain input. Can be an array or single string.
+ */
+function highlightResults(input) {
+  let domainArr = Array.isArray(input) ? input : [input];
+
+  // Get all links on the page related to a google search
+  document.querySelectorAll(".g .rc .yuRUbf a").forEach((node) => {
+    const parent = node.closest(".g");
+    for (let i = 0; i < domainArr.length; i++) {
+      if (node.innerHTML.includes(domainArr[i])) {
+        parent.classList.add("preference");
         break;
       }
     }
@@ -35,4 +54,4 @@ function removeFromInput(string) {
   input.value = input.value.substring(0, input.value.indexOf(string) - 1);
 }
 
-export { removeDomainsFromResults, removeFromInput, removeFromTitle };
+export { removeResults, removeFromInput, removeFromTitle, highlightResults };

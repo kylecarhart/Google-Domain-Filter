@@ -85,6 +85,7 @@ module.exports = (env) => {
           from:
             "node_modules/webextension-polyfill/dist/browser-polyfill.min.js", // https://github.com/mozilla/webextension-polyfill
         },
+        { from: "./src/content/styles.css", to: "./content" }, // Copy content styles
       ]),
       // Inject version number
       new webpack.DefinePlugin({
