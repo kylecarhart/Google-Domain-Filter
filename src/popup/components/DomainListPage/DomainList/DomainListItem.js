@@ -1,18 +1,14 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import { CloseIcon, DragHandleIcon, SaveIcon } from "../../../icons";
+import { DragHandleIcon } from "../../../icons";
 import { Draggable } from "react-beautiful-dnd";
 import DomainListItemDropdown from "./DomainListItemDropdown";
-import { IconButton } from "../../Button";
 import validator from "validator";
-import { replaceStringInArray, sortLexIgnoreCase } from "../../../../utils";
+import { replaceStringInArray } from "../../../../utils";
 import DomainListItemInput from "./DomainListItemInput";
 import DomainListItemEditOptions from "./DomainListItemEditOptions";
 
-function DomainListItem(
-  { domain, index, isListAutoSorted, isDraggingOver, setDomains },
-  ref
-) {
+function DomainListItem({ domain, index, isDraggingOver, setDomains }, ref) {
   const [inputText, setInputText] = useState(domain);
   const [isHovering, setIsHovering] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -40,21 +36,12 @@ function DomainListItem(
       }
 
       const editedList = replaceStringInArray(domainList, domain, inputText);
-
-      if (isListAutoSorted) {
-        return sortLexIgnoreCase(editedList);
-      }
-
       return editedList;
     });
   };
 
   return (
-    <Draggable
-      draggableId={domain}
-      index={index}
-      isDragDisabled={isListAutoSorted}
-    >
+    <Draggable draggableId={domain} index={index}>
       {(provided, snapshot) => (
         <div ref={ref}>
           <StyledListItem
@@ -91,11 +78,9 @@ function DomainListItem(
               isEditing={isEditing}
             />
 
-            {!isListAutoSorted && (
-              <DragHandle {...provided.dragHandleProps}>
-                <DragHandleIcon />
-              </DragHandle>
-            )}
+            <DragHandle {...provided.dragHandleProps}>
+              <DragHandleIcon />
+            </DragHandle>
           </StyledListItem>
         </div>
       )}

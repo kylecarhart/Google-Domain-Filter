@@ -3,20 +3,13 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Button } from "../../Button";
 import validator from "validator";
-import { sortLexIgnoreCase } from "../../../../utils";
 
-function DomainInput({ domains, setDomains, isListAutoSorted, ...props }) {
+function DomainInput({ domains, setDomains, ...props }) {
   const [inputText, setInputText] = useState("");
 
   const addDomain = () => {
     if (validator.isFQDN(inputText) && !domains.includes(inputText)) {
-      if (isListAutoSorted) {
-        setDomains((domainList) =>
-          sortLexIgnoreCase([...domainList, inputText])
-        );
-      } else {
-        setDomains((domainList) => [inputText, ...domainList]);
-      }
+      setDomains((domainList) => [inputText, ...domainList]);
       setInputText("");
     }
   };
@@ -50,7 +43,6 @@ function DomainInput({ domains, setDomains, isListAutoSorted, ...props }) {
 DomainInput.propTypes = {
   domains: PropTypes.arrayOf(PropTypes.string).isRequired,
   setDomains: PropTypes.func.isRequired,
-  isListAutoSorted: PropTypes.bool.isRequired,
 };
 
 const StyledButton = styled(Button)`

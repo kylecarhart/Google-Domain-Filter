@@ -4,15 +4,11 @@ import DomainInput from "./DomainInput";
 import styled from "styled-components";
 import InputSettingsDropdown from "./InputSettingsDropdown";
 
-function DomainInputBar({ domains, setDomains, isListAutoSorted, ...props }) {
+function DomainInputBar({ domains, setDomains, ...props }) {
   return (
     <StyledDomainInputBar {...props}>
-      <StyledDomainInput
-        domains={domains}
-        setDomains={setDomains}
-        isListAutoSorted={isListAutoSorted}
-      />
-      <InputSettingsDropdown />
+      <StyledDomainInput domains={domains} setDomains={setDomains} />
+      {/* <InputSettingsDropdown /> */}
     </StyledDomainInputBar>
   );
 }
@@ -20,7 +16,6 @@ function DomainInputBar({ domains, setDomains, isListAutoSorted, ...props }) {
 DomainInputBar.propTypes = {
   domains: PropTypes.arrayOf(PropTypes.string).isRequired,
   setDomains: PropTypes.func.isRequired,
-  isListAutoSorted: PropTypes.bool.isRequired,
 };
 
 const StyledDomainInputBar = styled.div`

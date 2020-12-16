@@ -1,30 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import DomainListItem from "./DomainListItem";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
-import { usePrevious } from "../../../hooks";
 
-function DomainList({ domains, setDomains, isListAutoSorted }) {
-  const prevDomainList = usePrevious(domains);
-
+function DomainList({ domains, setDomains }) {
   const testList = domains.map((domain) => ({
     domain,
     ref: React.createRef(),
   }));
-
-  // Scroll to the domain added or edited
-  useEffect(() => {
-    if (isListAutoSorted) {
-      const diff = domains.filter(
-        (domain) => !prevDomainList.includes(domain)
-      )[0];
-
-      if (testList[domains.indexOf(diff)]) {
-        testList[domains.indexOf(diff)].ref.current.scrollIntoView();
-      }
-    }
-  }, [prevDomainList, testList, domains, isListAutoSorted]);
 
   function onDragEnd(result) {
     const { destination, source, draggableId } = result;
@@ -58,7 +42,6 @@ function DomainList({ domains, setDomains, isListAutoSorted }) {
                 key={domain}
                 index={idx}
                 domain={domain}
-                isListAutoSorted={isListAutoSorted}
                 isDraggingOver={snapshot.isDraggingOver}
                 setDomains={setDomains}
               />
@@ -74,7 +57,6 @@ function DomainList({ domains, setDomains, isListAutoSorted }) {
 DomainList.propTypes = {
   domains: PropTypes.arrayOf(PropTypes.string).isRequired,
   setDomains: PropTypes.func.isRequired,
-  isListAutoSorted: PropTypes.bool.isRequired,
 };
 
 const StyledList = styled.ul`
