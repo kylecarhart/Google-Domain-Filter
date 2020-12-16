@@ -1,3 +1,5 @@
+const SEARCH_RESULT_QUERY = ".g .rc .yuRUbf a";
+
 /**
  * Remove domains from the Google search results.
  * @param {[string] | string} input - Domain input. Can be an array or single string.
@@ -6,7 +8,7 @@ function removeResults(input) {
   let domainArr = Array.isArray(input) ? input : [input];
 
   // Get all links on the page related to a google search
-  document.querySelectorAll(".g .rc .yuRUbf a").forEach((node) => {
+  document.querySelectorAll(SEARCH_RESULT_QUERY).forEach((node) => {
     const parent = node.closest(".g");
     for (let i = 0; i < domainArr.length; i++) {
       if (node.innerHTML.includes(domainArr[i])) {
@@ -25,7 +27,7 @@ function highlightResults(input) {
   let domainArr = Array.isArray(input) ? input : [input];
 
   // Get all links on the page related to a google search
-  document.querySelectorAll(".g .rc .yuRUbf a").forEach((node) => {
+  document.querySelectorAll(SEARCH_RESULT_QUERY).forEach((node) => {
     const parent = node.closest(".g");
     for (let i = 0; i < domainArr.length; i++) {
       if (node.innerHTML.includes(domainArr[i])) {

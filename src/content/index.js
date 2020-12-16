@@ -14,27 +14,31 @@ import {
   const filterList = storage.filterList || [];
   const preferenceList = storage.preferenceList || [];
 
-  if (filterList.length === 0 && preferenceList.length === 0) {
-    return; // No domains to filter, break out early.
+  if (filterList.length !== 0) {
+    const filterString = toExcludeQuery(...filterList);
+
+    // Mutate google search as the DOM builds
+    const observer = new Observer(filterString);
+    observer.observe();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      observer.disconnect();
+      highlightResults(preferenceList);
+    });
+
+    removeFromTitle(` ${filterString}`);
+    removeFromInput(filterString);
+
+    // Listen for changes to domains and remove them from the DOM
+    browser.storage.onChanged.addListener((storage) => {
+      let filterList = storage.filterList ? storage.filterList.newValue : [];
+      removeResults(filterList);
+    });
   }
 
-  const filterString = toExcludeQuery(...filterList);
-
-  // Mutate google search as the DOM builds
-  const observer = new Observer(filterString);
-  observer.observe();
-
-  document.addEventListener("DOMContentLoaded", () => {
-    observer.disconnect();
-    highlightResults(preferenceList);
-  });
-
-  removeFromTitle(` ${filterString}`);
-  removeFromInput(filterString);
-
-  // Listen for changes to domains and remove them from the DOM
-  browser.storage.onChanged.addListener((storage) => {
-    let filterList = storage.filterList ? storage.filterList.newValue : [];
-    removeResults(filterList);
-  });
+  if (preferenceList.length !== 0) {
+    document.addEventListener("DOMContentLoaded", () => {
+      highlightResults(preferenceList);
+    });
+  }
 })();
