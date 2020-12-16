@@ -16,7 +16,7 @@ const Navbar = ({ selected, setSelected }) => {
       <NavItem
         text="Preference list"
         navId="preferenceList"
-        tipText="Prioritize search results from domains in this list."
+        tipText="Highlight search results from domains in this list."
         selected={selected === "preferenceList"}
         setSelected={setSelected}
       />
