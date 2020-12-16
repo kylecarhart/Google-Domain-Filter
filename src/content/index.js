@@ -23,7 +23,6 @@ import {
 
     document.addEventListener("DOMContentLoaded", () => {
       observer.disconnect();
-      highlightResults(preferenceList);
     });
 
     removeFromTitle(` ${filterString}`);
