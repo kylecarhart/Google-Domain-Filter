@@ -1,20 +1,16 @@
 /**
- * On storage change, remove DOM links of domains that are in storage.
- * @param {Object} storage - Browser storage object.
+ * Remove domains from the Google search results.
+ * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
-function storageChangeListener(storage) {
-  let filterList = [];
-  if (storage.filterList) {
-    filterList = storage.filterList.newValue;
-  }
+function removeDomainsFromResults(input) {
+  console.log("here", input);
+  let domainArr = Array.isArray(input) ? input : [input];
 
   // Get all links on the page related to a google search
-  document.querySelectorAll(".g .rc a:not([class])").forEach((node) => {
-    const closestNode = node.closest(".g");
-
-    for (let i = 0; i < filterList.length; i++) {
-      if (node.href.includes(filterList[i])) {
-        closestNode.style.display = "none";
+  document.querySelectorAll(".g").forEach((node) => {
+    for (let i = 0; i < domainArr.length; i++) {
+      if (node.innerHTML.includes(domainArr[i])) {
+        node.style.display = "none";
         break;
       }
     }
@@ -39,4 +35,4 @@ function removeFromInput(string) {
   input.value = input.value.substring(0, input.value.indexOf(string) - 1);
 }
 
-export { storageChangeListener, removeFromInput, removeFromTitle };
+export { removeDomainsFromResults, removeFromInput, removeFromTitle };

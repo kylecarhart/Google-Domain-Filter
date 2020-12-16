@@ -3,7 +3,7 @@ import { Observer } from "./Observer";
 import {
   removeFromInput,
   removeFromTitle,
-  storageChangeListener,
+  removeDomainsFromResults,
 } from "./mutations";
 
 // Start google domain filtering script
@@ -29,5 +29,8 @@ import {
   removeFromInput(filterString);
 
   // Listen for changes to domains and remove them from the DOM
-  browser.storage.onChanged.addListener(storageChangeListener);
+  browser.storage.onChanged.addListener((storage) => {
+    let filterList = storage.filterList ? storage.filterList.newValue : [];
+    removeDomainsFromResults(filterList);
+  });
 })();
