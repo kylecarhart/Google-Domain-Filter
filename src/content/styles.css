@@ -5,9 +5,9 @@
 .preference::before {
   content: "";
   background: #4285f4;
-  width: 4px;
+  width: 3px;
   position: absolute;
-  left: -12px;
+  left: -20px;
   top: 0;
   bottom: 0;
   /* border-radius: 2px; */
