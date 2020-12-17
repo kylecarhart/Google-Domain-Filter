@@ -1,26 +1,38 @@
 const PREFERENCE_CLASS = "preference";
+const DISPLAY_NONE_CLASS = "displaynone";
 
 const RESULTS_WRAPPER_QUERY = "#rso";
 const RESULTS_GROUP_QUERY = ".hlcw0c";
 const RESULT_WRAPPER_QUERY = ".g";
-const RESULT_LINK_QUERY = ".g .rc .yuRUbf a";
+const RESULT_LINK_QUERY = ".g .rc .yuRUbf>a";
 
 /**
- * Loop through results and call a callback on each match.
+ * Loop through results and call matchCallback() on each match.
+ * If no match, call noMatchCallback().
  * @param {[string] | string} input - Domain input. Can be an array or single string.
- * @param {function} callback
+ * @param {function(HTMLElement)} matchCallback - Callback function on match.
+ * @param {function(HTMLElement)} noMatchCallback - Callback function on no match.
  */
-function handleResults(input, callback) {
+function handleResults(input, matchCallback, noMatchCallback = () => {}) {
   let domainArr = Array.isArray(input) ? input : [input];
 
-  // Get all links on the page related to a google search
+  // For each result DOM node, check if href matches domain in the list
+  // TODO: Find solution for prefernce list being out of order
   document.querySelectorAll(RESULT_LINK_QUERY).forEach((node) => {
-    const parent = node.closest(RESULT_WRAPPER_QUERY);
+    const resultWrapperNode = node.closest(RESULT_WRAPPER_QUERY);
+
+    let calledBack = false;
     for (let i = 0; i < domainArr.length; i++) {
-      if (node.innerHTML.includes(domainArr[i])) {
-        callback(parent);
+      const nodeHostName = new URL(node.href).hostname;
+      if (nodeHostName.endsWith(domainArr[i])) {
+        matchCallback(resultWrapperNode);
+        calledBack = true;
         break;
       }
+    }
+
+    if (!calledBack) {
+      noMatchCallback(resultWrapperNode);
     }
   });
 }
@@ -30,9 +42,15 @@ function handleResults(input, callback) {
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
 function removeResults(input) {
-  handleResults(input, (parent) => {
-    parent.style.display = "none";
-  });
+  handleResults(
+    input,
+    (node) => {
+      node.classList.add(DISPLAY_NONE_CLASS);
+    },
+    (node) => {
+      node.classList.remove(DISPLAY_NONE_CLASS);
+    }
+  );
 }
 
 /**
@@ -40,14 +58,26 @@ function removeResults(input) {
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
 function highlightResults(input) {
-  handleResults(input, (parent) => {
-    parent.classList.add(PREFERENCE_CLASS);
+  handleResults(
+    input,
+    (node) => {
+      node.classList.add(PREFERENCE_CLASS);
 
-    const resultsNode = parent
-      .closest(RESULTS_WRAPPER_QUERY)
-      .querySelector(RESULTS_GROUP_QUERY);
-    resultsNode.insertBefore(parent, resultsNode.childNodes[0]);
-  });
+      const resultsWrapperNode = node.closest(RESULTS_WRAPPER_QUERY);
+      const resultsGroupNode = resultsWrapperNode.querySelector(
+        RESULTS_GROUP_QUERY
+      );
+
+      if (resultsGroupNode) {
+        resultsGroupNode.insertBefore(node, resultsGroupNode.childNodes[0]);
+      } else {
+        resultsWrapperNode.insertBefore(node, resultsWrapperNode.childNodes[0]);
+      }
+    },
+    (node) => {
+      node.classList.remove(PREFERENCE_CLASS);
+    }
+  );
 }
 
 /**

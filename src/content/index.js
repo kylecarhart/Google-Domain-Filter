@@ -27,17 +27,26 @@ import {
 
     removeFromTitle(` ${filterString}`);
     removeFromInput(filterString);
-
-    // Listen for changes to domains and remove them from the DOM
-    browser.storage.onChanged.addListener((storage) => {
-      let filterList = storage.filterList ? storage.filterList.newValue : [];
-      removeResults(filterList);
-    });
   }
 
+  // Highlight search results when all DOM content is loaded
   if (preferenceList.length !== 0) {
     document.addEventListener("DOMContentLoaded", () => {
       highlightResults(preferenceList);
     });
   }
+
+  // Listen for changes to domains and remove them from the DOM
+  browser.storage.onChanged.addListener((storage) => {
+    if (storage.filterList) {
+      removeResults(storage.filterList.newValue);
+    }
+  });
+
+  // Listen for changes to domains and remove them from the DOM
+  browser.storage.onChanged.addListener((storage) => {
+    if (storage.preferenceList) {
+      highlightResults(storage.preferenceList.newValue);
+    }
+  });
 })();
