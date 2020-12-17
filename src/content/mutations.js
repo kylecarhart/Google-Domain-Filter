@@ -88,6 +88,7 @@ function highlightResults(input) {
       );
 
       if (resultsGroupNode) {
+        // Sometimes this doesnt exist for some reason...
         resultsGroupNode.insertBefore(node, resultsGroupNode.childNodes[0]);
       } else {
         resultsWrapperNode.insertBefore(node, resultsWrapperNode.childNodes[0]);
