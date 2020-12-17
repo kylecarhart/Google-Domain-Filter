@@ -16,13 +16,23 @@ const RESULT_LINK_QUERY = ".g .rc .yuRUbf>a";
 function handleResults(input, matchCallback, noMatchCallback = () => {}) {
   let domainArr = Array.isArray(input) ? input : [input];
 
+  let nodes = Array.from(document.querySelectorAll(RESULT_LINK_QUERY));
+
+  // Filter out any nonstandard results
+  nodes.filter((node) => {
+    if (node.closest(".ULSxyf")) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+
   /**
    * We need to sort the array of matching nodes first to accommodate for the
    * preference list sorting. This will sort the node array based on the domain
    * array order, but backwards. This allows the preference list matchCallback
    * to reorder DOM nodes without having to worry about the order.
    */
-  let nodes = Array.from(document.querySelectorAll(RESULT_LINK_QUERY));
   nodes.sort((a, b) => {
     let aIdx = domainArr.findIndex((domain) => a.hostname.endsWith(domain));
     let bIdx = domainArr.findIndex((domain) => b.hostname.endsWith(domain));
@@ -36,14 +46,13 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
     }
   });
 
-  // For each result DOM node, check if href matches domain in the list
+  // For each result DOM node, check if hostname matches domain in the list
   nodes.forEach((node) => {
     const resultWrapperNode = node.closest(RESULT_WRAPPER_QUERY);
 
     let calledBack = false;
     for (let i = 0; i < domainArr.length; i++) {
-      const nodeHostName = node.hostname;
-      if (nodeHostName.endsWith(domainArr[i])) {
+      if (node.hostname.endsWith(domainArr[i])) {
         matchCallback(resultWrapperNode);
         calledBack = true;
         break;
