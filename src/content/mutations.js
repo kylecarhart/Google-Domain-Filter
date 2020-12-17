@@ -1,18 +1,24 @@
-const SEARCH_RESULT_QUERY = ".g .rc .yuRUbf a";
+const PREFERENCE_CLASS = "preference";
+
+const RESULTS_WRAPPER_QUERY = "#rso";
+const RESULTS_GROUP_QUERY = ".hlcw0c";
+const RESULT_WRAPPER_QUERY = ".g";
+const RESULT_LINK_QUERY = ".g .rc .yuRUbf a";
 
 /**
- * Remove domains from the Google search results.
+ * Loop through results and call a callback on each match.
  * @param {[string] | string} input - Domain input. Can be an array or single string.
+ * @param {function} callback
  */
-function removeResults(input) {
+function handleResults(input, callback) {
   let domainArr = Array.isArray(input) ? input : [input];
 
   // Get all links on the page related to a google search
-  document.querySelectorAll(SEARCH_RESULT_QUERY).forEach((node) => {
-    const parent = node.closest(".g");
+  document.querySelectorAll(RESULT_LINK_QUERY).forEach((node) => {
+    const parent = node.closest(RESULT_WRAPPER_QUERY);
     for (let i = 0; i < domainArr.length; i++) {
       if (node.innerHTML.includes(domainArr[i])) {
-        parent.style.display = "none";
+        callback(parent);
         break;
       }
     }
@@ -20,21 +26,27 @@ function removeResults(input) {
 }
 
 /**
- * Remove domains from the Google search results.
+ * Hide search results matching domain input.
+ * @param {[string] | string} input - Domain input. Can be an array or single string.
+ */
+function removeResults(input) {
+  handleResults(input, (parent) => {
+    parent.style.display = "none";
+  });
+}
+
+/**
+ * Highlight and reorder search results matching domain input.
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
 function highlightResults(input) {
-  let domainArr = Array.isArray(input) ? input : [input];
+  handleResults(input, (parent) => {
+    parent.classList.add(PREFERENCE_CLASS);
 
-  // Get all links on the page related to a google search
-  document.querySelectorAll(SEARCH_RESULT_QUERY).forEach((node) => {
-    const parent = node.closest(".g");
-    for (let i = 0; i < domainArr.length; i++) {
-      if (node.innerHTML.includes(domainArr[i])) {
-        parent.classList.add("preference");
-        break;
-      }
-    }
+    const resultsNode = parent
+      .closest(RESULTS_WRAPPER_QUERY)
+      .querySelector(RESULTS_GROUP_QUERY);
+    resultsNode.insertBefore(parent, resultsNode.childNodes[0]);
   });
 }
 
@@ -56,4 +68,4 @@ function removeFromInput(string) {
   input.value = input.value.substring(0, input.value.indexOf(string) - 1);
 }
 
-export { removeResults, removeFromInput, removeFromTitle, highlightResults };
+export { removeFromInput, removeFromTitle, removeResults, highlightResults };
