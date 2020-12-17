@@ -7,8 +7,8 @@ const RESULT_WRAPPER_QUERY = ".g";
 const RESULT_LINK_QUERY = ".g .rc .yuRUbf>a";
 
 /**
- * Loop through results and call matchCallback() on each match.
- * If no match, call noMatchCallback().
+ * Loop through results and call matchCallback() on each match. If no match,
+ * optionally call noMatchCallback().
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  * @param {function(HTMLElement)} matchCallback - Callback function on match.
  * @param {function(HTMLElement)} noMatchCallback - Callback function on no match.
