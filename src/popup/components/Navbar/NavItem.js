@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import NavTip from "./NavTip";
 
-function NavItem({ text, navId, tipText, selected, setSelected }) {
+function NavItem({ text, navId, tipText, selected, setSelected, ...props }) {
   return (
     <Button
       selected={selected}
       onClick={() => {
         setSelected(navId);
       }}
+      {...props}
     >
       <Text>{text}</Text>
       <NavTip text={tipText} />
@@ -29,7 +30,6 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
   text-align: center;
   font-size: 1rem;
   padding: 0.75rem 0;
