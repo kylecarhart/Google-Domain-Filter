@@ -26,7 +26,12 @@ function DomainListItem({ domain, index, isDraggingOver, setDomains }, ref) {
   };
 
   const editDomain = () => {
-    if (domain === inputText || !validator.isFQDN(inputText)) {
+    if (!validator.isFQDN(inputText)) {
+      return;
+    }
+
+    if (domain === inputText) {
+      cancelEdit();
       return;
     }
 
