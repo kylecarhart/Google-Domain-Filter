@@ -1,7 +1,7 @@
 {
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parserOptions": {
-    "ecmaVersion": 11,
+    "ecmaVersion": 9,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -14,9 +14,9 @@
     "node": true
   },
   "rules": {
-    "no-console": "warn",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "no-unused-vars": "warn"
   },
   "plugins": ["react-hooks"]
 }

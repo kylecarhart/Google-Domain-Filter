@@ -1,29 +1,24 @@
 {
   "manifest_version": 2,
-  "name": "Google Search Blacklist",
+  "name": "Google Domain Filter",
   "author": "Kyle Carhart",
   "version": "1.0",
   "description": "Filter domains from your Google searches.",
   "homepage_url": "https://github.com/KMCGamer/google-domain-filter",
-  "permissions": [
-    "storage",
-    "activeTab",
-    "webRequest",
-    "*://*.google.com/",
-    "webRequestBlocking"
-  ],
+  "permissions": ["storage", "activeTab", "webRequest", "webRequestBlocking"],
   "browser_action": {
     "default_popup": "./popup/index.html"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.google.com/search?*"],
-      "js": ["./content/index.js"],
+      "matches": [],
+      "js": ["./browser-polyfill.min.js", "./content/index.js"],
+      "css": ["./content/styles.css"],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "scripts": ["./background/index.js"]
+    "scripts": ["./browser-polyfill.min.js", "./background/index.js"]
   },
   "browser_specific_settings": {
     "gecko": {
