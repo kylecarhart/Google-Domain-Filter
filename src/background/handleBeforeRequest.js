@@ -1,3 +1,4 @@
+import { FILTER_LIST_KEY } from "../storage";
 import { tlds } from "../tlds.json";
 import { toExcludeQuery } from "../utils";
 
@@ -5,13 +6,13 @@ import { toExcludeQuery } from "../utils";
  * Handles redirecting google queries based on the filter list.
  */
 async function initRequestListener() {
-  const storage = await browser.storage.sync.get("filterList");
-  let filterList = storage.filterList || []; // default to empty array
+  const storage = await browser.storage.sync.get(FILTER_LIST_KEY);
+  let filterList = storage[FILTER_LIST_KEY] || []; // default to empty array
 
   // Update domains when storage domains change
   browser.storage.onChanged.addListener((storage) => {
-    if (storage.filterList) {
-      filterList = storage.filterList.newValue;
+    if (storage[FILTER_LIST_KEY]) {
+      filterList = storage[FILTER_LIST_KEY].newValue;
     }
   });
 

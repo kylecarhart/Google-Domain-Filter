@@ -2,22 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import NavItem from "./NavItem";
 import styled from "styled-components";
+import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "../../constants";
 
 const Navbar = ({ selected, setSelected }) => {
   return (
     <Nav>
       <StyledNavItem
         text="Blacklist"
-        navId="filterList"
+        navId={FILTER_LIST_NAV}
         tipText="Remove search results containing domains in this list."
-        selected={selected === "filterList"}
+        selected={selected === FILTER_LIST_NAV}
         setSelected={setSelected}
       />
       <StyledNavItem
         text="Preference list"
-        navId="preferenceList"
+        navId={PREFERENCE_LIST_NAV}
         tipText="Prioritize search results from domains in this list (order matters!)"
-        selected={selected === "preferenceList"}
+        selected={selected === PREFERENCE_LIST_NAV}
         setSelected={setSelected}
       />
     </Nav>

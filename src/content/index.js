@@ -6,13 +6,14 @@ import {
   removeResults,
   highlightResults,
 } from "./mutations";
+import { FILTER_LIST_KEY, PREFERENCE_LIST_KEY } from "../storage";
 
 // Start google domain filtering script
 (async function () {
   const storage = await browser.storage.sync.get();
 
-  const filterList = storage.filterList || [];
-  const preferenceList = storage.preferenceList || [];
+  const filterList = storage[FILTER_LIST_KEY] || [];
+  const preferenceList = storage[PREFERENCE_LIST_KEY] || [];
 
   if (filterList.length !== 0) {
     const filterString = toExcludeQuery(...filterList);
@@ -38,15 +39,15 @@ import {
 
   // Listen for changes to domains and remove them from the DOM
   browser.storage.onChanged.addListener((storage) => {
-    if (storage.filterList) {
-      removeResults(storage.filterList.newValue);
+    if (storage[FILTER_LIST_KEY]) {
+      removeResults(storage[FILTER_LIST_KEY].newValue);
     }
   });
 
   // Listen for changes to domains and remove them from the DOM
   browser.storage.onChanged.addListener((storage) => {
-    if (storage.preferenceList) {
-      highlightResults(storage.preferenceList.newValue);
+    if (storage[PREFERENCE_LIST_KEY]) {
+      highlightResults(storage[PREFERENCE_LIST_KEY].newValue);
     }
   });
 })();

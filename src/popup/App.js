@@ -5,15 +5,16 @@ import {
   FilterListPage,
   PreferenceListPage,
 } from "./components/DomainListPage";
+import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "./constants";
 
 export default function App() {
-  const [selected, setSelected] = useState("filterList");
+  const [selected, setSelected] = useState(FILTER_LIST_NAV);
 
   const currentPage = () => {
     switch (selected) {
-      case "filterList":
+      case FILTER_LIST_NAV:
         return <FilterListPage />;
-      case "preferenceList":
+      case PREFERENCE_LIST_NAV:
         return <PreferenceListPage />;
       default:
         break;

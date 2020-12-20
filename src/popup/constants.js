@@ -1,4 +1,4 @@
-const FILTER_LIST = "filterList";
-const PREFERENCE_LIST = "preferenceList";
+const FILTER_LIST_NAV = "filterList";
+const PREFERENCE_LIST_NAV = "preferenceList";
 
-export { FILTER_LIST, PREFERENCE_LIST };
+export { FILTER_LIST_NAV, PREFERENCE_LIST_NAV };

@@ -1,3 +1,5 @@
+import { initStorage } from "../storage";
+
 /**
  * Handler for runtime.onInstalled.
  * @param {*} details - The reason that the runtime.onInstalled event is being dispatched.
@@ -27,9 +29,16 @@ async function onInstall(details) {
   const manifest = browser.runtime.getManifest();
 
   // Initialize the storage area
-  await browser.storage.sync.set({ filterList: [], preferenceList: [] });
+  try {
+    await initStorage();
+    console.log(`Storage initialized to default values.`);
+  } catch (e) {
+    console.log(e);
+  }
 
-  console.log(`Extension installed. Current version is: ${manifest.version}`);
+  console.log(
+    `*** Extension installed. Current version is: ${manifest.version}. ***`
+  );
 }
 
 /**
