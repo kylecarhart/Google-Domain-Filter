@@ -10,7 +10,10 @@ import { FILTER_LIST_KEY, PREFERENCE_LIST_KEY } from "../storage";
 
 // Start google domain filtering script
 (async function () {
-  const storage = await browser.storage.sync.get();
+  const storage = await browser.storage.sync.get([
+    FILTER_LIST_KEY,
+    PREFERENCE_LIST_KEY,
+  ]);
 
   const filterList = storage[FILTER_LIST_KEY] || [];
   const preferenceList = storage[PREFERENCE_LIST_KEY] || [];

@@ -1,3 +1,5 @@
+import { escapeRegExp } from "../utils";
+
 const PREFERENCE_CLASS = "preference";
 const DISPLAY_NONE_CLASS = "displaynone";
 
@@ -34,8 +36,12 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
    * to reorder DOM nodes without having to worry about the order.
    */
   nodes.sort((a, b) => {
-    let aIdx = domainArr.findIndex((domain) => a.hostname.endsWith(domain));
-    let bIdx = domainArr.findIndex((domain) => b.hostname.endsWith(domain));
+    let aIdx = domainArr.findIndex((domain) =>
+      getDomainRegExp(domain).test(a.hostname)
+    );
+    let bIdx = domainArr.findIndex((domain) =>
+      getDomainRegExp(domain).test(b.hostname)
+    );
 
     if (aIdx > bIdx) {
       return -1;
@@ -52,7 +58,10 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
 
     let calledBack = false;
     for (let i = 0; i < domainArr.length; i++) {
-      if (node.hostname.endsWith(domainArr[i])) {
+      const domain = domainArr[i];
+      const domainRegExp = getDomainRegExp(domain);
+
+      if (domainRegExp.test(node.hostname)) {
         matchCallback(resultWrapperNode);
         calledBack = true;
         break;
@@ -125,6 +134,15 @@ function removeFromTitle(string) {
 function removeFromInput(string) {
   const input = document.querySelector('input[name="q"]');
   input.value = input.value.substring(0, input.value.indexOf(string) - 1);
+}
+
+/**
+ * Generate a regular expression for domain comparison.
+ * @param {string} domain - Domain to generate RegExp from.
+ */
+function getDomainRegExp(domain) {
+  const escapedString = escapeRegExp(domain);
+  return new RegExp(`^(?:.+\\.)?${escapedString}$`);
 }
 
 export { removeFromInput, removeFromTitle, removeResults, highlightResults };

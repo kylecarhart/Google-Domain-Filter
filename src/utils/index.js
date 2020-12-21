@@ -52,3 +52,11 @@ export function replaceStringInArray(arr, from, to) {
     return str;
   });
 }
+
+/**
+ * Escapes a string for safe use within a RegExp constructor.
+ * @param {string} string - Input string.
+ */
+export function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+}
