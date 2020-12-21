@@ -3,10 +3,11 @@ import { escapeRegExp } from "../utils";
 const PREFERENCE_CLASS = "preference";
 const DISPLAY_NONE_CLASS = "displaynone";
 
-const RESULTS_WRAPPER_QUERY = "#rso";
-const RESULTS_GROUP_QUERY = ".hlcw0c";
 const RESULT_WRAPPER_QUERY = ".g";
-const RESULT_LINK_QUERY = ".g .rc .yuRUbf>a";
+const FIREFOX_RESULT_LINK_QUERY = "#rso > div > div > div > div.yuRUbf > a";
+const CHROME_RESULT_LINK_QUERY = "#rso >  div > div > div.yuRUbf > a";
+
+const RESULT_LINK_QUERY = `${FIREFOX_RESULT_LINK_QUERY},${CHROME_RESULT_LINK_QUERY}`;
 
 /**
  * Loop through results and call matchCallback() on each match. If no match,
@@ -16,18 +17,14 @@ const RESULT_LINK_QUERY = ".g .rc .yuRUbf>a";
  * @param {function(HTMLElement)} noMatchCallback - Callback function on no match.
  */
 function handleResults(input, matchCallback, noMatchCallback = () => {}) {
-  let domainArr = Array.isArray(input) ? input : [input];
+  let domains = Array.isArray(input) ? input : [input];
 
+  /**
+   * Firefox and Chrome browsers are served differently formatted pages.
+   * Firefox search results are grouped into additional divs, however we
+   * can query for Firefox and Chrome at the same time here.
+   */
   let nodes = Array.from(document.querySelectorAll(RESULT_LINK_QUERY));
-
-  // Filter out any nonstandard results
-  nodes.filter((node) => {
-    if (node.closest(".ULSxyf")) {
-      return false;
-    } else {
-      return true;
-    }
-  });
 
   /**
    * We need to sort the array of matching nodes first to accommodate for the
@@ -36,10 +33,10 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
    * to reorder DOM nodes without having to worry about the order.
    */
   nodes.sort((a, b) => {
-    let aIdx = domainArr.findIndex((domain) =>
+    let aIdx = domains.findIndex((domain) =>
       getDomainRegExp(domain).test(a.hostname)
     );
-    let bIdx = domainArr.findIndex((domain) =>
+    let bIdx = domains.findIndex((domain) =>
       getDomainRegExp(domain).test(b.hostname)
     );
 
@@ -57,8 +54,8 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
     const resultWrapperNode = node.closest(RESULT_WRAPPER_QUERY);
 
     let calledBack = false;
-    for (let i = 0; i < domainArr.length; i++) {
-      const domain = domainArr[i];
+    for (let i = 0; i < domains.length; i++) {
+      const domain = domains[i];
       const domainRegExp = getDomainRegExp(domain);
 
       if (domainRegExp.test(node.hostname)) {
@@ -100,17 +97,11 @@ function highlightResults(input) {
     (node) => {
       node.classList.add(PREFERENCE_CLASS);
 
-      const resultsWrapperNode = node.closest(RESULTS_WRAPPER_QUERY);
-      const resultsGroupNode = resultsWrapperNode.querySelector(
-        RESULTS_GROUP_QUERY
-      );
+      const topResultNode = document
+        .querySelector(RESULT_LINK_QUERY)
+        .closest(RESULT_WRAPPER_QUERY);
 
-      if (resultsGroupNode) {
-        // Sometimes this doesnt exist for some reason...
-        resultsGroupNode.insertBefore(node, resultsGroupNode.childNodes[0]);
-      } else {
-        resultsWrapperNode.insertBefore(node, resultsWrapperNode.childNodes[0]);
-      }
+      topResultNode.parentElement.insertBefore(node, topResultNode);
     },
     (node) => {
       node.classList.remove(PREFERENCE_CLASS);
