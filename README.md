@@ -6,17 +6,22 @@
   <br>
 </h1>
 
-Blacklist domains from Google search results!
+- Filter domains from your Google search results!
+- Add websites to your preferences to bring results you prefer to the top!
 
-![Domains](https://user-images.githubusercontent.com/6385983/70561137-ebc6cb00-1b57-11ea-9f38-0c1a25a5879c.png)
+<img width="397" alt="Google Domain Filter Preview" src="https://user-images.githubusercontent.com/6385983/102741623-df577f80-4320-11eb-8582-b952d1df3458.png">
 
 ## Description
 
-Built with React and webextension APIs, the Google Domain Filter allows you to input a set of domains you would like to filter away from your google results.
+Built with React and webextension APIs, the Google Domain Filter allows you to input a set of domains you would like to filter away from your google results. You may also use the preference list to highlight and prioritize certain domains. Domains in the preference list will be brought to the top of the page and accented in blue.
 
 ### How it Works
 
 The extension runs in the background listening to requests made to google that contain a query. The query is then modified to contain additional parameters to filter away google search results that contain any specified domains. The extension then sends the query to google and awaits a response. On response, the extension then modifies the results page to remove any obvious indications that domains were filtered out, making the entire process seamless.
+
+### Caveats
+
+Due to the nature of how the extension works, it may interfere with certain google search page features. Features such as Google Definitions (ex: "Define Ubiquitous"), Google Translate (ex: "Translate hola"), and other similar in page apps may not appear when domains are in your filter. To bring back those functionalities, simply remove all domains from your blacklist or uninstall the web extension. **Workarounds are still being looked into.**
 
 ### Tools/Frameworks/Libraries Used
 
