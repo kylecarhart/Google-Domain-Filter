@@ -9,7 +9,9 @@
 - Filter domains from your Google search results!
 - Add websites to your preferences to bring results you prefer to the top!
 
-<img width="397" alt="Google Domain Filter Preview" src="https://user-images.githubusercontent.com/6385983/102741623-df577f80-4320-11eb-8582-b952d1df3458.png">
+<p align="center">
+  <img width="397" alt="Google Domain Filter Preview" src="https://user-images.githubusercontent.com/6385983/102741623-df577f80-4320-11eb-8582-b952d1df3458.png">
+</p>
 
 ## Description
 
@@ -21,7 +23,7 @@ The extension runs in the background listening to requests made to google that c
 
 ### Caveats
 
-Due to the nature of how the extension works, it may interfere with certain google search page features. Features such as Google Definitions (ex: "Define Ubiquitous"), Google Translate (ex: "Translate hola"), and other similar in page apps may not appear when domains are in your filter. To bring back those functionalities, simply remove all domains from your blacklist or uninstall the web extension. **Workarounds are still being looked into.**
+Due to the nature of how the extension works, it may interfere with certain google search page features. Features such as Google Definitions (ex: "Define Ubiquitous"), Google Translate (ex: "Translate hola"), and other similar in-page apps may not appear when domains are in your filter. To bring back those functionalities, simply remove all domains from your blacklist or uninstall the web extension. **Workarounds are still being looked into.**
 
 ### Tools/Frameworks/Libraries Used
 
