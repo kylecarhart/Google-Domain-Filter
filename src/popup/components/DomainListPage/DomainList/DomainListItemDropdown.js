@@ -7,9 +7,7 @@ import { IconButton } from "../../Button";
 
 function DomainListItemDropdown({
   domain,
-  isEditing,
   startEdit,
-  cancelEdit,
   showTrigger,
   setDomains,
 }) {
@@ -17,13 +15,6 @@ function DomainListItemDropdown({
     text: "Edit",
     onClick: () => {
       startEdit();
-    },
-  };
-
-  const cancelEditOption = {
-    text: "Cancel Edit",
-    onClick: () => {
-      cancelEdit();
     },
   };
 
@@ -43,7 +34,7 @@ function DomainListItemDropdown({
           <MoreIcon />
         </StyledIconButton>
       )}
-      items={[isEditing ? cancelEditOption : editOption, deleteOption]}
+      items={[editOption, deleteOption]}
     />
   );
 }

@@ -67,21 +67,19 @@ function DomainListItem({ domain, index, isDraggingOver, setDomains }, ref) {
               editDomain={editDomain}
             />
 
-            {isEditing && (
+            {isEditing ? (
               <DomainListItemEditOptions
                 editDomain={editDomain}
                 cancelEdit={cancelEdit}
               />
+            ) : (
+              <DomainListItemDropdown
+                domain={domain}
+                setDomains={setDomains}
+                showTrigger={isHovering && !isDraggingOver}
+                startEdit={startEdit}
+              />
             )}
-
-            <DomainListItemDropdown
-              domain={domain}
-              setDomains={setDomains}
-              showTrigger={isHovering && !isDraggingOver}
-              startEdit={startEdit}
-              cancelEdit={cancelEdit}
-              isEditing={isEditing}
-            />
 
             <DragHandle {...provided.dragHandleProps}>
               <DragHandleIcon />
