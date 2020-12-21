@@ -1,13 +1,14 @@
 <h1 align="center">
-  <br>
+  <br />
   <a href="https://github.com/KMCGamer/google-domain-filter"><img src="https://user-images.githubusercontent.com/6385983/71632282-b273ff00-2bdb-11ea-9a62-554cfce1c016.png" alt="Google Domain Filter"></a>
-  <br>
+  <br />
   Google Domain Filter
-  <br>
+  <br />
 </h1>
 
-- Filter domains from your Google search results!
-- Add websites to your preferences to bring results you prefer to the top!
+<p align="center"> 
+  Filter domains from your Google search results and bring results you prefer to the top!
+</p>
 
 <p align="center">
   <img width="397" alt="Google Domain Filter Preview" src="https://user-images.githubusercontent.com/6385983/102741623-df577f80-4320-11eb-8582-b952d1df3458.png">
