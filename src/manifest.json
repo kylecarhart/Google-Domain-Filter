@@ -20,15 +20,15 @@
   "background": {
     "scripts": ["./browser-polyfill.min.js", "./background/index.js"]
   },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "gsb@carhart.dev",
-      "strict_min_version": "53.0"
-    }
-  },
   "icons": {
     "16": "./static/logo16.png",
     "48": "./static/logo48.png",
     "128": "./static/logo128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gsb@carhart.dev",
+      "strict_min_version": "57.0"
+    }
   }
 }

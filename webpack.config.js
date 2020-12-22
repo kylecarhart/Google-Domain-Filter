@@ -15,7 +15,7 @@ module.exports = (env) => {
     },
     // Output each in a folder named after their entry
     output: {
-      path: path.resolve(__dirname, "./dist"),
+      path: path.resolve(__dirname, "./build"),
       filename: "./[name]/index.js",
     },
     // Remove eval() from javascript

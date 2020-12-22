@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "watch": "npm run clean && webpack --env.mode=development --env.watch",
-    "build": "webpack --env.mode=production",
-    "start": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -t chromium -u google.com --source-dir ./dist/",
-    "start:firefox": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -u google.com --source-dir ./dist/",
-    "start:chrome": "web-ext run -t chromium -u google.com --source-dir ./dist/",
-    "clean": "rimraf dist"
+    "build": "npm run clean && webpack --env.mode=production && web-ext build -s build -a dist -o",
+    "start": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -t chromium -u google.com --source-dir build",
+    "start:firefox": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -u google.com --source-dir build",
+    "start:chrome": "web-ext run -t chromium -u google.com --source-dir build",
+    "clean": "rimraf build"
   },
   "author": "Kyle Carhart",
   "license": "MIT",
