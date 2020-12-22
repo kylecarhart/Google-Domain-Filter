@@ -42,4 +42,4 @@ Start by running `npm start` in the root directory. This will kick off the webpa
 
 ### Build for Production
 
-Run `npm run build` to create a build for production. Then follow steps to properly sign the extension using `web-ext`.
+Run `npm run build` to create a build for production. Then run `web-ext build` in the `dist` folder to make a build.
