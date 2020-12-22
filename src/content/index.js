@@ -27,6 +27,7 @@ import { FILTER_LIST_KEY, PREFERENCE_LIST_KEY } from "../storage";
 
     document.addEventListener("DOMContentLoaded", () => {
       observer.disconnect();
+      removeFromInput(filterString);
     });
 
     removeFromTitle(` ${filterString}`);

@@ -113,7 +113,9 @@ function removeFromTitle(string) {
  */
 function removeFromInput(string) {
   const input = document.querySelector('input[name="q"]');
-  input.value = input.value.substring(0, input.value.indexOf(string) - 1);
+  if (input.value.includes(string)) {
+    input.value = input.value.substring(0, input.value.indexOf(string) - 1);
+  }
 }
 
 /**
