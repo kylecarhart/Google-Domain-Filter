@@ -1,7 +1,8 @@
 import { escapeRegExp, getElementsByXPath } from "../utils";
 
 const RESULT_LINK_XPATH =
-  "//div[@class='g' and not(ancestor::g-accordion-expander)]//div[@class='yuRUbf']/a";
+  "//div[@class='hlcw0c' or @id='rso']/div[@class='g']//div[@class='yuRUbf']/a";
+const RESULT_WRAPPER = ".g";
 
 /**
  * Loop through results and call matchCallback() on each match. If no match,
@@ -40,7 +41,7 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
 
   // For each result DOM node, check if hostname matches domain in the list
   nodes.forEach((node) => {
-    const resultWrapperNode = node.closest(".g");
+    const resultWrapperNode = node.closest(RESULT_WRAPPER);
 
     let calledBack = false;
     for (let i = 0; i < domains.length; i++) {
@@ -85,7 +86,7 @@ function highlightResults(input) {
     input,
     (node) => {
       const topResultNode = getElementsByXPath(RESULT_LINK_XPATH)[0].closest(
-        ".g"
+        RESULT_WRAPPER
       );
       topResultNode.parentElement.insertBefore(node, topResultNode);
 
