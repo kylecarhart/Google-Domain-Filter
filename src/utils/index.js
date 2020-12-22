@@ -60,3 +60,22 @@ export function replaceStringInArray(arr, from, to) {
 export function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
+/**
+ * Retrieve all results from xpath query.
+ * @param {string} xpath String of XPath query.
+ * @param {*} parent Parent node to search from. Default is document.
+ */
+export function getElementsByXPath(xpath, parent) {
+  let results = [];
+  let query = document.evaluate(
+    xpath,
+    parent || document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+  );
+  for (let i = 0, length = query.snapshotLength; i < length; ++i) {
+    results.push(query.snapshotItem(i));
+  }
+  return results;
+}

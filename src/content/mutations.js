@@ -1,13 +1,7 @@
-import { escapeRegExp } from "../utils";
+import { escapeRegExp, getElementsByXPath } from "../utils";
 
-const PREFERENCE_CLASS = "preference";
-const DISPLAY_NONE_CLASS = "displaynone";
-
-const RESULT_WRAPPER_QUERY = ".g";
-const FIREFOX_RESULT_LINK_QUERY = "#rso > div > div > div > div.yuRUbf > a";
-const CHROME_RESULT_LINK_QUERY = "#rso >  div > div > div.yuRUbf > a";
-
-const RESULT_LINK_QUERY = `${FIREFOX_RESULT_LINK_QUERY},${CHROME_RESULT_LINK_QUERY}`;
+const RESULT_LINK_XPATH =
+  "//div[@class='g' and not(ancestor::g-accordion-expander)]//div[@class='yuRUbf']/a";
 
 /**
  * Loop through results and call matchCallback() on each match. If no match,
@@ -19,12 +13,7 @@ const RESULT_LINK_QUERY = `${FIREFOX_RESULT_LINK_QUERY},${CHROME_RESULT_LINK_QUE
 function handleResults(input, matchCallback, noMatchCallback = () => {}) {
   let domains = Array.isArray(input) ? input : [input];
 
-  /**
-   * Firefox and Chrome browsers are served differently formatted pages.
-   * Firefox search results are grouped into additional divs, however we
-   * can query for Firefox and Chrome at the same time here.
-   */
-  let nodes = Array.from(document.querySelectorAll(RESULT_LINK_QUERY));
+  let nodes = getElementsByXPath(RESULT_LINK_XPATH);
 
   /**
    * We need to sort the array of matching nodes first to accommodate for the
@@ -51,7 +40,7 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
 
   // For each result DOM node, check if hostname matches domain in the list
   nodes.forEach((node) => {
-    const resultWrapperNode = node.closest(RESULT_WRAPPER_QUERY);
+    const resultWrapperNode = node.closest(".g");
 
     let calledBack = false;
     for (let i = 0; i < domains.length; i++) {
@@ -79,10 +68,10 @@ function removeResults(input) {
   handleResults(
     input,
     (node) => {
-      node.classList.add(DISPLAY_NONE_CLASS);
+      node.setAttribute("displaynone", "");
     },
     (node) => {
-      node.classList.remove(DISPLAY_NONE_CLASS);
+      node.removeAttribute("displaynone");
     }
   );
 }
@@ -95,16 +84,15 @@ function highlightResults(input) {
   handleResults(
     input,
     (node) => {
-      node.classList.add(PREFERENCE_CLASS);
-
-      const topResultNode = document
-        .querySelector(RESULT_LINK_QUERY)
-        .closest(RESULT_WRAPPER_QUERY);
-
+      const topResultNode = getElementsByXPath(RESULT_LINK_XPATH)[0].closest(
+        ".g"
+      );
       topResultNode.parentElement.insertBefore(node, topResultNode);
+
+      node.setAttribute("preference", "");
     },
     (node) => {
-      node.classList.remove(PREFERENCE_CLASS);
+      node.removeAttribute("preference");
     }
   );
 }

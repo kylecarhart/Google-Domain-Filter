@@ -1,8 +1,8 @@
-.preference {
+[preference] {
   position: relative;
 }
 
-.preference::before {
+[preference]::before {
   content: "";
   background: #4285f4;
   width: 3px;
@@ -10,9 +10,8 @@
   left: -20px;
   top: 0;
   bottom: 0;
-  /* border-radius: 2px; */
 }
 
-.displaynone {
+[displaynone] {
   display: none;
 }
