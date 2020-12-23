@@ -38,8 +38,13 @@ Due to the nature of how the extension works, it may interfere with certain goog
 
 Make sure you run `npm install` first.
 
-Start by running `npm start` in the root directory. This will kick off the webpack build watch, which will allow you to make changes while webpack re-compiles to the `./dist` folder. While that is running, open another terminal and run `npm run start:firefox`. This will start the `web-ext` helper which will open an contained instance of firefox and install the web extension. `web-ext` will watch for changes to the `./dist` folder and refresh automatically.
+Start by running `npm start` in the root directory. This will kick off the webpack build watch, which will allow you to make changes while webpack re-compiles to the `build` folder. While webpack is watching for changes, open another terminal and start a firefox, chrome, or both instances by using one of the commands below:
+- Firefox only: `npm run start:firefox`
+- Chrome only: `npm run start:chrome`
+- Both: `npm run start`
+
+I have mine set to use firefox developer edition and chrome canary. You will either need to download these, or specify your own firefox and chrome instances in the npm scripts in package.json. Webpack will compile to the `build` folder, and `web-ext` will watch for changes to the `build` folder and refresh your browser automatically.
 
 ### Build for Production
 
-Run `npm run build` to create a build for production. Then run `web-ext build` in the `dist` folder to make a build.
+Run `npm run build` to create a build for production. Webpack will compile the code into the `build` folder with production environment variables. Web-ext will then create a build from that and place the zipped extension into the `dist` folder.
