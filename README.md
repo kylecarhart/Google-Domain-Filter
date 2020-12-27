@@ -1,6 +1,8 @@
 <h1 align="center">
   <br />
-  <a href="https://github.com/KMCGamer/google-domain-filter"><img src="https://user-images.githubusercontent.com/6385983/71632282-b273ff00-2bdb-11ea-9a62-554cfce1c016.png" alt="Google Domain Filter"></a>
+  <a href="https://github.com/KMCGamer/google-domain-filter">
+    <img src="https://user-images.githubusercontent.com/6385983/71632282-b273ff00-2bdb-11ea-9a62-554cfce1c016.png" alt="Google Domain Filter" title="Google Domain Filter" />
+  </a>
   <br />
   Google Domain Filter
   <br />
@@ -11,11 +13,11 @@
 </p>
 
 <p align="center"> 
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/google-domain-filter/">
-    <img src="https://user-images.githubusercontent.com/6385983/103181046-82048680-486a-11eb-9303-0b5b2537f726.png"/>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/google-domain-filter" alt="Download for Firefox" title="Download for Firefox">
+    <img src="https://user-images.githubusercontent.com/6385983/103181145-c6445680-486b-11eb-8a92-79aa271f5d79.png" />
   </a>
-  <a href="https://chrome.google.com/webstore/detail/google-domain-filter/pfefijhgghjngiekipelcephlehhiedl">
-    <img src="https://user-images.githubusercontent.com/6385983/103181045-82048680-486a-11eb-97c6-c6ef6ab8a111.png"/>
+  <a href="https://chrome.google.com/webstore/detail/google-domain-filter/pfefijhgghjngiekipelcephlehhiedl" alt="Download for Chrome" title="Download for Chrome">
+    <img src="https://user-images.githubusercontent.com/6385983/103181045-82048680-486a-11eb-97c6-c6ef6ab8a111.png" />
   </a>
 </p>
 
