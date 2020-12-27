@@ -10,13 +10,22 @@
   Filter domains from your Google search results and bring results you prefer to the top!
 </p>
 
-<p align="center">
-  <img width="397" alt="Google Domain Filter Preview" src="https://user-images.githubusercontent.com/6385983/102741623-df577f80-4320-11eb-8582-b952d1df3458.png">
+<p align="center"> 
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/google-domain-filter/">
+    <img src="https://user-images.githubusercontent.com/6385983/103181046-82048680-486a-11eb-9303-0b5b2537f726.png"/>
+  </a>
+  <a href="https://chrome.google.com/webstore/detail/google-domain-filter/pfefijhgghjngiekipelcephlehhiedl">
+    <img src="https://user-images.githubusercontent.com/6385983/103181045-82048680-486a-11eb-97c6-c6ef6ab8a111.png"/>
+  </a>
 </p>
 
 ## Description
 
 Built with React and webextension APIs, the Google Domain Filter allows you to input a set of domains you would like to filter away from your google results. You may also use the preference list to highlight and prioritize certain domains. Domains in the preference list will be brought to the top of the page and accented in blue.
+
+<p align="center">
+  <img width="397" alt="Google Domain Filter Preview" src="https://user-images.githubusercontent.com/6385983/102741623-df577f80-4320-11eb-8582-b952d1df3458.png">
+</p>
 
 ### How it Works
 
