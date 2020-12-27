@@ -80,7 +80,7 @@ module.exports = (env) => {
             return manifestJSON;
           },
         },
-        { from: "./src/static/*", to: "./static", flatten: true }, // Copy static files (imgs)
+        { from: "./src/static/png/logo*.png", to: "./static", flatten: true }, // Copy static files (imgs)
         {
           from:
             "node_modules/webextension-polyfill/dist/browser-polyfill.min.js", // https://github.com/mozilla/webextension-polyfill
