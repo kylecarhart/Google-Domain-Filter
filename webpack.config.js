@@ -9,9 +9,10 @@ module.exports = (env) => {
     mode: env.mode,
     // One entry point for each part of an extension
     entry: {
-      background: "./src/background/",
+      background: "./src/background",
       content: "./src/content",
-      popup: "./src/popup/",
+      popup: "./src/popup",
+      options: "./src/options",
     },
     // Output each in a folder named after their entry
     output: {
@@ -22,7 +23,11 @@ module.exports = (env) => {
     devtool: "none",
     watch: env.watch ? true : false,
     resolve: {
-      extensions: [".js", ".jsx"],
+      alias: {
+        svelte: path.resolve("node_modules", "svelte"),
+      },
+      extensions: [".mjs", ".js", ".jsx", ".svelte"],
+      mainFields: ["svelte", "browser", "module", "main"],
     },
     module: {
       rules: [
@@ -48,6 +53,11 @@ module.exports = (env) => {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],
         },
+        {
+          test: /\.svelte$/,
+          exclude: /node_modules/,
+          use: "svelte-loader",
+        },
       ],
     },
     plugins: [
@@ -55,7 +65,13 @@ module.exports = (env) => {
       new HtmlWebPackPlugin({
         template: "./src/popup/index.html",
         filename: "./popup/index.html",
-        excludeChunks: ["background", "content"],
+        chunks: ["popup"],
+      }),
+      // Create index.html for popup
+      new HtmlWebPackPlugin({
+        template: "./src/options/index.html",
+        filename: "./options/index.html",
+        chunks: ["options"],
       }),
       // Copy manifest.json
       new CopyPlugin([
