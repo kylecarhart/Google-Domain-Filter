@@ -53,10 +53,13 @@ module.exports = (env) => {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],
         },
+        // Load Svelte
         {
           test: /\.svelte$/,
-          exclude: /node_modules/,
-          use: "svelte-loader",
+          // exclude: /node_modules/,
+          use: {
+            loader: "svelte-loader",
+          },
         },
       ],
     },

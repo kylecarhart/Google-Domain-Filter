@@ -1,11 +1,11 @@
 <script>
-	let example = 'World'
+	import { Button } from 'sveltestrap';
+	const handleClick = () => alert('I warned you!');
 </script>
 
 <style>
-	h1 {
-		color: purple;
-	}
+/* put styles here */
 </style>
 
-<h1>Hello {example}!</h1>
+<!-- <div>asdf</div> -->
+<Button color="danger" on:click={handleClick}>Do Not Press</Button>
