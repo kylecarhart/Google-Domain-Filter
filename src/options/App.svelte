@@ -1,11 +1,14 @@
 <script>
-	import { Button } from 'sveltestrap';
-	const handleClick = () => alert('I warned you!');
+	import { Col, Container, Row } from 'sveltestrap';
 </script>
 
 <style>
 /* put styles here */
 </style>
 
-<!-- <div>asdf</div> -->
-<Button color="danger" on:click={handleClick}>Do Not Press</Button>
+
+<Container>
+  <Row>
+    <Col>Example column</Col>
+  </Row>
+</Container>
