@@ -52,6 +52,7 @@ const StyledTippy = styled(Tippy)`
 `;
 
 const Icon = styled(HelpCircleIcon)`
+  margin-left: 0.5rem;
   &:focus {
     outline: none;
   }

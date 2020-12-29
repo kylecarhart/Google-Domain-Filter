@@ -3,27 +3,20 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import NavTip from "./NavTip";
 
-function NavItem({ text, navId, tipText, selected, setSelected, ...props }) {
+function NavItem({ tipText, selected, children, ...props }) {
   return (
-    <Button
-      selected={selected}
-      onClick={() => {
-        setSelected(navId);
-      }}
-      {...props}
-    >
-      <Text>{text}</Text>
-      <NavTip text={tipText} />
+    <Button selected={selected} {...props}>
+      {children}
+      {tipText && <NavTip text={tipText} />}
     </Button>
   );
 }
 
 NavItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  navId: PropTypes.string.isRequired,
-  tipText: PropTypes.string.isRequired,
-  selected: PropTypes.bool.isRequired,
-  setSelected: PropTypes.func.isRequired,
+  tipText: PropTypes.string,
+  selected: PropTypes.bool,
+  setSelected: PropTypes.func,
+  children: PropTypes.any,
 };
 
 const Button = styled.div`
@@ -46,10 +39,6 @@ const Button = styled.div`
   &:hover {
     background: ${(props) => (props.selected ? "" : "#f2f2f2")};
   }
-`;
-
-const Text = styled.span`
-  margin-right: 0.5rem;
 `;
 
 export default NavItem;
