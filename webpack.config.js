@@ -23,11 +23,7 @@ module.exports = (env) => {
     devtool: "none",
     watch: env.watch ? true : false,
     resolve: {
-      alias: {
-        svelte: path.resolve("node_modules", "svelte"),
-      },
-      extensions: [".mjs", ".js", ".jsx", ".svelte"],
-      mainFields: ["svelte", "browser", "module", "main"],
+      extensions: [".js", ".jsx"],
     },
     module: {
       rules: [
@@ -53,14 +49,6 @@ module.exports = (env) => {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],
         },
-        // Load Svelte
-        {
-          test: /\.svelte$/,
-          // exclude: /node_modules/,
-          use: {
-            loader: "svelte-loader",
-          },
-        },
       ],
     },
     plugins: [
@@ -70,7 +58,7 @@ module.exports = (env) => {
         filename: "./popup/index.html",
         chunks: ["popup"],
       }),
-      // Create index.html for popup
+      // Create index.html for options
       new HtmlWebPackPlugin({
         template: "./src/options/index.html",
         filename: "./options/index.html",

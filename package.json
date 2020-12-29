@@ -44,9 +44,6 @@
     "react-popper": "^2.2.3",
     "reset-css": "^5.0.1",
     "styled-components": "^4.4.1",
-    "svelte": "^3.31.0",
-    "svelte-loader": "^2.13.6",
-    "sveltestrap": "^3.9.7",
     "validator": "^13.1.17"
   }
 }
