@@ -22,7 +22,8 @@
   },
   "options_ui": {
     "page": "./options/index.html",
-    "open_in_tab": true
+    "open_in_tab": true,
+    "browser_style": false
   },
   "icons": {
     "16": "./static/logo16.png",

@@ -3,7 +3,6 @@
 *,
 *::before,
 *::after {
-  font-size: 100%;
   box-sizing: border-box;
 }
 
@@ -13,6 +12,7 @@ body {
   font-weight: 400;
   line-height: 1.75;
   color: #333;
+  font-size: 100%;
 }
 
 p {
