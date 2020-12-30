@@ -14,10 +14,10 @@
 
 <p align="center"> 
   <a href="https://addons.mozilla.org/en-US/firefox/addon/google-domain-filter" alt="Download for Firefox" title="Download for Firefox">
-    <img src="https://user-images.githubusercontent.com/6385983/103181145-c6445680-486b-11eb-8a92-79aa271f5d79.png" />
+    <img src="https://user-images.githubusercontent.com/6385983/103357808-109f2080-4a82-11eb-923a-3f3f5811d623.png" />
   </a>
   <a href="https://chrome.google.com/webstore/detail/google-domain-filter/pfefijhgghjngiekipelcephlehhiedl" alt="Download for Chrome" title="Download for Chrome">
-    <img src="https://user-images.githubusercontent.com/6385983/103181045-82048680-486a-11eb-97c6-c6ef6ab8a111.png" />
+    <img src="https://user-images.githubusercontent.com/6385983/103357809-109f2080-4a82-11eb-809f-8c00699a1a32.png" />
   </a>
 </p>
 
