@@ -2,8 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
 import Setting from "./Setting";
+import { useStorage } from "../popup/hooks/";
+import {
+  FILTER_LIST_ENABLED_KEY,
+  FILTER_MODE_EXPERIMENTAL_KEY,
+  OPTIONS_KEY,
+  PREFERENCE_LIST_ENABLED_KEY,
+} from "../storage";
 
 function App({ ...props }) {
+  const [options, setOptions] = useStorage(OPTIONS_KEY, {});
+
   return (
     <Container {...props}>
       <h2>Settings</h2>
@@ -12,20 +21,37 @@ function App({ ...props }) {
         title="Filter List"
         description="Turns on/off the google domain filter."
       >
-        <ButtonGroup />
+        <ButtonGroup
+          option={options[FILTER_LIST_ENABLED_KEY]}
+          onClick={(bool) => {
+            setOptions({ ...options, [FILTER_LIST_ENABLED_KEY]: bool });
+          }}
+        />
       </Setting>
       <Setting
         title="Preference List"
         description="Turns on/off the preference list highlighting."
       >
-        <ButtonGroup />
+        <ButtonGroup
+          option={options[PREFERENCE_LIST_ENABLED_KEY]}
+          onClick={(bool) => {
+            setOptions({ ...options, [PREFERENCE_LIST_ENABLED_KEY]: bool });
+          }}
+        />
       </Setting>
       <hr />
       <Setting
         title="Filter Mode"
         description="If you are experiencing issues with search result pages not showing any results, try the Experimental option."
       >
-        <ButtonGroup />
+        <ButtonGroup
+          option={options[FILTER_MODE_EXPERIMENTAL_KEY]}
+          onText="Experimental"
+          offText="Default"
+          onClick={(bool) => {
+            setOptions({ ...options, [FILTER_MODE_EXPERIMENTAL_KEY]: bool });
+          }}
+        />
       </Setting>
       <hr />
     </Container>
