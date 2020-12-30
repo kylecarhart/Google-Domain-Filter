@@ -15,7 +15,7 @@ function App({ ...props }) {
 
   return (
     <Container {...props}>
-      <h2>Settings</h2>
+      <h2>Filter Options</h2>
       <hr />
       <Setting
         title="Filter List"
