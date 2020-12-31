@@ -5,7 +5,7 @@ export const OPTIONS_KEY = "options";
 export const FILTER_LIST_ENABLED_KEY = "filterListEnabled";
 export const PREFERENCE_LIST_ENABLED_KEY = "preferenceListEnabled";
 
-export const FILTER_MODE_EXPERIMENTAL_KEY = "filterModeIsExperimental";
+export const FILTER_MODE_DEFAULT_KEY = "filterModeIsDefault";
 
 const STORAGE_DEFAULTS = {
   [FILTER_LIST_KEY]: [],
@@ -13,7 +13,7 @@ const STORAGE_DEFAULTS = {
   [OPTIONS_KEY]: {
     [FILTER_LIST_ENABLED_KEY]: true,
     [PREFERENCE_LIST_ENABLED_KEY]: true,
-    [FILTER_MODE_EXPERIMENTAL_KEY]: false,
+    [FILTER_MODE_DEFAULT_KEY]: true,
   },
 };
 

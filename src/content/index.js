@@ -6,17 +6,24 @@ import {
   removeResults,
   highlightResults,
 } from "./mutations";
-import { FILTER_LIST_KEY, PREFERENCE_LIST_KEY } from "../storage";
+import {
+  FILTER_LIST_KEY,
+  OPTIONS_KEY,
+  PREFERENCE_LIST_KEY,
+  FILTER_MODE_DEFAULT_KEY,
+} from "../storage";
 
 // Start google domain filtering script
 (async function () {
   const storage = await browser.storage.sync.get([
     FILTER_LIST_KEY,
     PREFERENCE_LIST_KEY,
+    OPTIONS_KEY,
   ]);
 
   const filterList = storage[FILTER_LIST_KEY] || [];
   const preferenceList = storage[PREFERENCE_LIST_KEY] || [];
+  const options = storage[OPTIONS_KEY] || {};
 
   if (filterList.length !== 0) {
     const filterString = toExcludeQuery(...filterList);
@@ -28,6 +35,9 @@ import { FILTER_LIST_KEY, PREFERENCE_LIST_KEY } from "../storage";
     document.addEventListener("DOMContentLoaded", () => {
       observer.disconnect();
       removeFromInput(filterString);
+      if (options[FILTER_MODE_DEFAULT_KEY]) {
+        removeResults(filterList);
+      }
     });
 
     removeFromTitle(` ${filterString}`);

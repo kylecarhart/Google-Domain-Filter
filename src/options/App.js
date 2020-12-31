@@ -5,7 +5,7 @@ import Setting from "./Setting";
 import { useStorage } from "../popup/hooks/";
 import {
   FILTER_LIST_ENABLED_KEY,
-  FILTER_MODE_EXPERIMENTAL_KEY,
+  FILTER_MODE_DEFAULT_KEY,
   OPTIONS_KEY,
   PREFERENCE_LIST_ENABLED_KEY,
 } from "../storage";
@@ -45,11 +45,11 @@ function App({ ...props }) {
         description="If you are experiencing issues with search result pages not showing any results, try the Experimental option."
       >
         <ButtonGroup
-          option={options[FILTER_MODE_EXPERIMENTAL_KEY]}
-          onText="Experimental"
-          offText="Default"
+          option={options[FILTER_MODE_DEFAULT_KEY]}
+          onText="Default"
+          offText="Experimental"
           onClick={(bool) => {
-            setOptions({ ...options, [FILTER_MODE_EXPERIMENTAL_KEY]: bool });
+            setOptions({ ...options, [FILTER_MODE_DEFAULT_KEY]: bool });
           }}
         />
       </Setting>
