@@ -15,7 +15,7 @@ const Navbar = ({ selected, setSelected }) => {
           setSelected(FILTER_LIST_NAV);
         }}
       >
-        Blacklist
+        Filter List
       </StyledNavItem>
       <StyledNavItem
         tipText="Prioritize search results from domains in this list (order matters!)"

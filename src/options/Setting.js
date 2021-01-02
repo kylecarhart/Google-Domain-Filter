@@ -35,7 +35,7 @@ const SettingDescription = styled.div`
   flex: 1;
 `;
 
-const SettingTitle = styled.h4`
+const SettingTitle = styled.h5`
   margin: 0 0 0.5rem 0;
 `;
 

@@ -15,12 +15,9 @@ function App({ ...props }) {
 
   return (
     <Container {...props}>
-      <h2>Filter Options</h2>
+      <h3>Filter Options</h3>
       <hr />
-      <Setting
-        title="Filter List"
-        description="Turns on/off the google domain filter."
-      >
+      <Setting title="Filter List" description="Turns on/off domain filtering.">
         <ButtonGroup
           option={options[FILTER_LIST_ENABLED_KEY]}
           onClick={(bool) => {
@@ -30,7 +27,7 @@ function App({ ...props }) {
       </Setting>
       <Setting
         title="Preference List"
-        description="Turns on/off the preference list highlighting."
+        description="Turns on/off preference list highlighting."
       >
         <ButtonGroup
           option={options[PREFERENCE_LIST_ENABLED_KEY]}
