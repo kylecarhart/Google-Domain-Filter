@@ -51,14 +51,14 @@ import {
     });
   }
 
-  // Listen for changes to domains and remove them from the DOM
+  // Listen for changes to filter list and remove them from the DOM
   browser.storage.onChanged.addListener((storage) => {
     if (storage[FILTER_LIST_KEY]) {
       removeResults(storage[FILTER_LIST_KEY].newValue);
     }
   });
 
-  // Listen for changes to domains and remove them from the DOM
+  // Listen for changes to preferences and highlight them in the DOM
   browser.storage.onChanged.addListener((storage) => {
     if (storage[PREFERENCE_LIST_KEY]) {
       highlightResults(storage[PREFERENCE_LIST_KEY].newValue);
