@@ -33,9 +33,8 @@ export async function initRequestListener() {
     const filterString = toExcludeQuery(...filterList);
 
     // Add the sites to the query if it doesn't contain them already
-    // This avoids the infinite request loop.
-    if (!filterList.every((domain) => params.get("q").includes(domain))) {
-      params.set("q", `${params.get("q")} ${filterString}`);
+    if (!params.get("as_q")) {
+      params.set("as_q", filterString);
     } else {
       return;
     }
