@@ -11,8 +11,7 @@ import { FILTER_MODE_DEFAULT_KEY, OPTIONS_KEY } from "../storage";
 
   // Get filter mode method
   const storage = await browser.storage.sync.get(OPTIONS_KEY);
-  const isDefault = storage[OPTIONS_KEY][FILTER_MODE_DEFAULT_KEY];
-  if (!isDefault) {
+  if (storage[OPTIONS_KEY] && !storage[OPTIONS_KEY][FILTER_MODE_DEFAULT_KEY]) {
     initRequestListener();
   }
 

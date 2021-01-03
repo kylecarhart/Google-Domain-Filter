@@ -127,4 +127,10 @@ function getDomainRegExp(domain) {
   return new RegExp(`^(?:.+\\.)?${escapedString}$`);
 }
 
-export { removeFromInput, removeFromTitle, removeResults, highlightResults };
+export {
+  removeFromInput,
+  removeFromTitle,
+  removeResults,
+  highlightResults,
+  getDomainRegExp,
+};

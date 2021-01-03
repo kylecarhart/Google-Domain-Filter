@@ -1,25 +1,26 @@
-const TEXT_NODE = 3;
+import { getDomainRegExp } from "./mutations";
 
-/** Class representing a Mutation Observer */
-class Observer {
+/**
+ * Class representing the mutation observer
+ */
+export default class ResultObserver {
   /**
    * Create a mutation observer.
    * @param {string} filterString - The string to remove from the DOM.
    */
-  constructor(filterString) {
-    this.filterString = filterString;
+  constructor(filterList) {
+    this.filterList = filterList;
     this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((addedNode) => {
-          switch (addedNode.nodeType) {
-            case TEXT_NODE:
-              addedNode.nodeValue = addedNode.nodeValue.replace(
-                this.filterString,
-                ""
-              );
-              break;
-            default:
-              break;
+          if (
+            addedNode.nodeName === "A" &&
+            addedNode.parentElement.className === "yuRUbf" &&
+            filterList.some((domain) =>
+              getDomainRegExp(domain).test(addedNode.hostname)
+            )
+          ) {
+            addedNode.closest(".g").setAttribute("displaynone", "");
           }
         });
       });
@@ -33,6 +34,8 @@ class Observer {
     this.observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
+      attributes: true,
+      attributeOldValue: true,
     });
   }
 
@@ -43,5 +46,3 @@ class Observer {
     this.observer.disconnect();
   }
 }
-
-export { Observer };
