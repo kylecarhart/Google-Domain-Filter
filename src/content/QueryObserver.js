@@ -22,10 +22,6 @@ export default class QueryObserver {
             return;
           }
 
-          if (addedNode.nodeName === "A") {
-            // console.log(addedNode.href, addedNode.closest(".g"));
-          }
-
           // Modify any other text nodes containing the filter query
           if (addedNode.nodeType === TEXT_NODE) {
             addedNode.nodeValue = addedNode.nodeValue.replace(
