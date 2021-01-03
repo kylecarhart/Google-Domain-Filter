@@ -1,4 +1,4 @@
-import { initStorage } from "../storage";
+import storage from "../storage";
 
 /**
  * Handler for runtime.onInstalled.
@@ -30,7 +30,7 @@ async function onInstall(details) {
 
   // Initialize the storage area
   try {
-    await initStorage();
+    await storage.init();
     console.log(`Storage initialized to default values.`);
   } catch (e) {
     console.log(e);

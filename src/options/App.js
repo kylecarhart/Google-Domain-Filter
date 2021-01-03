@@ -2,16 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
 import Setting from "./Setting";
-import { useStorage } from "../popup/hooks/";
-import {
-  FILTER_LIST_ENABLED_KEY,
-  FILTER_MODE_DEFAULT_KEY,
-  OPTIONS_KEY,
-  PREFERENCE_LIST_ENABLED_KEY,
-} from "../storage";
+import storage from "../storage";
 
 function App({ ...props }) {
-  const [options, setOptions] = useStorage(OPTIONS_KEY, {});
+  const [options, setOptions] = storage.options.useHook();
 
   return (
     <Container {...props}>
@@ -19,9 +13,12 @@ function App({ ...props }) {
       <hr />
       <Setting title="Filter List" description="Turns on/off domain filtering.">
         <ButtonGroup
-          option={options[FILTER_LIST_ENABLED_KEY]}
+          option={options.filterListEnabled}
           onClick={(bool) => {
-            setOptions({ ...options, [FILTER_LIST_ENABLED_KEY]: bool });
+            setOptions({
+              ...options,
+              filterListEnabled: bool,
+            });
           }}
         />
       </Setting>
@@ -30,9 +27,12 @@ function App({ ...props }) {
         description="Turns on/off preference list highlighting."
       >
         <ButtonGroup
-          option={options[PREFERENCE_LIST_ENABLED_KEY]}
+          option={options.preferenceListEnabled}
           onClick={(bool) => {
-            setOptions({ ...options, [PREFERENCE_LIST_ENABLED_KEY]: bool });
+            setOptions({
+              ...options,
+              preferenceListEnabled: bool,
+            });
           }}
         />
       </Setting>
@@ -42,11 +42,14 @@ function App({ ...props }) {
         description="If you are experiencing issues with search result pages not showing any results, try the Experimental option."
       >
         <ButtonGroup
-          option={options[FILTER_MODE_DEFAULT_KEY]}
+          option={options.filterMode}
           onText="Default"
           offText="Experimental"
           onClick={(bool) => {
-            setOptions({ ...options, [FILTER_MODE_DEFAULT_KEY]: bool });
+            setOptions({
+              ...options,
+              filterMode: bool,
+            });
           }}
         />
       </Setting>

@@ -1,14 +1,12 @@
-import { FILTER_LIST_KEY } from "../storage";
+import storage from "../storage";
 import { tlds } from "../tlds.json";
 import { toExcludeQuery } from "../utils";
 
 let filterList = null;
 let isRunning = false;
 
-const changeListener = (storage) => {
-  if (storage[FILTER_LIST_KEY]) {
-    filterList = storage[FILTER_LIST_KEY].newValue;
-  }
+const changeListener = (_filterList) => {
+  filterList = _filterList;
 };
 
 const onBeforeRequestListener = (details) => {
@@ -33,17 +31,11 @@ const onBeforeRequestListener = (details) => {
   };
 };
 
-const initFilterList = async () => {
-  const storage = await browser.storage.sync.get(FILTER_LIST_KEY);
-  filterList = storage[FILTER_LIST_KEY];
-  return filterList;
-};
-
 /**
  * Start the onBeforeRequest and storage change listeners.
  */
 export async function startRequestListener() {
-  filterList = filterList || (await initFilterList());
+  filterList = filterList || (await storage.filterList.get());
 
   browser.webRequest.onBeforeRequest.addListener(
     onBeforeRequestListener,
@@ -54,7 +46,7 @@ export async function startRequestListener() {
     ["blocking"]
   );
 
-  browser.storage.onChanged.addListener(changeListener);
+  storage.filterList.addListener(changeListener);
   isRunning = true;
 }
 
@@ -63,7 +55,7 @@ export async function startRequestListener() {
  */
 export function stopRequestListener() {
   if (isRunning) {
-    browser.storage.onChanged.removeListener(changeListener);
+    storage.filterList.removeListener(changeListener);
     browser.webRequest.onBeforeRequest.removeListener(onBeforeRequestListener);
   }
 

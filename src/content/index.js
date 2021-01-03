@@ -1,7 +1,7 @@
 import QueryObserver from "./QueryObserver";
 import { removeResults, highlightResults } from "./mutations";
-import { FILTER_LIST_KEY, PREFERENCE_LIST_KEY } from "../storage";
 import ResultObserver from "./ResultObserver";
+import storage from "../storage";
 
 const url = new URL(window.location.href);
 const params = url.searchParams;
@@ -16,13 +16,8 @@ if (asQParam) {
 
 // Start google domain filtering script
 (async function () {
-  const storage = await browser.storage.sync.get([
-    FILTER_LIST_KEY,
-    PREFERENCE_LIST_KEY,
-  ]);
-
-  const filterList = storage[FILTER_LIST_KEY] || [];
-  const preferenceList = storage[PREFERENCE_LIST_KEY] || [];
+  const filterList = await storage.filterList.get();
+  const preferenceList = await storage.preferenceList.get();
 
   // Run the result observer when using default filter mode
   if (!asQParam) {
@@ -36,11 +31,11 @@ if (asQParam) {
   });
 
   // Listen for changes to filter list and remove them from the DOM
-  browser.storage.onChanged.addListener((storage) => {
-    if (storage[FILTER_LIST_KEY]) {
-      removeResults(storage[FILTER_LIST_KEY].newValue);
-    } else if (storage[PREFERENCE_LIST_KEY]) {
-      highlightResults(storage[PREFERENCE_LIST_KEY].newValue);
-    }
+  storage.filterList.addListener((filterList) => {
+    console.log("change to filter list");
+    removeResults(filterList);
   });
+  storage.preferenceList.addListener((preferenceList) =>
+    highlightResults(preferenceList)
+  );
 })();
