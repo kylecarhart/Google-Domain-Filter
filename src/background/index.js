@@ -26,10 +26,8 @@ import {
       const filterListEnabled =
         storage[OPTIONS_KEY].newValue[FILTER_LIST_ENABLED_KEY];
       if (!isDefault && filterListEnabled) {
-        console.log("started");
         startRequestListener();
       } else {
-        console.log("stopped");
         stopRequestListener();
       }
     }
