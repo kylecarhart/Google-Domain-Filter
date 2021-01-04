@@ -9,7 +9,7 @@ let listenerMap = new Map();
  * @param {string} key - Key of value to retrieve from storage.
  * @param {any=} defaultValue - defaultValue to set if key doesnt exist.
  */
-export async function getStorage(key, defaultValue) {
+async function getStorage(key, defaultValue) {
   try {
     const storage = await browser.storage.sync.get(key);
     // Return storage value if the key exists
@@ -34,7 +34,7 @@ export async function getStorage(key, defaultValue) {
  * @param {string} key - Key of storage value.
  * @param {*} val - Value to set.
  */
-export function setStorage(key, val) {
+function setStorage(key, val) {
   try {
     return browser.storage.sync.set({ [key]: val });
   } catch (e) {
@@ -47,7 +47,7 @@ export function setStorage(key, val) {
  * @param {string} key - Key of storage value.
  * @param {function} callback - Function to call if storage value found.
  */
-export function addStorageListener(key, callback) {
+function addStorageListener(key, callback) {
   const listener = (storage) => {
     if (storage[key]) {
       callback(storage[key].newValue);
@@ -62,7 +62,7 @@ export function addStorageListener(key, callback) {
  * Remove a storage listener based on a callback.
  * @param {function} callback - Callback function to remove from listener.
  */
-export function removeStorageListener(callback) {
+function removeStorageListener(callback) {
   const listener = listenerMap.get(callback);
   if (listener) {
     browser.storage.onChanged.removeListener(listener);
@@ -77,7 +77,7 @@ export function removeStorageListener(callback) {
  * @param {*} defaultValue - Default value (if none found).
  */
 
-export function useStorage(key, defaultValue) {
+function useStorage(key, defaultValue) {
   const [storedValue, setStoredValue] = useState(defaultValue);
 
   // Get value from storage, or defaultValue if doesnt exist.
@@ -101,4 +101,50 @@ export function useStorage(key, defaultValue) {
   };
 
   return [storedValue, setValue];
+}
+
+export function daoFactory(key, defaultValue) {
+  /**
+   * Get filter list from storage.
+   */
+  function get() {
+    return getStorage(key, defaultValue);
+  }
+
+  /**
+   * Set filter list in storage.
+   * @param {[string]} val - Filter list array.
+   */
+  function set(val) {
+    return setStorage(key, val);
+  }
+
+  /**
+   * Set a listener to changes on the filter list in storage.
+   * @param {Function} callback - Function to call back.
+   */
+  function addListener(callback) {
+    addStorageListener(key, callback);
+  }
+
+  /**
+   * Remove specified listener.
+   * @param {Function} callback - Function to call back.
+   */
+  function removeListener(callback) {
+    removeStorageListener(callback);
+  }
+
+  /**
+   * Use a react hook to listen for object changes.
+   */
+  const useHook = useStorage.bind(null, key, defaultValue);
+
+  return {
+    get,
+    set,
+    addListener,
+    removeListener,
+    useHook,
+  };
 }
