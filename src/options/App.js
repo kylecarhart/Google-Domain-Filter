@@ -56,11 +56,24 @@ function App({ ...props }) {
         <Description>
           <Title>Filter Mode</Title>
           <Subtitle>
-            If you are experiencing issues with search result pages not showing
-            any results, try the Experimental option. The default filter mode
-            may result in fewer search results per page. The experimental filter
-            mode is more accurate in filtering, but has some caveats.
+            Change the method in which domains are filtered from Google search
+            results.
           </Subtitle>
+          <SmallSubtitle>
+            The <b>Default</b> filter mode may result in fewer search results
+            per page.
+          </SmallSubtitle>
+          <SmallSubtitle>
+            The <b>Experimental</b> filter mode is more accurate at filtering,
+            but may have some weird quirks/side effects (ex: Google Translate
+            not working).
+          </SmallSubtitle>
+          <SmallSubtitle style={{ margin: "1rem 0" }}>
+            <i>
+              If you are experiencing issues with search result pages not
+              showing any results, try the Experimental option.
+            </i>
+          </SmallSubtitle>
         </Description>
         <SettingInput>
           <ButtonGroup
@@ -114,6 +127,13 @@ const Title = styled.h5`
 const Subtitle = styled.p`
   color: #6d6d6d;
   margin-top: 0;
+`;
+
+const SmallSubtitle = styled.small`
+  color: #6d6d6d;
+  & > b {
+    color: #333;
+  }
 `;
 
 const SettingInput = styled.div`
