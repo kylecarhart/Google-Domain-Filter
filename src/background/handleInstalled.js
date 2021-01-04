@@ -1,5 +1,3 @@
-import storage from "../storage";
-
 /**
  * Handler for runtime.onInstalled.
  * @param {*} details - The reason that the runtime.onInstalled event is being dispatched.
