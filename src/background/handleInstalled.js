@@ -28,14 +28,6 @@ function handleInstalled(details) {
 async function onInstall(details) {
   const manifest = browser.runtime.getManifest();
 
-  // Initialize the storage area
-  try {
-    await storage.init();
-    console.log(`Storage initialized to default values.`);
-  } catch (e) {
-    console.log(e);
-  }
-
   console.log(
     `*** Extension installed. Current version is: ${manifest.version}. ***`
   );
