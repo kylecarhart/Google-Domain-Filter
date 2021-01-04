@@ -5,6 +5,8 @@ import styled, { css } from "styled-components";
 function ButtonGroup({
   onText = "On",
   offText = "Off",
+  onValue = true,
+  offValue = false,
   option,
   onClick,
   ...props
@@ -12,17 +14,17 @@ function ButtonGroup({
   return (
     <div {...props}>
       <Button
-        selected={option}
+        selected={option === onValue}
         onClick={() => {
-          onClick(true);
+          onClick(onValue);
         }}
       >
         {onText}
       </Button>
       <Button
-        selected={!option}
+        selected={option === offValue}
         onClick={() => {
-          onClick(false);
+          onClick(offValue);
         }}
       >
         {offText}
@@ -33,8 +35,10 @@ function ButtonGroup({
 
 ButtonGroup.propTypes = {
   onText: PropTypes.string,
+  onValue: PropTypes.any,
   offText: PropTypes.string,
-  option: PropTypes.bool.isRequired,
+  offValue: PropTypes.any,
+  option: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

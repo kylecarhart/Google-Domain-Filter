@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
-import Setting from "./Setting";
 import storage from "../storage";
 
 function App({ ...props }) {
@@ -11,47 +10,73 @@ function App({ ...props }) {
     <Container {...props}>
       <h3>Filter Options</h3>
       <hr />
-      <Setting title="Filter List" description="Turns on/off domain filtering.">
-        <ButtonGroup
-          option={options.filterListEnabled}
-          onClick={(bool) => {
-            setOptions({
-              ...options,
-              filterListEnabled: bool,
-            });
-          }}
-        />
+
+      {/* Filter List ON/OFF */}
+      <Setting>
+        <Description>
+          <Title>Filter List</Title>
+          <Subtitle>Turns on/off domain filtering.</Subtitle>
+        </Description>
+        <SettingInput>
+          <ButtonGroup
+            option={options.filterListEnabled}
+            onClick={(val) => {
+              setOptions({
+                ...options,
+                filterListEnabled: val,
+              });
+            }}
+          />
+        </SettingInput>
       </Setting>
-      <Setting
-        title="Preference List"
-        description="Turns on/off preference list highlighting."
-      >
-        <ButtonGroup
-          option={options.preferenceListEnabled}
-          onClick={(bool) => {
-            setOptions({
-              ...options,
-              preferenceListEnabled: bool,
-            });
-          }}
-        />
+
+      {/* Preference List ON/OFF */}
+      <Setting>
+        <Description>
+          <Title>Preference List</Title>
+          <Subtitle>Turns on/off preference list highlighting.</Subtitle>
+        </Description>
+        <SettingInput>
+          <ButtonGroup
+            option={options.preferenceListEnabled}
+            onClick={(val) => {
+              setOptions({
+                ...options,
+                preferenceListEnabled: val,
+              });
+            }}
+          />
+        </SettingInput>
       </Setting>
+
       <hr />
-      <Setting
-        title="Filter Mode"
-        description="If you are experiencing issues with search result pages not showing any results, try the Experimental option."
-      >
-        <ButtonGroup
-          option={options.filterMode}
-          onText="Default"
-          offText="Experimental"
-          onClick={(bool) => {
-            setOptions({
-              ...options,
-              filterMode: bool,
-            });
-          }}
-        />
+
+      {/* Filter Mode: Defualt/Experimental */}
+      <Setting>
+        <Description>
+          <Title>Filter Mode</Title>
+          <Subtitle>
+            If you are experiencing issues with search result pages not showing
+            any results, try the Experimental option. The default filter mode
+            may result in fewer search results per page. The experimental filter
+            mode is more accurate in filtering, but has some caveats.
+          </Subtitle>
+        </Description>
+        <SettingInput>
+          <ButtonGroup
+            option={options.filterMode}
+            onText="Default"
+            onValue="default"
+            offText="Experimental"
+            offValue="experimental"
+            onClick={(val) => {
+              setOptions({
+                ...options,
+                filterMode: val,
+              });
+            }}
+          />
+        </SettingInput>
       </Setting>
       <hr />
     </Container>
@@ -64,6 +89,42 @@ const Container = styled.div`
 
   @media (max-width: 900px) {
     padding: 1rem;
+  }
+`;
+
+const Setting = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+`;
+
+const Description = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const Title = styled.h5`
+  margin: 0 0 0.5rem 0;
+`;
+
+const Subtitle = styled.p`
+  color: #6d6d6d;
+  margin-top: 0;
+`;
+
+const SettingInput = styled.div`
+  display: flex;
+  width: 30%;
+  justify-content: flex-end;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    justify-content: flex-start;
+    width: 100%;
   }
 `;
 
