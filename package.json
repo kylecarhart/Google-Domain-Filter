@@ -1,6 +1,6 @@
 {
-  "name": "gsb-webpack",
-  "version": "1.0.0",
+  "name": "google-domain-filter",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
