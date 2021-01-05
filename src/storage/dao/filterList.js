@@ -1,4 +1,4 @@
-import { daoFactory } from "../storage";
+import { daoFactory } from "../storageUtils";
 
 export const FILTER_LIST_KEY = "filterList";
 export const defaultValue = [];

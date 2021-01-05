@@ -1,4 +1,4 @@
-import { daoFactory } from "../storage";
+import { daoFactory } from "../storageUtils";
 
 export const OPTIONS_KEY = "options";
 export const defaultValue = {

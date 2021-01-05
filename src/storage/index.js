@@ -1,7 +1,5 @@
 import * as daos from "./dao";
 
-export function getAll() {
-  return browser.storage.sync.get(null);
-}
+const storage = { ...daos };
 
-export default { ...daos, getAll };
+export default storage;

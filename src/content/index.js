@@ -16,7 +16,9 @@ if (asQParam) {
 
 // Start google domain filtering script
 (async function () {
-  const { filterList, preferenceList, options } = await storage.getAll();
+  const filterList = await storage.filterList.get();
+  const preferenceList = await storage.preferenceList.get();
+  const options = await storage.options.get();
 
   // Run the result observer when using default filter mode
   if (!asQParam && options.filterListEnabled) {
