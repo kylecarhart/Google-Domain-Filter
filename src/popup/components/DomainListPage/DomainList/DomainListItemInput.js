@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 function DomainListItemInput(
@@ -40,7 +39,5 @@ const Input = styled.input`
     border: none;
   }
 `;
-
-DomainListItemInput.propTypes = {};
 
 export default React.forwardRef(DomainListItemInput);
