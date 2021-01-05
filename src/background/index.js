@@ -11,12 +11,12 @@ import {
 
   // Get filter mode method
   const options = await storage.options.get();
-  if (options && options.filterListEnabled && !options.filterMode) {
+  if (options.filterListEnabled && options.filterMode === "experimental") {
     startRequestListener();
   }
 
   storage.options.addListener((options) => {
-    if (options.filterListEnabled && !options.filterMode) {
+    if (options.filterListEnabled && options.filterMode === "experimental") {
       startRequestListener();
     } else {
       stopRequestListener();
