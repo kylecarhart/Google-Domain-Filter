@@ -9,11 +9,13 @@ function ButtonGroup({
   offValue = false,
   option,
   onClick,
+  disabled = false,
   ...props
 }) {
   return (
     <div {...props}>
       <Button
+        disabled={disabled}
         selected={option === onValue}
         onClick={() => {
           onClick(onValue);
@@ -22,6 +24,7 @@ function ButtonGroup({
         {onText}
       </Button>
       <Button
+        disabled={disabled}
         selected={option === offValue}
         onClick={() => {
           onClick(offValue);
@@ -40,6 +43,7 @@ ButtonGroup.propTypes = {
   offValue: PropTypes.any,
   option: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 const primaryStyle = css`
@@ -47,7 +51,7 @@ const primaryStyle = css`
   background: #318bf5;
 
   &:hover {
-    background: #0f75ec;
+    background: ${({ disabled }) => (disabled ? "#318bf5" : "#0f75ec")};
   }
 `;
 
@@ -56,12 +60,12 @@ const defaultStyle = css`
   background: #fff;
 
   &:hover {
-    background: #f0f0f0;
+    background: ${({ disabled }) => (disabled ? "#fff" : "#f0f0f0")};
   }
 `;
 
 const Button = styled.button`
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   border: none;
   padding: 6px 16px;
   border-radius: 2px;

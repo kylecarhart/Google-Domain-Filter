@@ -52,7 +52,7 @@ function App({ ...props }) {
       <hr />
 
       {/* Filter Mode: Defualt/Experimental */}
-      <Setting>
+      <Setting disabled={!options.filterListEnabled}>
         <Description>
           <Title>Filter Mode</Title>
           <Subtitle>
@@ -77,6 +77,7 @@ function App({ ...props }) {
         </Description>
         <SettingInput>
           <ButtonGroup
+            disabled={!options.filterListEnabled}
             option={options.filterMode}
             onText="Default"
             onValue="default"
@@ -112,6 +113,7 @@ const Setting = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
   }
+  opacity: ${({ disabled }) => (disabled ? ".5" : "1")};
 `;
 
 const Description = styled.div`
@@ -131,6 +133,7 @@ const Subtitle = styled.p`
 
 const SmallSubtitle = styled.small`
   color: #6d6d6d;
+
   & > b {
     color: #333;
   }
