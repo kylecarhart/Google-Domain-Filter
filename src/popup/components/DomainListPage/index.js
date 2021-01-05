@@ -1,12 +1,15 @@
 import React from "react";
 import ListPage from "./ListPage";
+import storage from "../../../storage";
 
 function FilterListPage() {
-  return <ListPage storageKey="filterList" />;
+  const [domains, setDomains] = storage.filterList.useHook();
+  return <ListPage domains={domains} setDomains={setDomains} />;
 }
 
 function PreferenceListPage() {
-  return <ListPage storageKey="preferenceList" />;
+  const [domains, setDomains] = storage.preferenceList.useHook();
+  return <ListPage domains={domains} setDomains={setDomains} />;
 }
 
 export { FilterListPage, PreferenceListPage };

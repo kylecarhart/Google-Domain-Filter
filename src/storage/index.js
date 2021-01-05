@@ -1,13 +1,5 @@
-const FILTER_LIST_KEY = "filterList";
-const PREFERENCE_LIST_KEY = "preferenceList";
+import * as daos from "./dao";
 
-const STORAGE_DEFAULTS = {
-  [FILTER_LIST_KEY]: [],
-  [PREFERENCE_LIST_KEY]: [],
-};
+const storage = { ...daos };
 
-function initStorage() {
-  return browser.storage.sync.set(STORAGE_DEFAULTS);
-}
-
-export { FILTER_LIST_KEY, PREFERENCE_LIST_KEY, initStorage };
+export default storage;

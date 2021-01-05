@@ -1,8 +1,25 @@
-import initRequestListener from "./handleBeforeRequest";
 import handleInstalled from "./handleInstalled";
+import storage from "../storage";
+import {
+  startRequestListener,
+  stopRequestListener,
+} from "./onBeforeRequestListener";
 
-// Handle storage initialization on install.
-browser.runtime.onInstalled.addListener(handleInstalled);
+(async function () {
+  // Handle storage initialization on install.
+  browser.runtime.onInstalled.addListener(handleInstalled);
 
-// Start the google request listener and redirect.
-initRequestListener();
+  // Get filter mode method
+  const options = await storage.options.get();
+  if (options.filterListEnabled && options.filterMode === "experimental") {
+    startRequestListener();
+  }
+
+  storage.options.addListener((options) => {
+    if (options.filterListEnabled && options.filterMode === "experimental") {
+      startRequestListener();
+    } else {
+      stopRequestListener();
+    }
+  });
+})();

@@ -9,9 +9,10 @@ module.exports = (env) => {
     mode: env.mode,
     // One entry point for each part of an extension
     entry: {
-      background: "./src/background/",
+      background: "./src/background",
       content: "./src/content",
-      popup: "./src/popup/",
+      popup: "./src/popup",
+      options: "./src/options",
     },
     // Output each in a folder named after their entry
     output: {
@@ -55,7 +56,13 @@ module.exports = (env) => {
       new HtmlWebPackPlugin({
         template: "./src/popup/index.html",
         filename: "./popup/index.html",
-        excludeChunks: ["background", "content"],
+        chunks: ["popup"],
+      }),
+      // Create index.html for options
+      new HtmlWebPackPlugin({
+        template: "./src/options/index.html",
+        filename: "./options/index.html",
+        chunks: ["options"],
       }),
       // Copy manifest.json
       new CopyPlugin([

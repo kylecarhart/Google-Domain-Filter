@@ -42,8 +42,6 @@ function DomainListItemDropdown({
 DomainListItemDropdown.propTypes = {
   domain: PropTypes.string.isRequired,
   startEdit: PropTypes.func.isRequired,
-  cancelEdit: PropTypes.func.isRequired,
-  isEditing: PropTypes.bool.isRequired,
   showTrigger: PropTypes.bool.isRequired,
   setDomains: PropTypes.func.isRequired,
 };

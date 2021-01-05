@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useStorage } from "../../hooks";
 import DomainInputBar from "./DomainInputBar";
 import DomainList from "./DomainList";
 import styled from "styled-components";
 
-function ListPage({ storageKey }) {
-  const [domains, setDomains] = useStorage(storageKey, []);
-
+function ListPage({ domains, setDomains }) {
   return (
     <Page>
       <DomainInputBar domains={domains} setDomains={setDomains} />
@@ -23,7 +20,8 @@ const Page = styled.div`
 `;
 
 ListPage.propTypes = {
-  storageKey: PropTypes.string.isRequired,
+  domains: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setDomains: PropTypes.func.isRequired,
 };
 
 export default ListPage;

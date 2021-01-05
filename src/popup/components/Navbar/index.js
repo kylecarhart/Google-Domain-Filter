@@ -3,24 +3,36 @@ import PropTypes from "prop-types";
 import NavItem from "./NavItem";
 import styled from "styled-components";
 import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "../../constants";
+import { CogIcon } from "../../icons";
 
 const Navbar = ({ selected, setSelected }) => {
   return (
     <Nav>
       <StyledNavItem
-        text="Blacklist"
-        navId={FILTER_LIST_NAV}
         tipText="Remove search results containing domains in this list."
         selected={selected === FILTER_LIST_NAV}
-        setSelected={setSelected}
-      />
+        onClick={() => {
+          setSelected(FILTER_LIST_NAV);
+        }}
+      >
+        Filter List
+      </StyledNavItem>
       <StyledNavItem
-        text="Preference list"
-        navId={PREFERENCE_LIST_NAV}
         tipText="Prioritize search results from domains in this list (order matters!)"
         selected={selected === PREFERENCE_LIST_NAV}
-        setSelected={setSelected}
-      />
+        onClick={() => {
+          setSelected(PREFERENCE_LIST_NAV);
+        }}
+      >
+        Preference List
+      </StyledNavItem>
+      <OptionNavItem
+        onClick={() => {
+          browser.runtime.openOptionsPage();
+        }}
+      >
+        <CogIcon />
+      </OptionNavItem>
     </Nav>
   );
 };
@@ -36,6 +48,10 @@ const Nav = styled.nav`
 
 const StyledNavItem = styled(NavItem)`
   flex: 1;
+`;
+
+const OptionNavItem = styled(NavItem)`
+  width: 40px;
 `;
 
 export default Navbar;
