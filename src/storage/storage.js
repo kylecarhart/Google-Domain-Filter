@@ -50,7 +50,7 @@ function setStorage(key, val) {
 function addStorageListener(key, callback) {
   const listener = (storage) => {
     if (storage[key]) {
-      callback(storage[key].newValue);
+      callback(storage[key].newValue, storage[key].oldValue);
     }
   };
 
