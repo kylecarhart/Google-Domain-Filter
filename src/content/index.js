@@ -30,8 +30,14 @@ if (asQParam) {
     if (observer) {
       observer.disconnect();
     }
+
     if (options.preferenceListEnabled) {
       highlightResults(preferenceList);
+    }
+
+    // Attempt to remove filter results no matter what (for cached pages)
+    if (options.filterListEnabled) {
+      removeResults(filterList);
     }
   });
 
