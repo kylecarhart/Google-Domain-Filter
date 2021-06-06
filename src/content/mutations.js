@@ -2,7 +2,9 @@ import { escapeRegExp, getElementsByXPath } from "../utils";
 
 const RESULT_LINK_XPATH =
   "//div[@class='hlcw0c' or @id='rso']/div[@class='g']//div[@class='yuRUbf']/a";
-const RESULT_WRAPPER = ".g";
+const SINGLE_RESULT_WRAPPER = ".g";
+const GROUP_RESULT_WRAPPER = ".hlcw0c";
+const MAIN_RESULT_WRAPPER_ID = "rso";
 
 /**
  * Loop through results and call matchCallback() on each match. If no match,
@@ -39,9 +41,21 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
     }
   });
 
-  // For each result DOM node, check if hostname matches domain in the list
-  nodes.forEach((node) => {
-    const resultWrapperNode = node.closest(RESULT_WRAPPER);
+  /**
+   * For each result DOM node, check if hostname matches domain in the list.
+   * Go through the nodes backwards because it helps the preference list
+   * sort correctly.
+   */
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    const node = nodes[i];
+
+    let resultWrapperNode;
+
+    if (node.closest(GROUP_RESULT_WRAPPER) !== null) {
+      resultWrapperNode = node.closest(GROUP_RESULT_WRAPPER);
+    } else {
+      resultWrapperNode = node.closest(SINGLE_RESULT_WRAPPER);
+    }
 
     let calledBack = false;
     for (let i = 0; i < domains.length; i++) {
@@ -58,7 +72,7 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
     if (!calledBack) {
       noMatchCallback(resultWrapperNode);
     }
-  });
+  }
 }
 
 /**
@@ -85,10 +99,8 @@ function highlightResults(input) {
   handleResults(
     input,
     (node) => {
-      const topResultNode = getElementsByXPath(RESULT_LINK_XPATH)[0].closest(
-        RESULT_WRAPPER
-      );
-      topResultNode.parentElement.insertBefore(node, topResultNode);
+      const rso = document.getElementById(MAIN_RESULT_WRAPPER_ID);
+      rso.prepend(node);
 
       node.setAttribute("preference", "");
     },
