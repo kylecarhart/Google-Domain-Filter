@@ -1,7 +1,8 @@
 const TEXT_NODE = 3;
 
 /**
- * Class representing the mutation observer
+ * When experimental mode is turned on, this observer will remove the query
+ * string away from the dom.
  */
 export default class QueryObserver {
   /**

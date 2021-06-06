@@ -1,7 +1,8 @@
 import { getDomainRegExp } from "./mutations";
 
 /**
- * Class representing the mutation observer
+ * ResultObserver watches the dom for changes and will set matching search
+ * results to displaynone.
  */
 export default class ResultObserver {
   /**
