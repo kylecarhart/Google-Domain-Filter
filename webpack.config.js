@@ -19,8 +19,7 @@ module.exports = (env) => {
       path: path.resolve(__dirname, "./build"),
       filename: "./[name]/index.js",
     },
-    // Remove eval() from javascript
-    devtool: "none",
+    devtool: false, // Remove eval() from javascript
     watch: env.watch ? true : false,
     resolve: {
       extensions: [".js", ".jsx"],
@@ -65,35 +64,45 @@ module.exports = (env) => {
         chunks: ["options"],
       }),
       // Copy manifest.json
-      new CopyPlugin([
-        // Generate manifest
-        {
-          from: "./src/manifest.json",
-          to: ".",
-          transform: (content) => {
-            const manifest = JSON.parse(content.toString());
+      new CopyPlugin({
+        patterns: [
+          // Generate manifest
+          {
+            from: "./src/manifest.json",
+            to: ".",
+            transform: (content) => {
+              const manifest = JSON.parse(content.toString());
 
-            const matchPatterns = tlds.map(
-              (tld) => `*://*.google.${tld}/search?*`
-            );
+              const matchPatterns = tlds.map(
+                (tld) => `*://*.google.${tld}/search?*`
+              );
 
-            // Allow webRequest to intercept on all google tlds
-            manifest.permissions.push(...matchPatterns);
+              // Allow webRequest to intercept on all google tlds
+              manifest.permissions.push(...matchPatterns);
 
-            // Allow content scripts to run on all google tlds
-            manifest.content_scripts[0].matches.push(...matchPatterns);
+              // Allow content scripts to run on all google tlds
+              manifest.content_scripts[0].matches.push(...matchPatterns);
 
-            const manifestJSON = JSON.stringify(manifest, null, 2);
-            return manifestJSON;
+              const manifestJSON = JSON.stringify(manifest, null, 2);
+              return manifestJSON;
+            },
           },
-        },
-        { from: "./src/static/png/logo*.png", to: "./static", flatten: true }, // Copy static files (imgs)
-        {
-          from:
-            "node_modules/webextension-polyfill/dist/browser-polyfill.min.js", // https://github.com/mozilla/webextension-polyfill
-        },
-        { from: "./src/content/styles.css", to: "./content" }, // Copy content styles
-      ]),
+          // Copy static files (imgs)
+          {
+            from: "./src/static/png/logo*.png",
+            to: "./static/[name][ext]",
+          },
+          // https://github.com/mozilla/webextension-polyfill
+          {
+            from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
+          },
+          // Copy content styles
+          {
+            from: "./src/content/styles.css",
+            to: "./content",
+          },
+        ],
+      }),
       // Inject version number
       new webpack.DefinePlugin({
         __VERSION__: JSON.stringify(process.env.npm_package_version),

@@ -1,5 +1,5 @@
 import storage from "../storage";
-import { tlds } from "../tlds.json";
+import tlds from "../tlds.json";
 import { toExcludeQuery } from "../utils";
 
 let filterList = null;
