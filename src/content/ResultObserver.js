@@ -1,4 +1,8 @@
-import { getDomainRegExp } from "./mutations";
+import {
+  getDomainRegExp,
+  getParentResultNode,
+  setResultNodeFiltered,
+} from "./mutations";
 
 /**
  * ResultObserver watches the dom for changes and will set matching search
@@ -15,13 +19,13 @@ export default class ResultObserver {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((addedNode) => {
           if (
-            addedNode.nodeName === "A" &&
-            addedNode.parentElement.className === "yuRUbf" &&
+            getParentResultNode(addedNode) &&
             filterList.some((domain) =>
               getDomainRegExp(domain).test(addedNode.hostname)
             )
           ) {
-            addedNode.closest(".g").setAttribute("displaynone", "");
+            const parentResultNode = getParentResultNode(addedNode);
+            setResultNodeFiltered(parentResultNode);
           }
         });
       });

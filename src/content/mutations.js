@@ -1,10 +1,8 @@
-import { escapeRegExp, getElementsByXPath } from "../utils";
+import { escapeRegExp } from "../utils";
 
-const RESULT_LINK_XPATH =
-  "//div[@class='hlcw0c' or @id='rso']/div[@class='g']//div[@class='yuRUbf']/a";
-const SINGLE_RESULT_WRAPPER = ".g";
-const GROUP_RESULT_WRAPPER = ".hlcw0c";
 const MAIN_RESULT_WRAPPER_ID = "rso";
+const LINK_QUERY_SELECTOR = ".yuRUbf a";
+const ACCEPTABLE_SEARCH_RESULT_CLASSES = ["g", "hlcw0c"];
 
 /**
  * Loop through results and call matchCallback() on each match. If no match,
@@ -16,15 +14,44 @@ const MAIN_RESULT_WRAPPER_ID = "rso";
 function handleResults(input, matchCallback, noMatchCallback = () => {}) {
   let domains = Array.isArray(input) ? input : [input];
 
-  let nodes = getElementsByXPath(RESULT_LINK_XPATH);
+  /**
+   * Associate the search result hostname with its greatest ancestor node contained
+   * in the main search results wrapper.
+   */
+  let resultNodeArr = Array.from(
+    document.getElementById(MAIN_RESULT_WRAPPER_ID).childNodes
+  )
+    .filter((childNode) => {
+      if (
+        ACCEPTABLE_SEARCH_RESULT_CLASSES.some((cssClass) =>
+          childNode.classList.contains(cssClass)
+        )
+      ) {
+        return true;
+      }
+    })
+    .map((childNode, index) => {
+      let link = childNode.querySelector(LINK_QUERY_SELECTOR);
+      if (link) {
+        let resultNode = {
+          hostname: childNode.querySelector(LINK_QUERY_SELECTOR).hostname,
+          node: childNode,
+          originalPos: index,
+        };
+
+        return resultNode;
+      }
+    });
 
   /**
-   * We need to sort the array of matching nodes first to accommodate for the
-   * preference list sorting. This will sort the node array based on the domain
-   * array order, but backwards. This allows the preference list matchCallback
-   * to reorder DOM nodes without having to worry about the order.
+   * Nodes are sorted to account for preference list positions, but in reverse
+   * order. This allows for the callback to simply bring the currently processed
+   * node to the top of the stack so the last node to be processed would actually
+   * be first in the search results.
+   *
+   * This has no effect the filter list.
    */
-  nodes.sort((a, b) => {
+  resultNodeArr.sort((a, b) => {
     let aIdx = domains.findIndex((domain) =>
       getDomainRegExp(domain).test(a.hostname)
     );
@@ -37,42 +64,30 @@ function handleResults(input, matchCallback, noMatchCallback = () => {}) {
     } else if (aIdx < bIdx) {
       return 1;
     } else {
-      return 0;
+      // When the hosts match, take into considderation their original ranks
+      if (a.originalPos > b.originalPos) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
   });
 
   /**
-   * For each result DOM node, check if hostname matches domain in the list.
-   * Go through the nodes backwards because it helps the preference list
-   * sort correctly.
+   * For each result DOM node, check if hostname matches domain in the list
+   * and call the appropriate callback function.
    */
-  for (let i = nodes.length - 1; i >= 0; i--) {
-    const node = nodes[i];
+  resultNodeArr.forEach((resultNode) => {
+    const domain = domains.find((domain) =>
+      getDomainRegExp(domain).test(resultNode.hostname)
+    );
 
-    let resultWrapperNode;
-
-    if (node.closest(GROUP_RESULT_WRAPPER) !== null) {
-      resultWrapperNode = node.closest(GROUP_RESULT_WRAPPER);
+    if (domain) {
+      matchCallback(resultNode.node);
     } else {
-      resultWrapperNode = node.closest(SINGLE_RESULT_WRAPPER);
+      noMatchCallback(resultNode.node);
     }
-
-    let calledBack = false;
-    for (let i = 0; i < domains.length; i++) {
-      const domain = domains[i];
-      const domainRegExp = getDomainRegExp(domain);
-
-      if (domainRegExp.test(node.hostname)) {
-        matchCallback(resultWrapperNode);
-        calledBack = true;
-        break;
-      }
-    }
-
-    if (!calledBack) {
-      noMatchCallback(resultWrapperNode);
-    }
-  }
+  });
 }
 
 /**
@@ -83,10 +98,10 @@ function removeResults(input) {
   handleResults(
     input,
     (node) => {
-      node.setAttribute("displaynone", "");
+      setResultNodeFiltered(node);
     },
     (node) => {
-      node.removeAttribute("displaynone");
+      setResultNodeUnfiltered(node);
     }
   );
 }
@@ -101,11 +116,10 @@ function highlightResults(input) {
     (node) => {
       const rso = document.getElementById(MAIN_RESULT_WRAPPER_ID);
       rso.prepend(node);
-
-      node.setAttribute("preference", "");
+      setResultNodePreferred(node);
     },
     (node) => {
-      node.removeAttribute("preference");
+      setResultNodeUnpreferred(node);
     }
   );
 }
@@ -139,10 +153,60 @@ function getDomainRegExp(domain) {
   return new RegExp(`^(?:.+\\.)?${escapedString}$`);
 }
 
+/**
+ * Find the parent search result node of an anchor tag.
+ * Returns null if there is no match.
+ * @param {Node} linkNode - Anchor node
+ */
+function getParentResultNode(linkNode) {
+  if (linkNode.nodeName !== "A") {
+    return null;
+  }
+  if (!linkNode.parentNode.className === "yuRUbf") {
+    return null;
+  }
+
+  return linkNode.closest("#rso > .g, #rso > .hlcw0c");
+}
+
+/**
+ * Set the node to hidden using "displaynone" attribute
+ * @param {Node} node - DOM node
+ */
+function setResultNodeFiltered(node) {
+  node.setAttribute("displaynone", "");
+}
+
+/**
+ * Set the node to unhidden using "displaynone" attribute
+ * @param {Node} node - DOM node
+ */
+function setResultNodeUnfiltered(node) {
+  node.removeAttribute("displaynone");
+}
+
+/**
+ * Set the node to preferred using "preference" attribute
+ * @param {Node} node - DOM node
+ */
+function setResultNodePreferred(node) {
+  node.setAttribute("preference", "");
+}
+
+/**
+ * Set the node to unpreferred using "preference" att
+ * @param {Node} node - DOM node
+ */
+function setResultNodeUnpreferred(node) {
+  node.removeAttribute("preference");
+}
+
 export {
   removeFromInput,
   removeFromTitle,
   removeResults,
   highlightResults,
   getDomainRegExp,
+  getParentResultNode,
+  setResultNodeFiltered,
 };
