@@ -98,10 +98,10 @@ function removeResults(input) {
   handleResults(
     input,
     (node) => {
-      node.setAttribute("displaynone", "");
+      setResultNodeFiltered(node);
     },
     (node) => {
-      node.removeAttribute("displaynone");
+      setResultNodeUnfiltered(node);
     }
   );
 }
@@ -116,11 +116,10 @@ function highlightResults(input) {
     (node) => {
       const rso = document.getElementById(MAIN_RESULT_WRAPPER_ID);
       rso.prepend(node);
-
-      node.setAttribute("preference", "");
+      setResultNodePreferred(node);
     },
     (node) => {
-      node.removeAttribute("preference");
+      setResultNodeUnpreferred(node);
     }
   );
 }
@@ -154,10 +153,60 @@ function getDomainRegExp(domain) {
   return new RegExp(`^(?:.+\\.)?${escapedString}$`);
 }
 
+/**
+ * Find the parent search result node of an anchor tag.
+ * Returns null if there is no match.
+ * @param {Node} linkNode - Anchor node
+ */
+function getParentResultNode(linkNode) {
+  if (linkNode.nodeName !== "A") {
+    return null;
+  }
+  if (!linkNode.parentNode.className === "yuRUbf") {
+    return null;
+  }
+
+  return linkNode.closest("#rso > .g, #rso > .hlcw0c");
+}
+
+/**
+ * Set the node to hidden using "displaynone" attribute
+ * @param {Node} node - DOM node
+ */
+function setResultNodeFiltered(node) {
+  node.setAttribute("displaynone", "");
+}
+
+/**
+ * Set the node to unhidden using "displaynone" attribute
+ * @param {Node} node - DOM node
+ */
+function setResultNodeUnfiltered(node) {
+  node.removeAttribute("displaynone");
+}
+
+/**
+ * Set the node to preferred using "preference" attribute
+ * @param {Node} node - DOM node
+ */
+function setResultNodePreferred(node) {
+  node.setAttribute("preference", "");
+}
+
+/**
+ * Set the node to unpreferred using "preference" att
+ * @param {Node} node - DOM node
+ */
+function setResultNodeUnpreferred(node) {
+  node.removeAttribute("preference");
+}
+
 export {
   removeFromInput,
   removeFromTitle,
   removeResults,
   highlightResults,
   getDomainRegExp,
+  getParentResultNode,
+  setResultNodeFiltered,
 };
