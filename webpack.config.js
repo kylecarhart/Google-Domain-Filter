@@ -94,10 +94,6 @@ module.exports = (env) => {
             from: "./src/static/png/logo*.png",
             to: "./static/[name][ext]",
           },
-          // https://github.com/mozilla/webextension-polyfill
-          {
-            from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
-          },
           // Copy content styles
           {
             from: "./src/content/styles.css",
