@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
-const { tlds } = require("./src/tlds.json");
+const { tlds } = require("./src/tlds");
 
 module.exports = (env) => {
   return {
@@ -22,11 +22,13 @@ module.exports = (env) => {
     devtool: false, // Remove eval() from javascript
     watch: env.watch ? true : false,
     resolve: {
-      extensions: [".js", ".jsx"],
+      extensions: [".ts", ".tsx", ".js", ".jsx"],
     },
     module: {
       rules: [
         // Transpile javascript ES6 -> ES5
+        { test: /\.tsx?$/, exclude: /node_modules/, loader: "ts-loader" },
+        { test: /\.js$/, loader: "source-map-loader" },
         {
           test: /\.(jsx?)$/,
           exclude: /node_modules/,
