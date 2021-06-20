@@ -16,9 +16,9 @@ if (asQParam) {
 
 // Start google domain filtering script
 (async function () {
-  const filterList = await storage.filterList.get();
-  const preferenceList = await storage.preferenceList.get();
-  const options = await storage.options.get();
+  let filterList = await storage.filterList.get();
+  let preferenceList = await storage.preferenceList.get();
+  let options = await storage.options.get();
 
   // Run the result observer when using default filter mode
   if (!asQParam && options.filterListEnabled) {
@@ -41,16 +41,38 @@ if (asQParam) {
     }
   });
 
-  // Listen for changes to filter list and remove them from the DOM
-  storage.filterList.addListener((filterList) => {
-    if (options.filterListEnabled) {
-      removeResults(filterList);
+  storage.options.addListener((newOptions, oldOptions) => {
+    if (newOptions.filterListEnabled !== oldOptions.filterListEnabled) {
+      if (newOptions.filterListEnabled) {
+        removeResults(filterList);
+      } else {
+        removeResults([]);
+      }
     }
+
+    if (newOptions.preferenceListEnabled !== oldOptions.preferenceListEnabled) {
+      if (newOptions.preferenceListEnabled) {
+        highlightResults(preferenceList);
+      } else {
+        highlightResults([]);
+      }
+    }
+
+    options = newOptions;
   });
 
-  storage.preferenceList.addListener((preferenceList) => {
-    if (options.preferenceListEnabled) {
-      highlightResults(preferenceList);
+  // Listen for changes to filter list and remove them from the DOM
+  storage.filterList.addListener((newFilterList) => {
+    if (options.filterListEnabled) {
+      removeResults(newFilterList);
     }
+    filterList = newFilterList;
+  });
+
+  storage.preferenceList.addListener((newPreferenceList) => {
+    if (options.preferenceListEnabled) {
+      highlightResults(newPreferenceList);
+    }
+    preferenceList = newPreferenceList;
   });
 })();
