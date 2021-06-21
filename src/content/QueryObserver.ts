@@ -1,18 +1,18 @@
-const TEXT_NODE = 3;
-
 /**
  * When experimental mode is turned on, this observer will remove the query
  * string away from the dom.
  */
-export default class QueryObserver extends MutationObserver {
-  private filterString: string;
+export default class QueryObserver implements MutationObserver {
+  filterString: string;
+  observer: MutationObserver;
 
   /**
    * Create a mutation observer.
    * @param {string} filterString - The string to remove from the DOM.
    */
   constructor(filterString: string) {
-    super((mutations) => {
+    this.filterString = filterString;
+    this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((addedNode) => {
           // Modify the search input
@@ -36,18 +36,22 @@ export default class QueryObserver extends MutationObserver {
         });
       });
     });
-    this.filterString = filterString;
   }
 
-  /**
-   * Tell the observer to start listening.
-   */
   observe() {
-    super.observe(document.documentElement, {
+    this.observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
       attributes: true,
       attributeOldValue: true,
     });
+  }
+
+  disconnect() {
+    this.observer.disconnect();
+  }
+
+  takeRecords() {
+    return this.observer.takeRecords();
   }
 }
