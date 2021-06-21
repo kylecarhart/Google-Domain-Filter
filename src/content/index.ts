@@ -1,5 +1,5 @@
 import QueryObserver from "./QueryObserver";
-import { removeResults, highlightResults } from "./mutations";
+import { filterResults, preferResults } from "./mutations";
 import ResultObserver from "./ResultObserver";
 import storage from "../storage";
 
@@ -32,29 +32,29 @@ if (asQParam) {
     }
 
     if (options.preferenceListEnabled) {
-      highlightResults(preferenceList);
+      preferResults(preferenceList);
     }
 
     // Attempt to remove filter results no matter what (for cached pages)
     if (options.filterListEnabled) {
-      removeResults(filterList);
+      filterResults(filterList);
     }
   });
 
   storage.options.addListener((newOptions, oldOptions) => {
     if (newOptions.filterListEnabled !== oldOptions.filterListEnabled) {
       if (newOptions.filterListEnabled) {
-        removeResults(filterList);
+        filterResults(filterList);
       } else {
-        removeResults([]);
+        filterResults([]);
       }
     }
 
     if (newOptions.preferenceListEnabled !== oldOptions.preferenceListEnabled) {
       if (newOptions.preferenceListEnabled) {
-        highlightResults(preferenceList);
+        preferResults(preferenceList);
       } else {
-        highlightResults([]);
+        preferResults([]);
       }
     }
 
@@ -64,14 +64,14 @@ if (asQParam) {
   // Listen for changes to filter list and remove them from the DOM
   storage.filterList.addListener((newFilterList) => {
     if (options.filterListEnabled) {
-      removeResults(newFilterList);
+      filterResults(newFilterList);
     }
     filterList = newFilterList;
   });
 
   storage.preferenceList.addListener((newPreferenceList) => {
     if (options.preferenceListEnabled) {
-      highlightResults(newPreferenceList);
+      preferResults(newPreferenceList);
     }
     preferenceList = newPreferenceList;
   });

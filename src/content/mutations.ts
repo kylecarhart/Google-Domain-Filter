@@ -98,7 +98,7 @@ function handleResults(
  * Hide search results matching domain input.
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
-function removeResults(input: string | string[]) {
+function filterResults(input: string | string[]) {
   handleResults(
     input,
     (node) => {
@@ -114,7 +114,7 @@ function removeResults(input: string | string[]) {
  * Highlight and reorder search results matching domain input.
  * @param {[string] | string} input - Domain input. Can be an array or single string.
  */
-function highlightResults(input: string | string[]) {
+function preferResults(input: string | string[]) {
   handleResults(
     input,
     (node) => {
@@ -205,8 +205,8 @@ function setResultNodeUnpreferred(node: Element) {
 export {
   removeFromInput,
   removeFromTitle,
-  removeResults,
-  highlightResults,
+  filterResults,
+  preferResults,
   getDomainRegExp,
   getParentResultNode,
   setResultNodeFiltered,
