@@ -171,35 +171,35 @@ function getParentResultElement(anchorElement: HTMLAnchorElement) {
 }
 
 /**
- * Set the element to hidden using "displaynone" attribute
+ * Set the element to hidden using "data-filter" attribute
  * @param elem
  */
 function setResultElementFiltered(elem: Element) {
-  elem.setAttribute("displaynone", "");
+  elem.setAttribute("data-filter", "");
 }
 
 /**
- * Set the element to unhidden using "displaynone" attribute
+ * Set the element to unhidden using "data-filter" attribute
  * @param elem
  */
 function setResultElementUnfiltered(elem: Element) {
-  elem.removeAttribute("displaynone");
+  elem.removeAttribute("data-filter");
 }
 
 /**
- * Set the element to preferred using "preference" attribute
+ * Set the element to preferred using "data-preference" attribute
  * @param elem
  */
 function setResultElementPreferred(elem: Element) {
-  elem.setAttribute("preference", "");
+  elem.setAttribute("data-preference", "");
 }
 
 /**
- * Set the element to unpreferred using "preference" att
+ * Set the element to unpreferred using "data-preference" att
  * @param elem
  */
 function setResultElementUnpreferred(elem: Element) {
-  elem.removeAttribute("preference");
+  elem.removeAttribute("data-preference");
 }
 
 export {
