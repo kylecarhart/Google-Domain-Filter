@@ -5,7 +5,7 @@ interface Props extends ComponentPropsWithRef<"button"> {
   children: ReactNode;
 }
 
-export type Ref = HTMLButtonElement;
+type Ref = HTMLButtonElement;
 export const IconButton = forwardRef<Ref, Props>(
   ({ children, ...props }, ref) => (
     <Button ref={ref} {...props}>

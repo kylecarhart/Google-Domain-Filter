@@ -6,7 +6,7 @@ interface Props extends ComponentPropsWithRef<"button"> {
   children: ReactNode;
 }
 
-export type Ref = HTMLButtonElement;
+type Ref = HTMLButtonElement;
 export const Button = forwardRef<Ref, Props>(
   ({ styleType, children, ...props }, ref) => (
     <StyledButton ref={ref} styleType={styleType} {...props}>

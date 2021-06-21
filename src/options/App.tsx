@@ -4,15 +4,14 @@ import storage from "../storage";
 import { useStorage } from "../popup/hooks";
 import { FilterMode } from "../storage/dao/options";
 
-function App({ ...props }) {
-  // const [options, setOptions] = storage.options.useHook();
+function App() {
   const [options, setOptions] = useStorage(
     storage.options.key,
     storage.options.defaultValue
   );
 
   return (
-    <Container {...props}>
+    <Container>
       <h3>Filter Options</h3>
       <hr />
 

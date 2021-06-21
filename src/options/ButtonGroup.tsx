@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 
-interface IButtonGroup {
+interface Props {
   onText?: string;
   offText?: string;
   onValue?: string | boolean;
   offValue?: string | boolean;
   option: string | boolean;
-  onClick: (val: string | boolean) => any;
+  onClick: (val: string | boolean) => void;
   disabled?: boolean;
 }
 
@@ -19,7 +19,7 @@ function ButtonGroup({
   onClick,
   disabled = false,
   ...props
-}: IButtonGroup) {
+}: Props) {
   return (
     <div {...props}>
       <Button
