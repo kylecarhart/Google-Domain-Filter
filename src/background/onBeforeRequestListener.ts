@@ -37,7 +37,7 @@ const onBeforeRequestListener = (
 /**
  * Start the onBeforeRequest and storage change listeners.
  */
-export async function startRequestListener() {
+async function startRequestListener() {
   filterList = filterList || (await storage.filterList.get());
 
   browser.webRequest.onBeforeRequest.addListener(
@@ -56,7 +56,7 @@ export async function startRequestListener() {
 /**
  * Stop the onBeforeRequest and storage change listeners.
  */
-export function stopRequestListener() {
+function stopRequestListener() {
   if (isRunning) {
     storage.filterList.removeListener(changeListener);
     browser.webRequest.onBeforeRequest.removeListener(onBeforeRequestListener);
@@ -64,3 +64,5 @@ export function stopRequestListener() {
 
   isRunning = false;
 }
+
+export { startRequestListener, stopRequestListener };
