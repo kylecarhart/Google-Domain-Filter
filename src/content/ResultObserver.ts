@@ -1,7 +1,7 @@
 import {
   getDomainRegExp,
-  getParentResultNode,
-  setResultNodeFiltered,
+  getParentResultElement,
+  setResultElementFiltered,
 } from "./mutations";
 
 /**
@@ -21,13 +21,13 @@ export default class ResultObserver extends MutationObserver {
         mutation.addedNodes.forEach((addedNode) => {
           if (
             addedNode instanceof HTMLAnchorElement &&
-            getParentResultNode(addedNode) &&
+            getParentResultElement(addedNode) &&
             this.filterList.some((domain) =>
               getDomainRegExp(domain).test(addedNode.hostname)
             )
           ) {
-            const parentResultNode = getParentResultNode(addedNode);
-            setResultNodeFiltered(parentResultNode);
+            const parentResultNode = getParentResultElement(addedNode);
+            setResultElementFiltered(parentResultNode);
           }
         });
       });

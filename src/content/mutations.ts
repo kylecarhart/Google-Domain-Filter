@@ -19,7 +19,7 @@ function handleResults(
   let domains = Array.isArray(input) ? input : [input];
 
   /**
-   * Associate the search result hostname with its greatest ancestor node contained
+   * Associate the search result hostname with its greatest ancestor element contained
    * in the main search results wrapper.
    */
   let results = Array.from(
@@ -48,9 +48,9 @@ function handleResults(
     });
 
   /**
-   * Nodes are sorted to account for preference list positions, but in reverse
+   * Elements are sorted to account for preference list positions, but in reverse
    * order. This allows for the callback to simply bring the currently processed
-   * node to the top of the stack so the last node to be processed would actually
+   * element to the top of the stack so the last element to be processed would actually
    * be first in the search results.
    *
    * This has no effect the filter list.
@@ -78,7 +78,7 @@ function handleResults(
   });
 
   /**
-   * For each result DOM node, check if hostname matches domain in the list
+   * For each result DOM element, check if hostname matches domain in the list
    * and call the appropriate callback function.
    */
   results.forEach((result) => {
@@ -101,11 +101,11 @@ function handleResults(
 function filterResults(input: string | string[]) {
   handleResults(
     input,
-    (node) => {
-      setResultNodeFiltered(node);
+    (element) => {
+      setResultElementFiltered(element);
     },
-    (node) => {
-      setResultNodeUnfiltered(node);
+    (element) => {
+      setResultElementUnfiltered(element);
     }
   );
 }
@@ -117,13 +117,13 @@ function filterResults(input: string | string[]) {
 function preferResults(input: string | string[]) {
   handleResults(
     input,
-    (node) => {
+    (element) => {
       const rso = document.getElementById(MAIN_RESULT_WRAPPER_ID);
-      rso.prepend(node);
-      setResultNodePreferred(node);
+      rso.prepend(element);
+      setResultElementPreferred(element);
     },
-    (node) => {
-      setResultNodeUnpreferred(node);
+    (element) => {
+      setResultElementUnpreferred(element);
     }
   );
 }
@@ -158,48 +158,48 @@ function getDomainRegExp(domain: string) {
 }
 
 /**
- * Find the parent search result node of an anchor tag.
- * Returns null if there is no match.
- * @param {Node} linkNode - Anchor node
+ * Find the parent search result element of an anchor tag.
+ * @param anchorElement
+ * @returns the closest matching HTMLElement parent or null.
  */
-function getParentResultNode(linkNode: HTMLAnchorElement) {
-  if (linkNode.parentElement.className !== "yuRUbf") {
+function getParentResultElement(anchorElement: HTMLAnchorElement) {
+  if (anchorElement.parentElement.className !== "yuRUbf") {
     return null;
   }
 
-  return linkNode.closest<HTMLElement>("#rso > .g, #rso > .hlcw0c");
+  return anchorElement.closest<HTMLElement>("#rso > .g, #rso > .hlcw0c");
 }
 
 /**
- * Set the node to hidden using "displaynone" attribute
- * @param {Node} node - DOM node
+ * Set the element to hidden using "displaynone" attribute
+ * @param elem
  */
-function setResultNodeFiltered(node: Element) {
-  node.setAttribute("displaynone", "");
+function setResultElementFiltered(elem: Element) {
+  elem.setAttribute("displaynone", "");
 }
 
 /**
- * Set the node to unhidden using "displaynone" attribute
- * @param {Node} node - DOM node
+ * Set the element to unhidden using "displaynone" attribute
+ * @param elem
  */
-function setResultNodeUnfiltered(node: Element) {
-  node.removeAttribute("displaynone");
+function setResultElementUnfiltered(elem: Element) {
+  elem.removeAttribute("displaynone");
 }
 
 /**
- * Set the node to preferred using "preference" attribute
- * @param {Node} node - DOM node
+ * Set the element to preferred using "preference" attribute
+ * @param elem
  */
-function setResultNodePreferred(node: Element) {
-  node.setAttribute("preference", "");
+function setResultElementPreferred(elem: Element) {
+  elem.setAttribute("preference", "");
 }
 
 /**
- * Set the node to unpreferred using "preference" att
- * @param {Node} node - DOM node
+ * Set the element to unpreferred using "preference" att
+ * @param elem
  */
-function setResultNodeUnpreferred(node: Element) {
-  node.removeAttribute("preference");
+function setResultElementUnpreferred(elem: Element) {
+  elem.removeAttribute("preference");
 }
 
 export {
@@ -208,6 +208,6 @@ export {
   filterResults,
   preferResults,
   getDomainRegExp,
-  getParentResultNode,
-  setResultNodeFiltered,
+  getParentResultElement,
+  setResultElementFiltered,
 };
