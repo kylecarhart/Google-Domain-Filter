@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../Button";
 
@@ -9,6 +9,7 @@ interface Props {
 
 export default function DomainInput({ domains, addDomain, ...props }: Props) {
   const [inputText, setInputText] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleAddDomain = () => {
     if (addDomain(inputText)) {
@@ -16,9 +17,14 @@ export default function DomainInput({ domains, addDomain, ...props }: Props) {
     }
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <StyledDomainInput {...props}>
       <Input
+        ref={inputRef}
         placeholder="Enter domain"
         value={inputText}
         onChange={(e) => {
