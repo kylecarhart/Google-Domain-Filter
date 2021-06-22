@@ -12,13 +12,13 @@
   "content_scripts": [
     {
       "matches": [],
-      "js": ["./browser-polyfill.min.js", "./content/index.js"],
+      "js": ["./content/index.js"],
       "css": ["./content/styles.css"],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "scripts": ["./browser-polyfill.min.js", "./background/index.js"]
+    "scripts": ["./background/index.js"]
   },
   "options_ui": {
     "page": "./options/index.html",

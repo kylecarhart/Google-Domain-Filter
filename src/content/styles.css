@@ -1,8 +1,8 @@
-[preference] {
+[data-preference] {
   position: relative;
 }
 
-[preference]::before {
+[data-preference]::before {
   content: "";
   background: #4285f4;
   width: 3px;
@@ -12,6 +12,6 @@
   bottom: 0;
 }
 
-[displaynone] {
+[data-filter] {
   display: none;
 }
