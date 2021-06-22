@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Google Domain Filter",
   "author": "Kyle Carhart",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Filter domains from your Google searches.",
   "homepage_url": "https://github.com/KMCGamer/google-domain-filter",
   "permissions": ["storage", "activeTab", "webRequest", "webRequestBlocking"],
