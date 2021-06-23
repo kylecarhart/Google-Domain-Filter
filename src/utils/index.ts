@@ -1,18 +1,12 @@
-const EXCLUDE_QUERY = "-site";
-const INCLUDE_QUERY = "+site";
-
-export const ASC = true;
-export const DESC = false;
-
-type DomainList = string[];
+import { DomainList } from "../types";
 
 /**
  * Converts an array of domain strings into a single exclusion domain query string.
  * @param {...string} domains
  * @return {string} A domain exclusion query string.
  */
-export function toExcludeQuery(...domains: DomainList) {
-  return domains.map((domain) => `${EXCLUDE_QUERY}:${domain}`).join(" ");
+export function toExcludeQuery(domains: DomainList) {
+  return domains.map((domain) => `-site:${domain}`).join(" ");
 }
 
 /**
@@ -20,23 +14,34 @@ export function toExcludeQuery(...domains: DomainList) {
  * @param {...string} domains
  * @return {string} A domain inclusion query string.
  */
-export function toIncludeQuery(...domains: DomainList) {
-  return domains.map((domain) => `${INCLUDE_QUERY}:${domain}`).join(" ");
+export function toIncludeQuery(domains: DomainList) {
+  return domains.map((domain) => `+site:${domain}`).join(" ");
 }
 
 /**
  * Sort an array of strings lexicographically while ignoring case.
  * @param {[string]} arr - An array of strings.
- * @param {boolean} dir - Direction. Default true for ascending.
+ * @param {boolean} sortDir - Direction. Default true for ascending.
  */
-export function sortLexIgnoreCase(arr: string[], dir = ASC) {
+export function sortLexIgnoreCase(
+  arr: string[],
+  sortDir: "asc" | "desc" = "asc"
+) {
+  const dir = sortDir === "asc" ? 1 : -1;
   return [...arr].sort(function (a, b) {
-    if (a.toUpperCase() < b.toUpperCase()) {
-      return dir ? -1 : 1;
-    } else if (a.toUpperCase() > b.toUpperCase()) {
-      return dir ? 1 : -1;
+    if (a.toUpperCase() > b.toUpperCase()) {
+      return dir;
+    } else if (a.toUpperCase() < b.toUpperCase()) {
+      return -dir;
+    } else {
+      if (a > b) {
+        return dir;
+      } else if (a < b) {
+        return -dir;
+      } else {
+        return 0;
+      }
     }
-    return 0;
   });
 }
 
@@ -46,12 +51,12 @@ export function sortLexIgnoreCase(arr: string[], dir = ASC) {
  * @param {string} from - The string you want to change from.
  * @param {string} to - The string you want to change to.
  */
-export function replaceStringInArray(arr: string[], from: string, to: string) {
-  return arr.map((str) => {
-    if (str === from) {
+export function replaceInArray(arr: any[], from: any, to: any) {
+  return arr.map((obj) => {
+    if (obj === from) {
       return to;
     }
-    return str;
+    return obj;
   });
 }
 
@@ -61,23 +66,4 @@ export function replaceStringInArray(arr: string[], from: string, to: string) {
  */
 export function escapeRegExp(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-}
-/**
- * Retrieve all results from xpath query.
- * @param {string} xpath String of XPath query.
- * @param {Node} parent Parent node to search from. Default is document.
- */
-export function getElementsByXPath(xpath: string, parent: Node) {
-  let results = [];
-  let query = document.evaluate(
-    xpath,
-    parent || document,
-    null,
-    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-    null
-  );
-  for (let i = 0, length = query.snapshotLength; i < length; ++i) {
-    results.push(query.snapshotItem(i));
-  }
-  return results;
 }

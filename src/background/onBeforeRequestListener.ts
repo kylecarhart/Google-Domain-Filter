@@ -20,7 +20,7 @@ const onBeforeRequestListener = (
 
   const url = new URL(details.url);
   const params = url.searchParams;
-  const filterString = toExcludeQuery(...filterList);
+  const filterString = toExcludeQuery(filterList);
 
   // Add the sites to the query if it doesn't contain them already
   if (!params.get("as_q")) {
