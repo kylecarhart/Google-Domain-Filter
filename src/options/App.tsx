@@ -84,9 +84,9 @@ function App() {
             disabled={!options.filterListEnabled}
             option={options.filterMode}
             onText="Default"
-            onValue={FilterMode.Default}
+            onValue={"default" as FilterMode}
             offText="Experimental"
-            offValue={FilterMode.Experimental}
+            offValue={"experimental" as FilterMode}
             onClick={(val: FilterMode) => {
               setOptions({
                 ...options,

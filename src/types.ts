@@ -3,10 +3,7 @@
  */
 export type DomainList = string[];
 
-export enum FilterMode {
-  Default = "default",
-  Experimental = "experimental",
-}
+export type FilterMode = "default" | "experimental";
 
 export interface Options {
   filterListEnabled: boolean;
