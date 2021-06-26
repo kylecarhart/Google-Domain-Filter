@@ -1,26 +1,30 @@
 import handleInstalled from "./handleInstalled";
 import storage from "../storage";
-import {
-  startRequestListener,
-  stopRequestListener,
-} from "./onBeforeRequestListener";
+import FilterListRequestListener from "./FilterListRequestListener";
 import { browser } from "webextension-polyfill-ts";
 
 (async function () {
   // Handle storage initialization on install.
   browser.runtime.onInstalled.addListener(handleInstalled);
 
+  const filterList = await storage.filterList.get();
+  const listener = new FilterListRequestListener(filterList);
+
+  storage.filterList.addListener((newFilterList) => {
+    listener.filterList = newFilterList;
+  });
+
   // Get filter mode method
   const options = await storage.options.get();
   if (options.filterListEnabled && options.filterMode === "experimental") {
-    startRequestListener();
+    listener.start();
   }
 
   storage.options.addListener((options) => {
     if (options.filterListEnabled && options.filterMode === "experimental") {
-      startRequestListener();
+      listener.start(); // listener checks if it is already running, dont worry
     } else {
-      stopRequestListener();
+      listener.stop();
     }
   });
 })();
