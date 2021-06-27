@@ -1,4 +1,4 @@
-import { browser, Events, Storage } from "webextension-polyfill-ts";
+import { browser } from "webextension-polyfill-ts";
 import { StorageCallback, StorageListenerOnChanged } from "../types";
 
 /**
