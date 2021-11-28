@@ -2,60 +2,93 @@ import { escapeRegExp } from "../utils";
 
 const MAIN_RESULT_WRAPPER_ID = "rso";
 const LINK_QUERY_SELECTOR = ".yuRUbf a";
-const ACCEPTABLE_SEARCH_RESULT_CLASSES = ["g", "hlcw0c"];
+
+interface SearchResult {
+  hostname: string;
+  originalPos: number;
+  element: Element;
+}
 
 /**
- * Loop through results and call matchCallback() on each match. If no match,
- * optionally call noMatchCallback().
- * @param {[string] | string} input - Domain input. Can be an array or single string.
- * @param {function(HTMLElement)} matchCallback - Callback function on match.
- * @param {function(HTMLElement)} noMatchCallback - Callback function on no match.
+ * Hide search results matching domain input.
+ * @param {[string] | string} domainInput - Domain input. Can be an array or single string.
  */
-function handleResults(
-  input: string | string[],
-  matchCallback: (elem: Element) => void,
-  noMatchCallback = (elem: Element) => {}
-) {
-  let domains = Array.isArray(input) ? input : [input];
+function filterResults(domainInput: string | string[]) {
+  let domains = Array.isArray(domainInput) ? domainInput : [domainInput];
+  let searchResults = getSearchResults();
 
-  /**
-   * Associate the search result hostname with its greatest ancestor element contained
-   * in the main search results wrapper.
-   */
-  let results = Array.from(
-    document.getElementById(MAIN_RESULT_WRAPPER_ID).children
-  )
-    .filter((child) => {
-      if (
-        ACCEPTABLE_SEARCH_RESULT_CLASSES.some((cssClass) =>
-          child.classList.contains(cssClass)
-        )
-      ) {
-        return true;
-      }
-    })
+  searchResults.forEach((result) => {
+    const domain = domains.find((domain) =>
+      getDomainRegExp(domain).test(result.hostname)
+    );
+
+    if (domain) {
+      setResultElementAsFiltered(result.element);
+    } else {
+      setResultElementAsUnfiltered(result.element);
+    }
+  });
+}
+
+/**
+ * Highlight and reorder search results matching domain input.
+ * @param {[string] | string} domainInput - Domain input. Can be an array or single string.
+ */
+function preferResults(domainInput: string | string[]) {
+  let domains = Array.isArray(domainInput) ? domainInput : [domainInput];
+  let searchResults = getSearchResults();
+  sortSearchResultsForPreferenceHandling(searchResults, domains);
+
+  searchResults.forEach((result) => {
+    const domain = domains.find((domain) =>
+      getDomainRegExp(domain).test(result.hostname)
+    );
+
+    if (domain) {
+      const rso = document.getElementById(MAIN_RESULT_WRAPPER_ID);
+      rso.prepend(result.element);
+      setResultElementAsPreferred(result.element);
+    } else {
+      setResultElementAsUnpreferred(result.element);
+    }
+  });
+}
+
+/**
+ * Get search result objects from the DOM.
+ * @returns array of search result objects
+ */
+function getSearchResults(): SearchResult[] {
+  return Array.from(document.getElementById(MAIN_RESULT_WRAPPER_ID).children)
+    .filter((result) =>
+      // filter out elements that dont have links
+      result.querySelector<HTMLAnchorElement>(LINK_QUERY_SELECTOR)
+    )
     .map((child, index) => {
-      let link = child.querySelector<HTMLAnchorElement>(LINK_QUERY_SELECTOR);
-      if (link) {
-        let resultElement = {
-          hostname: link.hostname,
-          elem: child,
-          originalPos: index,
-        };
-
-        return resultElement;
-      }
+      // Associate the hostname with its greatest ancestor element
+      return {
+        hostname:
+          child.querySelector<HTMLAnchorElement>(LINK_QUERY_SELECTOR).hostname,
+        element: child,
+        originalPos: index,
+      } as SearchResult;
     });
+}
 
-  /**
-   * Elements are sorted to account for preference list positions, but in reverse
-   * order. This allows for the callback to simply bring the currently processed
-   * element to the top of the stack so the last element to be processed would actually
-   * be first in the search results.
-   *
-   * This has no effect the filter list.
-   */
-  results.sort((a, b) => {
+/**
+ * Elements are sorted to account for preference list positions, but in reverse
+ * order. This allows for the callback to simply bring the currently processed
+ * element to the top of the stack so the last element to be processed would actually
+ * be first in the search results.
+ *
+ * @param searchResultObjects search result objects
+ * @param domains domain strings to sort against
+ */
+function sortSearchResultsForPreferenceHandling(
+  searchResultObjects: SearchResult[],
+  domains: string[]
+): void {
+  searchResultObjects.sort((a, b) => {
     let aIdx = domains.findIndex((domain) =>
       getDomainRegExp(domain).test(a.hostname)
     );
@@ -76,56 +109,6 @@ function handleResults(
       }
     }
   });
-
-  /**
-   * For each result DOM element, check if hostname matches domain in the list
-   * and call the appropriate callback function.
-   */
-  results.forEach((result) => {
-    const domain = domains.find((domain) =>
-      getDomainRegExp(domain).test(result.hostname)
-    );
-
-    if (domain) {
-      matchCallback(result.elem);
-    } else {
-      noMatchCallback(result.elem);
-    }
-  });
-}
-
-/**
- * Hide search results matching domain input.
- * @param {[string] | string} input - Domain input. Can be an array or single string.
- */
-function filterResults(input: string | string[]) {
-  handleResults(
-    input,
-    (element) => {
-      setResultElementFiltered(element);
-    },
-    (element) => {
-      setResultElementUnfiltered(element);
-    }
-  );
-}
-
-/**
- * Highlight and reorder search results matching domain input.
- * @param {[string] | string} input - Domain input. Can be an array or single string.
- */
-function preferResults(input: string | string[]) {
-  handleResults(
-    input,
-    (element) => {
-      const rso = document.getElementById(MAIN_RESULT_WRAPPER_ID);
-      rso.prepend(element);
-      setResultElementPreferred(element);
-    },
-    (element) => {
-      setResultElementUnpreferred(element);
-    }
-  );
 }
 
 /**
@@ -159,22 +142,26 @@ function getDomainRegExp(domain: string) {
 
 /**
  * Find the parent search result element of an anchor tag.
+ * The div "#rso" contains all search result groups. Return the outermost element
+ * containing the anchor that is a direct child of #rso.
  * @param anchorElement
- * @returns the closest matching HTMLElement parent or null.
+ * @returns the outermost element containing the anchor that is a direct child
+ *          of #rso.
  */
 function getParentResultElement(anchorElement: HTMLAnchorElement) {
   if (anchorElement.parentElement.className !== "yuRUbf") {
     return null;
   }
 
-  return anchorElement.closest<HTMLElement>("#rso > .g, #rso > .hlcw0c");
+  const eldestElement = anchorElement.closest<HTMLElement>("#rso > *");
+  return eldestElement;
 }
 
 /**
  * Set the element to hidden using "data-filter" attribute
  * @param elem
  */
-function setResultElementFiltered(elem: Element) {
+function setResultElementAsFiltered(elem: Element) {
   elem.setAttribute("data-filter", "");
 }
 
@@ -182,7 +169,7 @@ function setResultElementFiltered(elem: Element) {
  * Set the element to unhidden using "data-filter" attribute
  * @param elem
  */
-function setResultElementUnfiltered(elem: Element) {
+function setResultElementAsUnfiltered(elem: Element) {
   elem.removeAttribute("data-filter");
 }
 
@@ -190,7 +177,7 @@ function setResultElementUnfiltered(elem: Element) {
  * Set the element to preferred using "data-preference" attribute
  * @param elem
  */
-function setResultElementPreferred(elem: Element) {
+function setResultElementAsPreferred(elem: Element) {
   elem.setAttribute("data-preference", "");
 }
 
@@ -198,7 +185,7 @@ function setResultElementPreferred(elem: Element) {
  * Set the element to unpreferred using "data-preference" att
  * @param elem
  */
-function setResultElementUnpreferred(elem: Element) {
+function setResultElementAsUnpreferred(elem: Element) {
   elem.removeAttribute("data-preference");
 }
 
@@ -209,5 +196,5 @@ export {
   preferResults,
   getDomainRegExp,
   getParentResultElement,
-  setResultElementFiltered,
+  setResultElementAsFiltered,
 };

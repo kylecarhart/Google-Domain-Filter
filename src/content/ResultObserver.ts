@@ -1,7 +1,7 @@
 import {
   getDomainRegExp,
   getParentResultElement,
-  setResultElementFiltered,
+  setResultElementAsFiltered,
 } from "./mutations";
 
 /**
@@ -29,7 +29,7 @@ export default class ResultObserver implements MutationObserver {
             )
           ) {
             const parentResultNode = getParentResultElement(addedNode);
-            setResultElementFiltered(parentResultNode);
+            setResultElementAsFiltered(parentResultNode);
           }
         });
       });
