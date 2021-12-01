@@ -1,5 +1,5 @@
 import { browser, WebRequest } from "webextension-polyfill-ts";
-import { tlds } from "../tlds.json";
+import { tlds } from "./tlds";
 import { DomainList } from "../types";
 import { toExcludeQuery } from "../utils";
 
