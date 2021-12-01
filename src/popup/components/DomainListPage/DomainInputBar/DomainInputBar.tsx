@@ -7,7 +7,7 @@ interface Props {
   addDomain: (domain: string) => boolean;
 }
 
-export default function DomainInput({ domains, addDomain, ...props }: Props) {
+function DomainInputBar({ domains, addDomain, ...props }: Props) {
   const [inputText, setInputText] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,31 +22,37 @@ export default function DomainInput({ domains, addDomain, ...props }: Props) {
   }, []);
 
   return (
-    <StyledDomainInput {...props}>
-      <Input
-        ref={inputRef}
-        placeholder="Enter domain"
-        value={inputText}
-        onChange={(e) => {
-          setInputText(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
+    <StyledDomainInputBar {...props}>
+      <StyledDomainInput {...props}>
+        <Input
+          ref={inputRef}
+          placeholder="Enter domain"
+          value={inputText}
+          onChange={(e) => {
+            setInputText(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAddDomain();
+            }
+          }}
+        />
+        <StyledButton
+          styleType="primary"
+          onClick={() => {
             handleAddDomain();
-          }
-        }}
-      />
-      <StyledButton
-        styleType="primary"
-        onClick={() => {
-          handleAddDomain();
-        }}
-      >
-        Add
-      </StyledButton>
-    </StyledDomainInput>
+          }}
+        >
+          Add
+        </StyledButton>
+      </StyledDomainInput>
+    </StyledDomainInputBar>
   );
 }
+
+const StyledDomainInputBar = styled.div`
+  display: flex;
+`;
 
 const StyledButton = styled(Button)`
   margin-left: 0;
@@ -55,6 +61,7 @@ const StyledButton = styled(Button)`
 
 const StyledDomainInput = styled.div`
   display: flex;
+  flex: 1;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
@@ -73,3 +80,5 @@ const Input = styled.input`
     color: #b8b8b8;
   }
 `;
+
+export default DomainInputBar;

@@ -1,7 +1,7 @@
-import { useState, cloneElement } from "react";
-import { DropdownMenuItem } from "./DropdownMenuItem";
-import { DropdownMenu } from "./DropdownMenu";
+import { cloneElement, useState } from "react";
 import { IDropdownOption } from "../DomainListPage/DomainList/DomainListItemDropdown";
+import { DropdownMenu } from "./DropdownMenu";
+import { DropdownMenuItem } from "./DropdownMenuItem";
 
 interface Props {
   trigger: Function;

@@ -1,8 +1,8 @@
-import NavItem from "./NavItem";
 import styled from "styled-components";
+import { browser } from "webextension-polyfill-ts";
 import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "../../constants";
 import { CogIcon } from "../../icons";
-import { browser } from "webextension-polyfill-ts";
+import NavItem from "./NavItem";
 
 interface Props {
   selected: string;

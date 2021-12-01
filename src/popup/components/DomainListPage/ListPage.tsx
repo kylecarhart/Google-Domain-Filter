@@ -1,9 +1,9 @@
-import DomainInputBar from "./DomainInputBar";
-import DomainList from "./DomainList";
+import { DraggableLocation } from "react-beautiful-dnd";
 import styled from "styled-components";
 import validator from "validator";
 import { replaceInArray } from "../../../utils";
-import { DraggableLocation } from "react-beautiful-dnd";
+import { DomainInputBar } from "./DomainInputBar";
+import { DomainList } from "./DomainList";
 
 interface Props {
   domains: string[];

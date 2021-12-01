@@ -1,7 +1,7 @@
-import { ReactNode, useState } from "react";
-import styled from "styled-components";
-import { usePopper } from "react-popper";
 import { Placement } from "@popperjs/core";
+import { ReactNode, useState } from "react";
+import { usePopper } from "react-popper";
+import styled from "styled-components";
 import { useOutsideClick } from "../../hooks";
 
 interface Props {
