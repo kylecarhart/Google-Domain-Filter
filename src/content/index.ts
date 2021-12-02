@@ -3,45 +3,55 @@ import { filterResults, preferResults } from "./mutations";
 import ResultObserver from "./ResultObserver";
 import storage from "../storage";
 
-const url = new URL(window.location.href);
-const params = url.searchParams;
-const asQParam = params.get("as_q");
-let observer: QueryObserver | ResultObserver = null;
-
-// Run the query observer when using the Experimental filter mode
-if (asQParam) {
-  observer = new QueryObserver(asQParam);
-  observer.observe();
-}
-
-// Start google domain filtering script
 (async function () {
+  const url = new URL(window.location.href);
+  const asQParam = url.searchParams.get("as_q");
+  let observer: QueryObserver | ResultObserver = null;
+
+  // Run the query observer when using the Experimental filter mode
+  if (asQParam) {
+    observer = new QueryObserver(asQParam);
+    observer.observe();
+  }
+
   let filterList = await storage.filterList.get();
   let preferenceList = await storage.preferenceList.get();
   let options = await storage.options.get();
 
-  // Run the result observer when using default filter mode
-  if (!asQParam && options.filterListEnabled) {
-    observer = new ResultObserver(filterList);
-    observer.observe();
-  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      if (observer) {
+        observer.disconnect();
+      }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    if (observer) {
-      observer.disconnect();
+      if (options.preferenceListEnabled) {
+        preferResults(preferenceList);
+      }
+
+      if (options.filterListEnabled) {
+        filterResults(filterList);
+      }
+    });
+
+    // Run the result observer when using default filter mode
+    if (!asQParam && options.filterListEnabled) {
+      observer = new ResultObserver(filterList);
+      observer.observe();
+    }
+  } else {
+    // Dom is already loaded (possibly due to back/forward navigation)
+    if (options.filterListEnabled) {
+      filterResults(filterList);
     }
 
     if (options.preferenceListEnabled) {
       preferResults(preferenceList);
     }
+  }
 
-    // Attempt to remove filter results no matter what (for cached pages)
-    if (options.filterListEnabled) {
-      filterResults(filterList);
-    }
-  });
-
+  // Listen for changes to the options (enable/disable)
   storage.options.addListener((newOptions, oldOptions) => {
+    // Show/hide filter results when options are changed.
     if (newOptions.filterListEnabled !== oldOptions.filterListEnabled) {
       if (newOptions.filterListEnabled) {
         filterResults(filterList);
@@ -50,6 +60,7 @@ if (asQParam) {
       }
     }
 
+    // Emphasize/de-emphasize preferences when options are changed.
     if (newOptions.preferenceListEnabled !== oldOptions.preferenceListEnabled) {
       if (newOptions.preferenceListEnabled) {
         preferResults(preferenceList);
@@ -69,6 +80,7 @@ if (asQParam) {
     filterList = newFilterList;
   });
 
+  // Listen to changes to preference list and highlight them in the DOM
   storage.preferenceList.addListener((newPreferenceList) => {
     if (options.preferenceListEnabled) {
       preferResults(newPreferenceList);

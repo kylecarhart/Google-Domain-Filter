@@ -1,6 +1,6 @@
 /**
  * When experimental mode is turned on, this observer will remove the query
- * string away from the dom.
+ * string away from the dom as it loads (to prevent DOM update flashing)
  */
 export default class QueryObserver implements MutationObserver {
   filterString: string;
@@ -25,6 +25,12 @@ export default class QueryObserver implements MutationObserver {
               return;
             }
           }
+
+          // Fix for google maps and other links
+          if (addedNode instanceof HTMLAnchorElement) {
+            addedNode.href = addedNode.href.replace(this.filterString, "");
+          }
+
           // Modify any other text nodes containing the filter query
           if (addedNode instanceof Text) {
             addedNode.nodeValue = addedNode.nodeValue.replace(
