@@ -1,7 +1,7 @@
 {
   "name": "google-domain-filter",
   "version": "1.2.0",
-  "description": "",
+  "description": "Filter and highlight domains in your google searches.",
   "main": "index.js",
   "scripts": {
     "watch": "npm run clean && webpack --env mode=development --env watch",
