@@ -1,5 +1,5 @@
 import useOutsideClick from "./useOutsideClick";
-import useStorage from "./useStorage";
 import usePrevious from "./usePrevious";
+import useStorage from "./useStorage";
 
 export { useOutsideClick, useStorage, usePrevious };

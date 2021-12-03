@@ -1,12 +1,12 @@
+import { createRef } from "react";
+import {
+  DragDropContext,
+  DraggableLocation,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 import styled from "styled-components";
 import DomainListItem from "./DomainListItem";
-import {
-  Droppable,
-  DragDropContext,
-  DropResult,
-  DraggableLocation,
-} from "react-beautiful-dnd";
-import { createRef } from "react";
 
 interface Props {
   domains: string[];

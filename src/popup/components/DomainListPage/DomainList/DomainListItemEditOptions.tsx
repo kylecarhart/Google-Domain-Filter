@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { CloseIcon, SaveIcon } from "../../../icons";
 import { IconButton } from "../../Button";
-import { SaveIcon, CloseIcon } from "../../../icons";
 
 interface Props {
   editDomain: () => void;

@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from "react";
+import { useEffect } from "react";
 
 /**
  * Listens for a click outside the ref element and fires the callback.

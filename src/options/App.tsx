@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
 import storage from "../storage";
 import { useStorage } from "../popup/hooks";
-import { FilterMode } from "../storage/dao/options";
+import { FilterMode } from "../types";
 
 function App() {
   const [options, setOptions] = useStorage(
@@ -84,9 +84,9 @@ function App() {
             disabled={!options.filterListEnabled}
             option={options.filterMode}
             onText="Default"
-            onValue="default"
+            onValue={"default" as FilterMode}
             offText="Experimental"
-            offValue="experimental"
+            offValue={"experimental" as FilterMode}
             onClick={(val: FilterMode) => {
               setOptions({
                 ...options,

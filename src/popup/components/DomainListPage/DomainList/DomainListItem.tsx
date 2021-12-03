@@ -1,10 +1,10 @@
-import { useState, useRef, forwardRef } from "react";
+import { forwardRef, useRef, useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { DragHandleIcon } from "../../../icons";
-import { Draggable } from "react-beautiful-dnd";
 import DomainListItemDropdown from "./DomainListItemDropdown";
-import DomainListItemInput from "./DomainListItemInput";
 import DomainListItemEditOptions from "./DomainListItemEditOptions";
+import DomainListItemInput from "./DomainListItemInput";
 
 interface Props {
   domain: string;

@@ -1,12 +1,15 @@
 import {
   getDomainRegExp,
   getParentResultElement,
-  setResultElementFiltered,
+  setResultElementAsFiltered,
 } from "./mutations";
 
 /**
- * ResultObserver watches the dom for changes and will set matching search
- * results to displaynone.
+ * The purpose of the ResultObserver is to catch updates to the DOM before they
+ * display to the user. This is better than letting the DOM finish loading and
+ * then doing mutations because it prevents a DOM update flash.
+ *
+ * Runs in default (non-experimental) mode.
  */
 export default class ResultObserver implements MutationObserver {
   filterList: string[];
@@ -29,7 +32,7 @@ export default class ResultObserver implements MutationObserver {
             )
           ) {
             const parentResultNode = getParentResultElement(addedNode);
-            setResultElementFiltered(parentResultNode);
+            setResultElementAsFiltered(parentResultNode);
           }
         });
       });

@@ -1,9 +1,9 @@
-import DomainInputBar from "./DomainInputBar";
-import DomainList from "./DomainList";
+import { DraggableLocation } from "react-beautiful-dnd";
 import styled from "styled-components";
 import validator from "validator";
-import { replaceStringInArray } from "../../../utils";
-import { DraggableLocation } from "react-beautiful-dnd";
+import { replaceInArray } from "../../../utils";
+import { DomainInputBar } from "./DomainInputBar";
+import { DomainList } from "./DomainList";
 
 interface Props {
   domains: string[];
@@ -43,7 +43,7 @@ function ListPage({ domains, setDomains }: Props) {
     }
 
     setDomains((domainList) => {
-      const editedList = replaceStringInArray(domainList, fromDomain, toDomain);
+      const editedList = replaceInArray(domainList, fromDomain, toDomain);
       return editedList;
     });
 

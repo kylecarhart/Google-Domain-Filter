@@ -1,8 +1,5 @@
 import { browser } from "webextension-polyfill-ts";
-
-let listenerMap = new Map();
-
-export type StorageCallback<T> = (newValue?: T, oldValue?: T) => void;
+import { StorageCallback, StorageListenerOnChanged } from "../types";
 
 /**
  * Attempt to retrieve value from storage. If the key does not exist, and
@@ -11,12 +8,12 @@ export type StorageCallback<T> = (newValue?: T, oldValue?: T) => void;
  * @param {string} key - Key of value to retrieve from storage.
  * @param {any=} defaultValue - defaultValue to set if key doesnt exist.
  */
-async function getStorage<T>(key: string, defaultValue?: T) {
+async function getStorage(key: string, defaultValue?: any) {
   try {
     const storage = await browser.storage.sync.get(key);
     // Return storage value if the key exists
     if (storage[key]) {
-      return storage[key] as T;
+      return storage[key];
     }
 
     // Storage key doesnt exist, set default value if specified.
@@ -36,7 +33,7 @@ async function getStorage<T>(key: string, defaultValue?: T) {
  * @param {string} key - Key of storage value.
  * @param {*} val - Value to set.
  */
-function setStorage<T>(key: string, val: T) {
+function setStorage(key: string, val: any) {
   try {
     return browser.storage.sync.set({ [key]: val });
   } catch (e) {
@@ -49,27 +46,23 @@ function setStorage<T>(key: string, val: T) {
  * @param {string} key - Key of storage value.
  * @param {function} callback - Function to call if storage value found.
  */
-function addStorageListener<T>(key: string, callback: StorageCallback<T>) {
-  const listener = (storage: Storage) => {
+function addStorageListener(key: string, callback: StorageCallback) {
+  const listener: StorageListenerOnChanged = (storage) => {
     if (storage[key]) {
       callback(storage[key].newValue, storage[key].oldValue);
     }
   };
 
-  listenerMap.set(callback, listener);
   browser.storage.onChanged.addListener(listener);
+  return listener;
 }
 
 /**
  * Remove a storage listener based on a callback.
  * @param {function} callback - Callback function to remove from listener.
  */
-function removeStorageListener<T>(callback: StorageCallback<T>) {
-  const listener = listenerMap.get(callback);
-  if (listener) {
-    browser.storage.onChanged.removeListener(listener);
-    listenerMap.delete(callback);
-  }
+function removeStorageListener(listener: StorageListenerOnChanged) {
+  browser.storage.onChanged.removeListener(listener);
 }
 
 export { getStorage, setStorage, addStorageListener, removeStorageListener };
