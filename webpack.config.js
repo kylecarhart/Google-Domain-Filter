@@ -85,6 +85,9 @@ module.exports = (env) => {
               // Allow content scripts to run on all google tlds
               manifest.content_scripts[0].matches.push(...matchPatterns);
 
+              // Take the version number from the package.json
+              manifest.version = process.env.npm_package_version;
+
               const manifestJSON = JSON.stringify(manifest, null, 2);
               return manifestJSON;
             },

@@ -4,17 +4,20 @@ import storage from "../storage";
 import { useStorage } from "../popup/hooks";
 import { FilterMode } from "../types";
 
+declare var __VERSION__: string;
+
 function App() {
   const [options, setOptions] = useStorage(
     storage.options.key,
     storage.options.defaultValue
   );
 
+  const version = __VERSION__;
+
   return (
     <Container>
       <h3>Filter Options</h3>
       <hr />
-
       {/* Filter List ON/OFF */}
       <Setting>
         <Description>
@@ -33,7 +36,6 @@ function App() {
           />
         </SettingInput>
       </Setting>
-
       {/* Preference List ON/OFF */}
       <Setting>
         <Description>
@@ -52,9 +54,7 @@ function App() {
           />
         </SettingInput>
       </Setting>
-
       <hr />
-
       {/* Filter Mode: Defualt/Experimental */}
       <Setting disabled={!options.filterListEnabled}>
         <Description>
@@ -97,6 +97,7 @@ function App() {
         </SettingInput>
       </Setting>
       <hr />
+      <SmallSubtitle>Version: {version}</SmallSubtitle>
     </Container>
   );
 }
