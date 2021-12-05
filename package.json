@@ -57,6 +57,6 @@
     "source-map-loader": "^3.0.0",
     "styled-components": "^5.3.0",
     "ts-loader": "^9.2.3",
-    "validator": "^13.6.0"
+    "validator": "^13.7.0"
   }
 }
