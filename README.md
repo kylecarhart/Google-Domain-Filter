@@ -1,10 +1,10 @@
 <h1 align="center">
   <br />
   <a href="https://github.com/KMCGamer/google-domain-filter">
-    <img src="https://user-images.githubusercontent.com/6385983/71632282-b273ff00-2bdb-11ea-9a62-554cfce1c016.png" alt="Google Domain Filter" title="Google Domain Filter" />
+    <img src="https://user-images.githubusercontent.com/77036988/144765937-37ed8059-0c5f-4c7d-9670-4efd496d1ab2.png" alt="Google Domain Filter" title="Google Domain Filter" />
   </a>
   <br />
-  Google Domain Filter
+  Domain Filter for Google™ Search
   <br />
 </h1>
 
@@ -50,6 +50,7 @@ Due to the nature of how the extension works, it may interfere with certain goog
 Make sure you run `npm install` first.
 
 Start by running `npm start` in the root directory. This will kick off the webpack build watch, which will allow you to make changes while webpack re-compiles to the `build` folder. While webpack is watching for changes, open another terminal and start a firefox, chrome, or both instances by using one of the commands below:
+
 - Firefox only: `npm run start:firefox`
 - Chrome only: `npm run start:chrome`
 - Both: `npm run start`
