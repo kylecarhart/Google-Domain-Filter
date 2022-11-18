@@ -72,30 +72,18 @@ export function removeStorageListener(listener: StorageListenerOnChanged) {
  * Create a storage service with a key and default value
  */
 export function storageFactory<T>(key: string, defaultValue: T) {
-  /**
-   * Get filter list from storage.
-   */
   function get() {
     return getStorage(key, defaultValue) as Promise<T>;
   }
 
-  /**
-   * Set filter list in storage.
-   */
   function set(val: T) {
     setStorage(key, val);
   }
 
-  /**
-   * Set a listener to changes on the filter list in storage.
-   */
   function addListener(callback: (newValue: T, oldValue: T) => void) {
     return addStorageListener(key, callback);
   }
 
-  /**
-   * Remove specified listener.
-   */
   function removeListener(listener: StorageListenerOnChanged) {
     removeStorageListener(listener);
   }
