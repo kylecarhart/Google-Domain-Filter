@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
-import storage from "../storage";
-import { useStorage } from "../popup/hooks";
 import { FilterMode } from "@globalTypes";
+import { useStorage } from "@apps/gecko/src/popup/hooks";
+import { storage } from "@/libs/common/storage";
 
 declare var __VERSION__: string;
 

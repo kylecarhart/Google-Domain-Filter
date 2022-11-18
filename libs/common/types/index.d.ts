@@ -1,5 +1,3 @@
-import { Storage } from "webextension-polyfill-ts";
-
 /**
  * Domain
  */
@@ -20,10 +18,3 @@ export interface Options {
 /**
  * Storage
  */
-export type StorageCallback = (newValue: any, oldValue: any) => void;
-export type StorageListenerOnChanged = (
-  changes: {
-    [s: string]: Storage.StorageChange;
-  },
-  areaName: string
-) => void;

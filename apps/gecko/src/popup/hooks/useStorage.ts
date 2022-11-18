@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getStorage, setStorage } from "../../storage/storageUtils";
+import {
+  getStorage,
+  setStorage,
+} from "../../../../../libs/common/utils/storage.util";
 
 /**
  * React hook that automatically retrieves and sets values in

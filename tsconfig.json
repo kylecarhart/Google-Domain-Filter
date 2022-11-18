@@ -1,5 +1,12 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "ES6",
+    "resolveJsonModule": true,
+    "lib": ["DOM"],
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    // Base starts here -----------------
     "baseUrl": "./",
     "paths": {
       "@apps/*": ["apps/*"],

@@ -1,7 +1,7 @@
 import QueryObserver from "./QueryObserver";
 import { filterResults, preferResults } from "./mutations";
 import ResultObserver from "./ResultObserver";
-import storage from "../storage";
+import { storage } from "@/libs/common/storage";
 
 (async function () {
   const url = new URL(window.location.href);

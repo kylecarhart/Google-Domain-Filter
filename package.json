@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start:gecko": "nx start gecko"
+    "watch:gecko": "nx watch gecko",
+    "start:gecko": "nx start gecko",
+    "watch:chrome": "nx watch chrome",
+    "start:chrome": "nx start chrome"
   },
   "private": true,
   "dependencies": {
