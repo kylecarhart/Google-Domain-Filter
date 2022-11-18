@@ -1,7 +1,7 @@
+import { replaceInArray } from "@utils/index";
 import { DraggableLocation } from "react-beautiful-dnd";
 import styled from "styled-components";
 import validator from "validator";
-import { replaceInArray } from "../../../utils";
 import { DomainInputBar } from "./DomainInputBar";
 import { DomainList } from "./DomainList";
 

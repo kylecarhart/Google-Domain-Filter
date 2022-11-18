@@ -1,4 +1,4 @@
-import { StorageListenerOnChanged } from "../../types";
+import { StorageListenerOnChanged } from "@globalTypes";
 import {
   getStorage,
   setStorage,

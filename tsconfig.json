@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    // "outDir": "./build",
-    "jsx": "react-jsx",
-    // "allowJs": true,
-    "target": "ES6",
-    "resolveJsonModule": true,
-    "lib": ["DOM"],
-    "noImplicitAny": true,
-    "moduleResolution": "node"
+    "baseUrl": "./",
+    "paths": {
+      "@apps/*": ["apps/*"],
+      "@globalTypes": ["libs/common/types/index.d.ts"],
+      "@utils/*": ["libs/common/utils/*"],
+      "@/*": ["*"]
+    }
   },
-  "include": ["./src/**/*"]
+  "include": ["./apps/**/*", "./libs/**/*"]
 }

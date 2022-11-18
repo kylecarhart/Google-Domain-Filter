@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
 import storage from "../storage";
 import { useStorage } from "../popup/hooks";
-import { FilterMode } from "../types";
+import { FilterMode } from "@globalTypes";
 
 declare var __VERSION__: string;
 

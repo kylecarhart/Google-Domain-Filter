@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const { tlds } = require("./src/tlds");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = (env) => {
   return {
@@ -22,6 +23,7 @@ module.exports = (env) => {
     devtool: false, // Remove eval() from javascript
     watch: env.watch ? true : false,
     resolve: {
+      plugins: [new TsconfigPathsPlugin({})],
       extensions: [".ts", ".tsx", ".js", ".jsx"],
     },
     module: {

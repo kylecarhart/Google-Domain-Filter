@@ -1,4 +1,4 @@
-import { FilterMode, Options } from "../../types";
+import { FilterMode, Options } from "@globalTypes";
 import daoFactory from "./daoFactory";
 
 export const OPTIONS_KEY = "options";

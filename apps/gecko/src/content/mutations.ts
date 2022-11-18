@@ -1,4 +1,4 @@
-import { escapeRegExp } from "../utils";
+import { escapeRegExp } from "@utils/index";
 
 const MAIN_RESULT_WRAPPER_ID = "rso";
 const LINK_QUERY_SELECTOR = ".yuRUbf a";

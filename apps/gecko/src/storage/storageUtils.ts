@@ -1,5 +1,5 @@
 import { browser } from "webextension-polyfill-ts";
-import { StorageCallback, StorageListenerOnChanged } from "../types";
+import { StorageCallback, StorageListenerOnChanged } from "@globalTypes";
 
 /**
  * Attempt to retrieve value from storage. If the key does not exist, and
@@ -25,6 +25,7 @@ async function getStorage(key: string, defaultValue?: any) {
     return null; // Do default value specified, return null;
   } catch (e) {
     console.log(`[Error in getStorage] ${e.name}: ${e.message}`);
+    throw e;
   }
 }
 
@@ -38,6 +39,7 @@ function setStorage(key: string, val: any) {
     return browser.storage.sync.set({ [key]: val });
   } catch (e) {
     console.log(`[Error in setStorage] ${e.name}: ${e.message}`);
+    throw e;
   }
 }
 

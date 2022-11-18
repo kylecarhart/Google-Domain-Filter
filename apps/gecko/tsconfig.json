@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    // "outDir": "./build",
+    "jsx": "react-jsx",
+    // "allowJs": true,
+    "target": "ES6",
+    "resolveJsonModule": true,
+    "lib": ["DOM"],
+    "noImplicitAny": true,
+    "moduleResolution": "node"
+  }
+}

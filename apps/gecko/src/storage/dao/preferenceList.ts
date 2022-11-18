@@ -1,4 +1,4 @@
-import { DomainList } from "../../types";
+import { DomainList } from "@globalTypes";
 import daoFactory from "./daoFactory";
 
 export const PREFERENCE_LIST_KEY = "preferenceList";

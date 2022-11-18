@@ -1,7 +1,7 @@
 import { browser, WebRequest } from "webextension-polyfill-ts";
 import { tlds } from "./tlds";
-import { DomainList } from "../types";
-import { toExcludeQuery } from "../utils";
+import { DomainList } from "@globalTypes";
+import { toExcludeQuery } from "@utils/index";
 
 export default class FilterListRequestListener {
   filterList: DomainList;
