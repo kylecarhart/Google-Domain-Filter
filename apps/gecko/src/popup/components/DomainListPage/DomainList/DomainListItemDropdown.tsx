@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MoreIcon } from "../../../icons";
-import { IconButton } from "../../Button";
+import { IconButton } from "../../../../../../../libs/common/ui/components/Button";
 import { Dropdown } from "../../Dropdown";
 
 export interface IDropdownOption {

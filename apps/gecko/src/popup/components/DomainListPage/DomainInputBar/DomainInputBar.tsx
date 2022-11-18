@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Button } from "../../Button";
+import { Button } from "@ui/components/Button";
 
 interface Props {
   domains: string[];

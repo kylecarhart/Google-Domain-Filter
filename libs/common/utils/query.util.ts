@@ -1,4 +1,4 @@
-import { DomainList } from "@globalTypes";
+import { DomainList } from "@common/types";
 
 /**
  * Converts an array of domain strings into a single exclusion domain query string.

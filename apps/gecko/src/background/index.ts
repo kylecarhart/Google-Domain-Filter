@@ -1,7 +1,7 @@
 import handleInstalled from "./handleInstalled";
 import FilterListRequestListener from "./FilterListRequestListener";
 import { browser } from "webextension-polyfill-ts";
-import { storage } from "@/libs/common/storage";
+import { storage } from "@common/storage";
 
 (async function () {
   // Handle storage initialization on install.

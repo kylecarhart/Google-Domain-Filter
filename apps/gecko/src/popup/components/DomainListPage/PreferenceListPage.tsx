@@ -1,5 +1,5 @@
-import { storage } from "@/libs/common/storage";
-import { useStorage } from "../../hooks";
+import { storage } from "libs/common/storage";
+import { useStorage } from "../../../../../../libs/common/ui/hooks";
 import ListPage from "./ListPage";
 
 export default function PreferenceListPage() {

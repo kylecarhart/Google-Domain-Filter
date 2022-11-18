@@ -1,4 +1,4 @@
-import { DomainList, Options } from "@globalTypes";
+import { DomainList, Options } from "@common/types";
 import { storageFactory } from "@utils/storage.util";
 
 // Storage keys and default values

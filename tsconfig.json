@@ -9,10 +9,9 @@
     // Base starts here -----------------
     "baseUrl": "./",
     "paths": {
-      "@apps/*": ["apps/*"],
-      "@globalTypes": ["libs/common/types/index.d.ts"],
+      "@ui/*": ["libs/common/ui/*"],
       "@utils/*": ["libs/common/utils/*"],
-      "@/*": ["*"]
+      "@common/*": ["libs/common/*"]
     }
   },
   "include": ["./apps/**/*", "./libs/**/*"]

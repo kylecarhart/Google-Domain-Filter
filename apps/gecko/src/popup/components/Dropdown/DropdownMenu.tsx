@@ -2,7 +2,7 @@ import { Placement } from "@popperjs/core";
 import { ReactNode, useState } from "react";
 import { usePopper } from "react-popper";
 import styled from "styled-components";
-import { useOutsideClick } from "../../hooks";
+import { useOutsideClick } from "../../../../../../libs/common/ui/hooks";
 
 interface Props {
   referenceElement: HTMLElement;
