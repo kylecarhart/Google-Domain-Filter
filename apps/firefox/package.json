@@ -1,5 +1,5 @@
 {
-  "name": "gecko",
+  "name": "firefox",
   "version": "1.2.1",
   "description": "Filter and highlight domains in your google searches.",
   "main": "index.js",
