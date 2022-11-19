@@ -1,9 +1,9 @@
-import { DomainList, Options } from "@common/types";
+import { Domain, Options } from "@common/types";
 import { storageFactory } from "@utils/storage.util";
 
 // Storage keys and default values
-const filterList = storageFactory("filterList", [] as DomainList);
-const preferenceList = storageFactory("preferenceList", [] as DomainList);
+const filterList = storageFactory("filterList", [] as Domain[]);
+const preferenceList = storageFactory("preferenceList", [] as Domain[]);
 const options = storageFactory("options", {
   filterListEnabled: true,
   preferenceListEnabled: true,

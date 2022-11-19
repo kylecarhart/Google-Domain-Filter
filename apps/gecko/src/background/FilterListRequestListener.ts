@@ -1,10 +1,10 @@
 import { browser, WebRequest } from "webextension-polyfill-ts";
 import { tlds } from "./tlds";
-import { DomainList } from "@common/types";
+import { Domain } from "@common/types";
 import { toExcludeQuery } from "@utils/index";
 
 export default class FilterListRequestListener {
-  filterList: DomainList;
+  filterList: Domain[];
   private isRunning: boolean;
   private listener = (details: WebRequest.OnBeforeRequestDetailsType) => {
     // If there are no domains, don't bother redirecting
@@ -28,7 +28,7 @@ export default class FilterListRequestListener {
     };
   };
 
-  constructor(filterList: DomainList = []) {
+  constructor(filterList: Domain[] = []) {
     this.filterList = filterList;
     this.isRunning = false;
   }
