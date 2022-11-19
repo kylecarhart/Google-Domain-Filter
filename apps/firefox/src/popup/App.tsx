@@ -1,30 +1,14 @@
-import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { Navbar } from "./components/Navbar";
-import {
-  FilterListPage,
-  PreferenceListPage,
-} from "./components/DomainListPage";
-import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "./constants";
 
 function App() {
-  const [selected, setSelected] = useState(FILTER_LIST_NAV);
-
-  const currentPage = () => {
-    switch (selected) {
-      case FILTER_LIST_NAV:
-        return <FilterListPage />;
-      case PREFERENCE_LIST_NAV:
-        return <PreferenceListPage />;
-      default:
-        break;
-    }
-  };
-
   return (
     <AppWrapper>
-      <Navbar selected={selected} setSelected={setSelected} />
-      <Page>{currentPage()}</Page>
+      <Navbar />
+      <Page>
+        <Outlet />
+      </Page>
     </AppWrapper>
   );
 }

@@ -1,35 +1,39 @@
+import { CogIcon } from "@ui/icons";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import browser from "webextension-polyfill";
-import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "../../constants";
-import { CogIcon } from "@ui/icons";
 import NavItem from "./NavItem";
 
-interface Props {
-  selected: string;
-  setSelected: (key: string) => void;
-}
-
-const Navbar = ({ selected, setSelected }: Props) => {
+const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <Nav>
-      <StyledNavItem
-        tipText="Remove search results containing domains in this list."
-        selected={selected === FILTER_LIST_NAV}
-        onClick={() => {
-          setSelected(FILTER_LIST_NAV);
-        }}
-      >
-        Filter List
-      </StyledNavItem>
-      <StyledNavItem
-        tipText="Prioritize search results from domains in this list (order matters!)"
-        selected={selected === PREFERENCE_LIST_NAV}
-        onClick={() => {
-          setSelected(PREFERENCE_LIST_NAV);
-        }}
-      >
-        Preference List
-      </StyledNavItem>
+      <NavLink to="/" style={{ flex: 1 }}>
+        {({ isActive }) => (
+          <StyledNavItem
+            tipText="Remove search results containing domains in this list."
+            selected={isActive}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Filter List
+          </StyledNavItem>
+        )}
+      </NavLink>
+      <NavLink to="/preferenceList" style={{ flex: 1 }}>
+        {({ isActive }) => (
+          <StyledNavItem
+            tipText="Prioritize search results from domains in this list (order matters!)"
+            selected={isActive}
+            onClick={() => {
+              navigate("/preferenceList");
+            }}
+          >
+            Preference List
+          </StyledNavItem>
+        )}
+      </NavLink>
       <OptionNavItem
         onClick={() => {
           browser.runtime.openOptionsPage();
