@@ -10,6 +10,7 @@
     // Base starts here -----------------
     "baseUrl": "./",
     "paths": {
+      "@apps/*": ["apps/*"],
       "@ui/*": ["libs/common/ui/*"],
       "@utils/*": ["libs/common/utils/*"],
       "@common/*": ["libs/common/*"]
