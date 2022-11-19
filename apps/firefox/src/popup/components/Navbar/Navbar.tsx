@@ -1,59 +1,54 @@
 import { CogIcon } from "@ui/icons";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import browser from "webextension-polyfill";
 import NavItem from "./NavItem";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   return (
     <Nav>
-      <NavLink to="/" style={{ flex: 1 }}>
+      <StyledNavLink to="/">
         {({ isActive }) => (
-          <StyledNavItem
+          <NavItem
             tipText="Remove search results containing domains in this list."
             selected={isActive}
-            onClick={() => {
-              navigate("/");
-            }}
           >
             Filter List
-          </StyledNavItem>
+          </NavItem>
         )}
-      </NavLink>
-      <NavLink to="/preferenceList" style={{ flex: 1 }}>
+      </StyledNavLink>
+      <StyledNavLink to="/preferenceList">
         {({ isActive }) => (
-          <StyledNavItem
+          <NavItem
             tipText="Prioritize search results from domains in this list (order matters!)"
             selected={isActive}
-            onClick={() => {
-              navigate("/preferenceList");
-            }}
           >
             Preference List
-          </StyledNavItem>
+          </NavItem>
         )}
-      </NavLink>
-      <OptionNavItem
+      </StyledNavLink>
+      <OptionsNavItem
         onClick={() => {
           browser.runtime.openOptionsPage();
+          window.close(); // Close the popup
         }}
       >
         <CogIcon />
-      </OptionNavItem>
+      </OptionsNavItem>
     </Nav>
   );
 };
 
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+`;
+
 const Nav = styled.nav`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
 `;
 
-const StyledNavItem = styled(NavItem)`
-  flex: 1;
-`;
-
-const OptionNavItem = styled(NavItem)`
+const OptionsNavItem = styled(NavItem)`
   width: 40px;
 `;
 

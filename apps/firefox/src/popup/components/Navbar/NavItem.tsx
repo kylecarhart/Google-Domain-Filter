@@ -5,24 +5,24 @@ import NavTip from "./NavTip";
 interface Props {
   tipText?: string;
   selected?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   children: ReactNode;
 }
 
 function NavItem({ tipText, selected, children, onClick, ...props }: Props) {
   return (
-    <Button selected={selected} onClick={onClick} {...props}>
+    <StyledNavItem selected={selected} onClick={onClick} {...props}>
       {children}
       {tipText && <NavTip text={tipText} />}
-    </Button>
+    </StyledNavItem>
   );
 }
 
-interface IButton {
+interface StyledNavItemProps {
   selected: boolean;
 }
 
-const Button = styled.div<IButton>`
+const StyledNavItem = styled.div<StyledNavItemProps>`
   display: flex;
   align-items: center;
   justify-content: center;
