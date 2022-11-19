@@ -1,4 +1,4 @@
-import { browser } from "webextension-polyfill-ts";
+import browser from "webextension-polyfill";
 
 export async function isChrome() {
   return browser.runtime.getURL("").startsWith("chrome-extension://");

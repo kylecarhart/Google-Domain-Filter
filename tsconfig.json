@@ -6,6 +6,7 @@
     "lib": ["DOM"],
     "noImplicitAny": true,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     // Base starts here -----------------
     "baseUrl": "./",
     "paths": {

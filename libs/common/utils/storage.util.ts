@@ -1,5 +1,4 @@
-import { browser } from "webextension-polyfill-ts";
-import { Storage } from "webextension-polyfill-ts";
+import browser, { Storage } from "webextension-polyfill";
 
 export type StorageCallback = (newValue: any, oldValue: any) => void;
 export type StorageListenerOnChanged = (

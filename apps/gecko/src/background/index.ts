@@ -1,6 +1,6 @@
 import handleInstalled from "./handleInstalled";
 import FilterListRequestListener from "./FilterListRequestListener";
-import { browser } from "webextension-polyfill-ts";
+import browser from "webextension-polyfill";
 import { storage } from "@common/storage";
 
 (async function () {

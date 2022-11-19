@@ -1,4 +1,4 @@
-import { browser, WebRequest } from "webextension-polyfill-ts";
+import browser, { WebRequest } from "webextension-polyfill";
 import { tlds } from "./tlds";
 import { Domain } from "@common/types";
 import { toExcludeQuery } from "@utils/index";

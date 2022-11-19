@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { browser } from "webextension-polyfill-ts";
+import browser from "webextension-polyfill";
 import { FILTER_LIST_NAV, PREFERENCE_LIST_NAV } from "../../constants";
 import { CogIcon } from "@ui/icons";
 import NavItem from "./NavItem";
