@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import styled from "styled-components";
-import { HelpCircleIcon } from "../../icons";
+import { HelpCircleIcon } from "@ui/icons";
 
 interface Props {
   text: string;

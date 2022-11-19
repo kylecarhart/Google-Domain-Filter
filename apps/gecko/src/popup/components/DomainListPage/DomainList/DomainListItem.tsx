@@ -1,7 +1,7 @@
 import { forwardRef, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { DragHandleIcon } from "../../../icons";
+import { DragHandleIcon } from "@ui/icons";
 import DomainListItemDropdown from "./DomainListItemDropdown";
 import DomainListItemEditOptions from "./DomainListItemEditOptions";
 import DomainListItemInput from "./DomainListItemInput";

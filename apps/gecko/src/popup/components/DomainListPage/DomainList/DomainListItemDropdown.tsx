@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MoreIcon } from "../../../icons";
+import { MoreIcon } from "@ui/icons";
 import { IconButton } from "@ui/components/Button";
 import { Dropdown } from "../../Dropdown";
 

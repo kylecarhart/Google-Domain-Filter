@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CloseIcon, SaveIcon } from "../../../icons";
+import { CloseIcon, SaveIcon } from "@ui/icons";
 import { IconButton } from "@ui/components/Button";
 
 interface Props {
