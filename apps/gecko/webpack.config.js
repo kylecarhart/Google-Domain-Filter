@@ -96,7 +96,7 @@ module.exports = (env) => {
           },
           // Copy static files (imgs)
           {
-            from: "./src/static/png/logo*.png",
+            from: "../../libs/common/static/png/logo*.png",
             to: "./static/[name][ext]",
           },
           // Copy content styles
