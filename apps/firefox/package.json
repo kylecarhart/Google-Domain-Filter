@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "npm run clean && webpack --env mode=development --env watch",
     "build": "npm run clean && webpack --env mode=production && web-ext build -s build -a dist -o",
-    "start": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -u google.com --source-dir build",
+    "start": "web-ext run -t firefox-desktop -f firefoxdeveloperedition -u google.com --source-dir build --firefox-preview",
     "clean": "rimraf build"
   },
   "author": "Kyle Carhart",
