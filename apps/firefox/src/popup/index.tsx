@@ -29,9 +29,10 @@ const router = createMemoryRouter([
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  // react-beautiful-dnd issue: https://github.com/atlassian/react-beautiful-dnd/issues/2396#issuecomment-1217797806
+  // <React.StrictMode>
+  <RouterProvider router={router} />
+  // </React.StrictMode>
 );
 
 // Firefox fix for window resize causing drag and drop not to work?

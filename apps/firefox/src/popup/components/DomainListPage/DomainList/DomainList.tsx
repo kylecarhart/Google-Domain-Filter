@@ -44,7 +44,7 @@ function DomainList({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId={"list"}>
+      <Droppable droppableId="list">
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
             {testList.map(({ domain, ref }, idx) => (

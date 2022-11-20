@@ -1,4 +1,4 @@
-import { storage } from "libs/common/storage";
+import { storage } from "@common/storage";
 import { useStorage } from "@ui/hooks";
 import ListPage from "./ListPage";
 
