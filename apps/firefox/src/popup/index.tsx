@@ -1,12 +1,9 @@
-import "normalize.css";
-import React from "react";
+import { FilterListPage, PreferenceListPage } from "@ui/pages/DomainListPage";
 import { createRoot } from "react-dom/client";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import {
-  FilterListPage,
-  PreferenceListPage,
-} from "./components/DomainListPage";
+
+import "normalize.css";
 import "./index.css";
 
 const router = createMemoryRouter([

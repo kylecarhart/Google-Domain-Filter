@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MoreIcon } from "@ui/icons";
 import { IconButton } from "@ui/components/Button";
-import { Dropdown } from "../../Dropdown";
+import { Dropdown } from "@ui/components/Dropdown";
 
 export interface IDropdownOption {
   text: string;

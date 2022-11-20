@@ -1,5 +1,5 @@
 import { cloneElement, useState } from "react";
-import { IDropdownOption } from "../DomainListPage/DomainList/DomainListItemDropdown";
+import { IDropdownOption } from "../../pages/DomainListPage/DomainList/DomainListItemDropdown";
 import { DropdownMenu } from "./DropdownMenu";
 import { DropdownMenuItem } from "./DropdownMenuItem";
 
