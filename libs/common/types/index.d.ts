@@ -17,3 +17,12 @@ export interface Options {
 /**
  * Storage
  */
+
+/**
+ * UI
+ */
+
+export interface DropdownOption {
+  text: string;
+  onClick: () => void;
+}

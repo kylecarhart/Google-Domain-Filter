@@ -1,11 +1,11 @@
+import { DropdownOption } from "@common/types";
 import { cloneElement, useState } from "react";
-import { IDropdownOption } from "../../pages/DomainListPage/DomainList/DomainListItemDropdown";
 import { DropdownMenu } from "./DropdownMenu";
 import { DropdownMenuItem } from "./DropdownMenuItem";
 
 interface Props {
   trigger: Function;
-  items: IDropdownOption[];
+  items: DropdownOption[];
 }
 
 function Dropdown({ trigger, items }: Props) {

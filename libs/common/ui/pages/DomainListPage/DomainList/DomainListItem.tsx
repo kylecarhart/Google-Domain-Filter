@@ -97,10 +97,10 @@ const DomainListItem = forwardRef<Ref, Props>(
   }
 );
 
-interface IStyledListItem {
+interface StyledListItemProps {
   isDragging: boolean;
 }
-const StyledListItem = styled.li<IStyledListItem>`
+const StyledListItem = styled.li<StyledListItemProps>`
   display: flex;
   align-items: center;
   list-style: none;

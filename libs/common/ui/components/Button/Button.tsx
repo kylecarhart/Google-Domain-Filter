@@ -33,10 +33,10 @@ const defaultStyle = css`
   }
 `;
 
-interface IStyledButton {
+interface StyledButtonProps {
   styleType: string;
 }
-const StyledButton = styled.button<IStyledButton>`
+const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   border: none;
   padding: 6px 16px;

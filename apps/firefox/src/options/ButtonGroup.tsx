@@ -22,7 +22,7 @@ function ButtonGroup({
 }: Props) {
   return (
     <div {...props}>
-      <Button
+      <StyledButton
         disabled={disabled}
         selected={option === onValue}
         onClick={() => {
@@ -30,8 +30,8 @@ function ButtonGroup({
         }}
       >
         {onText}
-      </Button>
-      <Button
+      </StyledButton>
+      <StyledButton
         disabled={disabled}
         selected={option === offValue}
         onClick={() => {
@@ -39,17 +39,17 @@ function ButtonGroup({
         }}
       >
         {offText}
-      </Button>
+      </StyledButton>
     </div>
   );
 }
 
-interface IStyle {
+interface StyledButtonProps {
   disabled: boolean;
   selected: boolean;
 }
 
-const primaryStyle = css<IStyle>`
+const primaryStyle = css<StyledButtonProps>`
   color: #fff;
   background: #318bf5;
 
@@ -58,7 +58,7 @@ const primaryStyle = css<IStyle>`
   }
 `;
 
-const defaultStyle = css<IStyle>`
+const defaultStyle = css<StyledButtonProps>`
   color: #333;
   background: #fff;
 
@@ -67,7 +67,7 @@ const defaultStyle = css<IStyle>`
   }
 `;
 
-const Button = styled.button<IStyle>`
+const StyledButton = styled.button<StyledButtonProps>`
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   border: none;
   padding: 6px 16px;

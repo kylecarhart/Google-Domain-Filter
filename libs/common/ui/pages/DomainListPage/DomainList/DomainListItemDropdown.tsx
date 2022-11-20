@@ -3,11 +3,6 @@ import { MoreIcon } from "@ui/icons";
 import { IconButton } from "@ui/components/Button";
 import { Dropdown } from "@ui/components/Dropdown";
 
-export interface IDropdownOption {
-  text: string;
-  onClick: () => void;
-}
-
 interface Props {
   domain: string;
   startEdit: () => void;
@@ -21,14 +16,14 @@ export default function DomainListItemDropdown({
   showTrigger,
   deleteDomain,
 }: Props) {
-  const editOption: IDropdownOption = {
+  const editOption = {
     text: "Edit",
     onClick: () => {
       startEdit();
     },
   };
 
-  const deleteOption: IDropdownOption = {
+  const deleteOption = {
     text: "Delete",
     onClick: () => {
       deleteDomain(domain);
@@ -47,11 +42,11 @@ export default function DomainListItemDropdown({
   );
 }
 
-interface IStyledIconButton {
+interface StyledIconButtonProps {
   isVisible: boolean;
 }
 
-const StyledIconButton = styled(IconButton)<IStyledIconButton>`
+const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
   color: #ababab;
   font-size: 18px;
 
