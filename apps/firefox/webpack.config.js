@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
-const { tlds } = require("./src/tlds");
+const { tlds } = require("../../libs/common/constants/tlds.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = (env) => {

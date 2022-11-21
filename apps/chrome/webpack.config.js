@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
-const { tlds } = require("./src/tlds");
+const { tlds } = require("../../libs/common/constants/tlds.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = (env) => {
@@ -82,7 +82,8 @@ module.exports = (env) => {
               );
 
               // Allow webRequest to intercept on all google tlds
-              manifest.host_permissions.push(...matchPatterns);
+              // TODO: Uncomment if you need host_permissions
+              // manifest.host_permissions.push(...matchPatterns);
 
               // Allow content scripts to run on all google tlds
               manifest.content_scripts[0].matches.push(...matchPatterns);

@@ -1,5 +1,5 @@
 import browser, { WebRequest } from "webextension-polyfill";
-import { tlds } from "./tlds";
+import tldsJson from "@constants/tlds.json";
 import { Domain } from "@common/types";
 import { toExcludeQuery } from "@utils/index";
 
@@ -38,7 +38,7 @@ export default class FilterListRequestListener {
       browser.webRequest.onBeforeRequest.addListener(
         this.listener,
         {
-          urls: tlds.map((tld) => `*://*.google.${tld}/search?*`),
+          urls: tldsJson.tlds.map((tld) => `*://*.google.${tld}/search?*`),
           types: ["main_frame"],
         },
         ["blocking"]
