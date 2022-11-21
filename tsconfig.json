@@ -13,6 +13,7 @@
       "@apps/*": ["apps/*"],
       "@ui/*": ["libs/common/ui/*"],
       "@utils/*": ["libs/common/utils/*"],
+      "@constants/*": ["libs/common/constants/*"],
       "@common/*": ["libs/common/*"]
     }
   },

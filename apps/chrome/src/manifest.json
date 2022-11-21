@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Google Domain Filter",
+  "author": "Kyle Carhart",
+  "version": "1.2.0",
+  "description": "Filter domains from your Google searches.",
+  "homepage_url": "https://github.com/KMCGamer/google-domain-filter",
+  "permissions": ["storage", "activeTab", "webRequest"],
+  "host_permissions": [],
+  "action": {
+    "default_popup": "./popup/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [],
+      "js": ["./content/index.js"],
+      "css": ["./content/styles.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "./background/index.js"
+  },
+  "options_ui": {
+    "page": "./options/index.html",
+    "open_in_tab": true,
+    "browser_style": false
+  },
+  "icons": {
+    "16": "./static/logo16.png",
+    "48": "./static/logo48.png",
+    "128": "./static/logo128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gsb@carhart.dev",
+      "strict_min_version": "57.0"
+    }
+  }
+}
