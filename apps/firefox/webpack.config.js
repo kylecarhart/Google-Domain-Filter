@@ -11,7 +11,7 @@ module.exports = (env) => {
     // One entry point for each part of an extension
     entry: {
       background: "./src/background",
-      content: "./src/content",
+      content: "../../libs/common/extension/content",
       popup: "../../libs/common/extension/popup",
       options: "../../libs/common/extension/options",
     },
@@ -101,7 +101,7 @@ module.exports = (env) => {
           },
           // Copy content styles
           {
-            from: "./src/content/styles.css",
+            from: "../../libs/common/extension/content/styles.css",
             to: "./content",
           },
         ],
