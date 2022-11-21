@@ -12,8 +12,8 @@ module.exports = (env) => {
     entry: {
       background: "./src/background",
       content: "./src/content",
-      popup: "./src/popup",
-      options: "./src/options",
+      popup: "../../libs/common/extension/popup",
+      options: "../../libs/common/extension/options",
     },
     // Output each in a folder named after their entry
     output: {
@@ -57,13 +57,13 @@ module.exports = (env) => {
     plugins: [
       // Create index.html for popup
       new HtmlWebPackPlugin({
-        template: "./src/popup/index.html",
+        template: "../../libs/common/extension/popup/index.html",
         filename: "./popup/index.html",
         chunks: ["popup"],
       }),
       // Create index.html for options
       new HtmlWebPackPlugin({
-        template: "./src/options/index.html",
+        template: "../../libs/common/extension/options/index.html",
         filename: "./options/index.html",
         chunks: ["options"],
       }),

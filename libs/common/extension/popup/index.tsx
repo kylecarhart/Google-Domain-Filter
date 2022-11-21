@@ -1,7 +1,7 @@
-import { FilterListPage, PreferenceListPage } from "@ui/pages/DomainListPage";
 import { createRoot } from "react-dom/client";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
+import { FilterListPage, PreferenceListPage } from "./pages/DomainListPage";
 
 import "normalize.css";
 import "./index.css";
