@@ -1,11 +1,12 @@
-import QueryObserver from "./QueryObserver";
-import { filterResults, preferResults } from "./mutations";
-import ResultObserver from "./ResultObserver";
 import { storage } from "@common/storage";
+import { QUERY_PARAM } from "@constants/index";
+import { filterResults, preferResults } from "./mutations";
+import QueryObserver from "./QueryObserver";
+import ResultObserver from "./ResultObserver";
 
 (async function () {
   const url = new URL(window.location.href);
-  const asQParam = url.searchParams.get("as_q");
+  const asQParam = url.searchParams.get(QUERY_PARAM);
   let observer: QueryObserver | ResultObserver = null;
 
   // Run the query observer when using the Experimental filter mode

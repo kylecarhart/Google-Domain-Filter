@@ -2,6 +2,7 @@ import browser, { WebRequest } from "webextension-polyfill";
 import tldsJson from "@constants/tlds.json";
 import { Domain } from "@common/types";
 import { toExcludeQuery } from "@utils/index";
+import { QUERY_PARAM } from "@constants/index";
 
 export default class FilterListRequestListener {
   filterList: Domain[];
@@ -17,8 +18,8 @@ export default class FilterListRequestListener {
     const filterString = toExcludeQuery(this.filterList);
 
     // Add the sites to the query if it doesn't contain them already
-    if (!params.get("as_q")) {
-      params.set("as_q", filterString);
+    if (!params.get(QUERY_PARAM)) {
+      params.set(QUERY_PARAM, filterString);
     } else {
       return;
     }
