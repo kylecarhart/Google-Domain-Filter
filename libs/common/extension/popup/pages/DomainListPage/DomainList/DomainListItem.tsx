@@ -1,7 +1,14 @@
+import {
+  remove,
+  replace,
+} from "@common/extension/popup/features/filterList/filterListSlice";
+import { RootState } from "@common/extension/popup/store";
+import { DragHandleIcon } from "@ui/icons";
+import { isValidDomain } from "@utils/domain.util";
 import { forwardRef, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { DragHandleIcon } from "@ui/icons";
 import DomainListItemDropdown from "./DomainListItemDropdown";
 import DomainListItemEditOptions from "./DomainListItemEditOptions";
 import DomainListItemInput from "./DomainListItemInput";
@@ -10,13 +17,16 @@ interface Props {
   domain: string;
   index: number;
   isDraggingOver: boolean;
-  editDomain: (fromDomain: string, toDomain: string) => boolean;
-  deleteDomain: (domain: string) => void;
 }
 
 type Ref = HTMLDivElement;
 const DomainListItem = forwardRef<Ref, Props>(
-  ({ domain, index, isDraggingOver, editDomain, deleteDomain }, ref) => {
+  ({ domain, index, isDraggingOver }, ref) => {
+    const filterList = useSelector(
+      (state: RootState) => state.filterList.domains
+    );
+    const dispatch = useDispatch();
+
     const [inputText, setInputText] = useState(domain);
     const [isHovering, setIsHovering] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -34,12 +44,25 @@ const DomainListItem = forwardRef<Ref, Props>(
       inputRef.current.setSelectionRange(-1, -1); // set cursor to end
     };
 
+    const handleDeleteDomain = () => {
+      dispatch(remove(domain));
+    };
+
     const handleEditDomain = () => {
       if (domain === inputText) {
         cancelEdit();
         return false;
       }
-      return editDomain(domain, inputText);
+
+      if (domain === inputText) {
+        return true;
+      } else if (!isValidDomain(filterList, inputText)) {
+        return false;
+      }
+
+      dispatch(replace({ from: domain, to: inputText }));
+
+      return true;
     };
 
     return (
@@ -82,7 +105,7 @@ const DomainListItem = forwardRef<Ref, Props>(
                   domain={domain}
                   showTrigger={isHovering && !isDraggingOver}
                   startEdit={startEdit}
-                  deleteDomain={deleteDomain}
+                  deleteDomain={() => handleDeleteDomain()}
                 />
               )}
 

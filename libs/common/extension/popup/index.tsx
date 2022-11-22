@@ -1,10 +1,12 @@
+import "normalize.css";
+import "./index.css";
+
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import { FilterListPage, PreferenceListPage } from "./pages/DomainListPage";
-
-import "normalize.css";
-import "./index.css";
+import { store } from "./store";
 
 const router = createMemoryRouter([
   {
@@ -26,10 +28,9 @@ const router = createMemoryRouter([
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
-  // react-beautiful-dnd issue: https://github.com/atlassian/react-beautiful-dnd/issues/2396#issuecomment-1217797806
-  // <React.StrictMode>
-  <RouterProvider router={router} />
-  // </React.StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 );
 
 // Firefox fix for window resize causing drag and drop not to work?

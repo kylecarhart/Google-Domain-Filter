@@ -7,5 +7,5 @@ export default function PreferenceListPage() {
     storage.preferenceList.key,
     storage.preferenceList.defaultValue
   );
-  return <ListPage domains={domains} setDomains={setDomains} />;
+  return <ListPage />;
 }

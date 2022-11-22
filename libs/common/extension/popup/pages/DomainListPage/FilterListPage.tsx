@@ -7,5 +7,5 @@ export default function FilterListPage() {
     storage.filterList.key,
     storage.filterList.defaultValue
   );
-  return <ListPage domains={domains} setDomains={setDomains} />;
+  return <ListPage />;
 }
