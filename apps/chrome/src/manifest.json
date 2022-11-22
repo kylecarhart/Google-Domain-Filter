@@ -5,12 +5,7 @@
   "version": "1.2.0",
   "description": "Filter domains from your Google searches.",
   "homepage_url": "https://github.com/KMCGamer/google-domain-filter",
-  "permissions": [
-    "storage",
-    "activeTab",
-    "webRequest",
-    "declarativeNetRequest"
-  ],
+  "permissions": ["storage", "activeTab", "declarativeNetRequest"],
   "host_permissions": [],
   "action": {
     "default_popup": "./popup/index.html"

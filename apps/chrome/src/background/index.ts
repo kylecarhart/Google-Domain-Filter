@@ -11,18 +11,15 @@ import {
     updateDynamicRules(filterList);
   });
 
-  /*
-   * TODO: Dont think this is necessary anymore. On very first load, experimental is disabled.
-   * On subsequent loads, if experimental is enabled, the rules are already in place.
-   */
-  // const options = await storage.options.get();
-  // if (options.filterListEnabled && options.filterMode === "experimental") {
-  //   enableDynamicRules();
-  // } else {
-  //   disableDynamicRules();
-  // }
+  // Turn on/off the declarativeNetRequest initially for experimental mode.
+  const options = await storage.options.get();
+  if (options.filterListEnabled && options.filterMode === "experimental") {
+    enableDynamicRules();
+  } else {
+    disableDynamicRules();
+  }
 
-  // Listen for changes to the filter mode
+  // Listen for changes to the filter mode option and turn on/off declarativeNetRequest rules
   storage.options.addListener((options) => {
     if (options.filterListEnabled && options.filterMode === "experimental") {
       enableDynamicRules();
