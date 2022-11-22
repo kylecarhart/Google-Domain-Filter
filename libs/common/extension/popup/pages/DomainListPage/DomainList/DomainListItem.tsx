@@ -1,14 +1,16 @@
 import {
   remove,
   replace,
-} from "@common/extension/popup/features/filterList/filterListSlice";
+} from "@common/extension/popup/features/filterList/domainListSlice";
 import { RootState } from "@common/extension/popup/store";
 import { DragHandleIcon } from "@ui/icons";
 import { isValidDomain } from "@utils/domain.util";
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useContext, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { DomainListContext } from "../ListPage";
 import DomainListItemDropdown from "./DomainListItemDropdown";
 import DomainListItemEditOptions from "./DomainListItemEditOptions";
 import DomainListItemInput from "./DomainListItemInput";
@@ -22,16 +24,16 @@ interface Props {
 type Ref = HTMLDivElement;
 const DomainListItem = forwardRef<Ref, Props>(
   ({ domain, index, isDraggingOver }, ref) => {
-    const filterList = useSelector(
-      (state: RootState) => state.filterList.domains
-    );
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const [inputText, setInputText] = useState(domain);
     const [isHovering, setIsHovering] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const { list, listType } = useContext(DomainListContext);
 
     const cancelEdit = () => {
       setInputText(domain);
@@ -45,7 +47,12 @@ const DomainListItem = forwardRef<Ref, Props>(
     };
 
     const handleDeleteDomain = () => {
-      dispatch(remove(domain));
+      dispatch(
+        remove({
+          domain,
+          type: listType,
+        })
+      );
     };
 
     const handleEditDomain = () => {
@@ -56,11 +63,17 @@ const DomainListItem = forwardRef<Ref, Props>(
 
       if (domain === inputText) {
         return true;
-      } else if (!isValidDomain(filterList, inputText)) {
+      } else if (!isValidDomain(list, inputText)) {
         return false;
       }
 
-      dispatch(replace({ from: domain, to: inputText }));
+      dispatch(
+        replace({
+          from: domain,
+          to: inputText,
+          type: listType,
+        })
+      );
 
       return true;
     };

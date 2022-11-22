@@ -1,20 +1,19 @@
-import { reorder } from "@common/extension/popup/features/filterList/filterListSlice";
-import { RootState } from "@common/extension/popup/store";
-import { createRef } from "react";
+import { reorder } from "@common/extension/popup/features/filterList/domainListSlice";
+import { createRef, useContext } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { DomainListContext } from "../ListPage";
 import DomainListItem from "./DomainListItem";
 
 interface Props {}
 
 function DomainList({}: Props) {
-  const filterList = useSelector(
-    (state: RootState) => state.filterList.domains
-  );
   const dispatch = useDispatch();
 
-  const refMappedList = filterList.map((domain) => ({
+  const { list, listType } = useContext(DomainListContext);
+
+  const refMappedList = list.map((domain) => ({
     domain,
     ref: createRef<HTMLDivElement>(),
   }));
@@ -33,6 +32,7 @@ function DomainList({}: Props) {
         domain: draggableId,
         from: source.index,
         to: destination.index,
+        type: listType,
       })
     );
   }
