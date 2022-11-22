@@ -1,0 +1,16 @@
+{
+  "name": "chrome",
+  "version": "1.3.0",
+  "description": "Filter and highlight domains in your google searches.",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npm run clean && webpack --env mode=development --env watch",
+    "build": "npm run clean && webpack --env mode=production && web-ext build -s build -a dist -o",
+    "start": "web-ext run -t chromium -u google.com --source-dir build",
+    "clean": "rimraf build"
+  },
+  "author": "Kyle Carhart",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
-    // "outDir": "./build",
     "jsx": "react-jsx",
-    // "allowJs": true,
     "target": "ES6",
     "resolveJsonModule": true,
     "lib": ["DOM"],
     "noImplicitAny": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    // Base starts here -----------------
+    "baseUrl": "./",
+    "paths": {
+      "@apps/*": ["apps/*"],
+      "@ui/*": ["libs/common/ui/*"],
+      "@utils/*": ["libs/common/utils/*"],
+      "@constants/*": ["libs/common/constants/*"],
+      "@common/*": ["libs/common/*"]
+    }
   },
-  "include": ["./src/**/*"]
+  "include": ["./apps/**/*", "./libs/**/*"]
 }
