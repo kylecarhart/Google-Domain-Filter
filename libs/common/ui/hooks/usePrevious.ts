@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 
 /**
  * Store reference to a previous value.
- * @param {*} value - Value to track.
  */
 export default function usePrevious(value: any) {
   const ref = useRef(value);

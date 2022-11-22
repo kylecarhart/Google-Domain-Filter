@@ -8,7 +8,6 @@ export default class QueryObserver implements MutationObserver {
 
   /**
    * Create a mutation observer.
-   * @param {string} filterString - The string to remove from the DOM.
    */
   constructor(filterString: string) {
     this.filterString = filterString;

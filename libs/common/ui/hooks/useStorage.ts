@@ -4,8 +4,6 @@ import { getStorage, setStorage } from "@utils/storage.util";
 /**
  * React hook that automatically retrieves and sets values in
  * storage of specified key.
- * @param {string} key - Key of the storage value to watch.
- * @param {*} defaultValue - Default value (if none found).
  */
 export default function useStorage<T>(key: string, defaultValue: T) {
   const [storedValue, setStoredValue] = useState(defaultValue);

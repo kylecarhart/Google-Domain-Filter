@@ -11,7 +11,6 @@ interface SearchResult {
 
 /**
  * Hide search results matching domain input.
- * @param {[string] | string} domainInput - Domain input. Can be an array or single string.
  */
 function filterResults(domainInput: string | string[]) {
   let domains = Array.isArray(domainInput) ? domainInput : [domainInput];
@@ -32,7 +31,6 @@ function filterResults(domainInput: string | string[]) {
 
 /**
  * Highlight and reorder search results matching domain input.
- * @param {[string] | string} domainInput - Domain input. Can be an array or single string.
  */
 function preferResults(domainInput: string | string[]) {
   let domains = Array.isArray(domainInput) ? domainInput : [domainInput];
@@ -56,7 +54,6 @@ function preferResults(domainInput: string | string[]) {
 
 /**
  * Get search result objects from the DOM.
- * @returns array of search result objects
  */
 function getSearchResults(): SearchResult[] {
   return Array.from(document.getElementById(MAIN_RESULT_WRAPPER_ID).children)
@@ -80,9 +77,6 @@ function getSearchResults(): SearchResult[] {
  * order. This allows for the callback to simply bring the currently processed
  * element to the top of the stack so the last element to be processed would actually
  * be first in the search results.
- *
- * @param searchResultObjects search result objects
- * @param domains domain strings to sort against
  */
 function sortSearchResultsForPreferenceHandling(
   searchResultObjects: SearchResult[],
@@ -113,7 +107,6 @@ function sortSearchResultsForPreferenceHandling(
 
 /**
  * Remove a string from the browser title
- * @param {string} string
  */
 function removeFromTitle(string: string) {
   const title = document.querySelector("title");
@@ -122,7 +115,6 @@ function removeFromTitle(string: string) {
 
 /**
  * Remove a string from the google search input
- * @param {string} string
  */
 function removeFromInput(string: string) {
   const input = document.querySelector<HTMLInputElement>('input[name="q"]');
@@ -133,7 +125,6 @@ function removeFromInput(string: string) {
 
 /**
  * Generate a regular expression for domain comparison.
- * @param {string} domain - Domain to generate RegExp from.
  */
 function getDomainRegExp(domain: string) {
   const escapedString = escapeRegExp(domain);
@@ -144,9 +135,6 @@ function getDomainRegExp(domain: string) {
  * Find the parent search result element of an anchor tag.
  * The div "#rso" contains all search result groups. Return the outermost element
  * containing the anchor that is a direct child of #rso.
- * @param anchorElement
- * @returns the outermost element containing the anchor that is a direct child
- *          of #rso.
  */
 function getParentResultElement(anchorElement: HTMLAnchorElement) {
   if (anchorElement.parentElement.className !== "yuRUbf") {
@@ -159,7 +147,6 @@ function getParentResultElement(anchorElement: HTMLAnchorElement) {
 
 /**
  * Set the element to hidden using "data-filter" attribute
- * @param elem
  */
 function setResultElementAsFiltered(elem: Element) {
   elem.setAttribute("data-filter", "");
@@ -167,7 +154,6 @@ function setResultElementAsFiltered(elem: Element) {
 
 /**
  * Set the element to unhidden using "data-filter" attribute
- * @param elem
  */
 function setResultElementAsUnfiltered(elem: Element) {
   elem.removeAttribute("data-filter");
@@ -175,7 +161,6 @@ function setResultElementAsUnfiltered(elem: Element) {
 
 /**
  * Set the element to preferred using "data-preference" attribute
- * @param elem
  */
 function setResultElementAsPreferred(elem: Element) {
   elem.setAttribute("data-preference", "");
@@ -183,7 +168,6 @@ function setResultElementAsPreferred(elem: Element) {
 
 /**
  * Set the element to unpreferred using "data-preference" att
- * @param elem
  */
 function setResultElementAsUnpreferred(elem: Element) {
   elem.removeAttribute("data-preference");

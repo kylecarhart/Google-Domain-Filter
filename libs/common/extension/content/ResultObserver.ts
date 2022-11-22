@@ -17,7 +17,6 @@ export default class ResultObserver implements MutationObserver {
 
   /**
    * Create a mutation observer.
-   * @param {string} filterString - The string to remove from the DOM.
    */
   constructor(filterList: string[]) {
     this.filterList = filterList;

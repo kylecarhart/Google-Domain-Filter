@@ -2,9 +2,6 @@ import { useEffect } from "react";
 
 /**
  * Listens for a click outside the ref element and fires the callback.
- * @param refElement Reference element in the dom.
- * @param callback Function to be called when click is outside dom element.
- * @param disabled Condition for when to call back.
  */
 export default function useOutsideClick<T extends HTMLElement = HTMLElement>(
   refElement: T,
