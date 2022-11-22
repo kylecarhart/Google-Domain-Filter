@@ -83,7 +83,7 @@ module.exports = (env) => {
 
               // Allow webRequest to intercept on all google tlds
               // TODO: Uncomment if you need host_permissions
-              // manifest.host_permissions.push(...matchPatterns);
+              manifest.host_permissions.push(...matchPatterns);
 
               // Allow content scripts to run on all google tlds
               manifest.content_scripts[0].matches.push(...matchPatterns);

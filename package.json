@@ -32,6 +32,7 @@
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.14.5",
     "@nrwl/nx-cloud": "latest",
+    "@types/chrome": "^0.0.202",
     "@types/react": "^18.0.25",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^18.0.9",
