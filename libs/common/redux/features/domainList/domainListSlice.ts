@@ -58,10 +58,17 @@ export const domainListSlice = createSlice({
       state[type].splice(from, 1);
       state[type].splice(to, 0, domain);
     },
+    set: (
+      state,
+      action: PayloadAction<{ domains: Domain[]; type: DomainListType }>
+    ) => {
+      const { domains, type } = action.payload;
+      state[type] = domains;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { push, remove, replace, reorder } = domainListSlice.actions;
+export const { push, remove, replace, reorder, set } = domainListSlice.actions;
 
 export const domainListReducer = domainListSlice.reducer;
