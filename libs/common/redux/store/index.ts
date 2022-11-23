@@ -17,7 +17,7 @@ import browser from "webextension-polyfill";
 import { domainListReducer } from "../features/domainList/domainListSlice";
 import { optionsReducer } from "../features/options/optionsSlice";
 
-export const syncStorageConfig = {
+const syncStorageConfig = {
   key: REDUX_PERSIST_KEY,
   storage: syncStorage,
 };
@@ -43,7 +43,7 @@ export const store = configureStore({
 
 export const persistor = persistStore(store, null, () => {
   try {
-    syncPersistToStorage();
+    initStorageSyncListener();
   } catch (e) {
     console.error("Unable to sync redux persist to storage.");
   }
@@ -54,10 +54,10 @@ export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
-function syncPersistToStorage() {
+function initStorageSyncListener() {
   browser.storage.sync.onChanged.addListener(() => {
-    getStoredState(syncStorageConfig).then((storedState) => {
-      // TODO: This could probably use some tweaking in the future. Not efficient.
+    getStateFromStorage().then((storedState) => {
+      // TODO: This could probably use some tweaking in the future. Not very efficient.
       const storedStateString = JSON.stringify(storedState);
       const currentStateString = JSON.stringify(store.getState());
       if (storedStateString !== currentStateString) {
@@ -69,4 +69,8 @@ function syncPersistToStorage() {
       }
     });
   });
+}
+
+export function getStateFromStorage(): Promise<RootState> {
+  return getStoredState.bind(null, syncStorageConfig);
 }

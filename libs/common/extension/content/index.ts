@@ -1,7 +1,6 @@
-import { RootState, store, syncStorageConfig } from "@common/redux/store";
+import { getStateFromStorage, store } from "@common/redux/store";
 import { QUERY_PARAM } from "@constants/index";
 import { isEqual } from "lodash";
-import getStoredState from "redux-persist/es/getStoredState";
 import { filterResults, preferResults } from "./mutations";
 import QueryObserver from "./QueryObserver";
 import ResultObserver from "./ResultObserver";
@@ -18,7 +17,7 @@ import ResultObserver from "./ResultObserver";
   }
 
   // Get the current state from storage
-  let currentState = (await getStoredState(syncStorageConfig)) as RootState;
+  let currentState = await getStateFromStorage();
   let { filterList, preferenceList } = currentState.domainLists;
   let { options } = currentState;
 
