@@ -1,22 +1,38 @@
-import { storage } from "@common/storage";
+import { getStateFromStorage, store } from "@common/redux/store";
+import { isEqual } from "lodash";
 import FilterListRequestListener from "./FilterListRequestListener";
 
 (async function () {
-  const filterList = await storage.filterList.get();
+  let currentState = await getStateFromStorage();
+  const { options } = currentState;
+  const { filterList } = currentState.domainLists;
   const listener = new FilterListRequestListener(filterList);
 
-  storage.filterList.addListener((newFilterList) => {
-    listener.filterList = newFilterList;
-  });
-
   // Get filter mode method
-  const options = await storage.options.get();
   if (options.filterListEnabled && options.filterMode === "experimental") {
     listener.start();
   }
 
-  storage.options.addListener((options) => {
-    if (options.filterListEnabled && options.filterMode === "experimental") {
+  store.subscribe(() => {
+    let previousState = currentState;
+    currentState = store.getState();
+
+    // Update filter list
+    if (
+      !isEqual(
+        currentState.domainLists.filterList,
+        previousState?.domainLists.filterList
+      )
+    ) {
+      listener.filterList = currentState.domainLists.filterList;
+    }
+
+    // Listen to options to start and stop the filter
+    if (
+      currentState.options.filterListEnabled &&
+      currentState.options.filterMode === "experimental"
+    ) {
+      console.log("something");
       listener.start(); // listener checks if it is already running, dont worry
     } else {
       listener.stop();

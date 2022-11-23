@@ -1,7 +1,10 @@
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
-import { FilterListPage, PreferenceListPage } from "./pages/DomainListPage";
+import ListPage from "./pages/DomainListPage/ListPage";
+import { persistor, store } from "../../redux/store";
 
 import "normalize.css";
 import "./index.css";
@@ -12,12 +15,12 @@ const router = createMemoryRouter([
     element: <App />,
     children: [
       {
-        path: "/",
-        element: <FilterListPage />,
+        index: true,
+        element: <ListPage listType="filterList" />,
       },
       {
         path: "preferenceList",
-        element: <PreferenceListPage />,
+        element: <ListPage listType="preferenceList" />,
       },
     ],
   },
@@ -25,11 +28,13 @@ const router = createMemoryRouter([
 
 const container = document.getElementById("root");
 const root = createRoot(container);
+
 root.render(
-  // react-beautiful-dnd issue: https://github.com/atlassian/react-beautiful-dnd/issues/2396#issuecomment-1217797806
-  // <React.StrictMode>
-  <RouterProvider router={router} />
-  // </React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
+  </Provider>
 );
 
 // Firefox fix for window resize causing drag and drop not to work?

@@ -1,77 +1,30 @@
-import { replaceInArray } from "@utils/index";
-import { DraggableLocation } from "react-beautiful-dnd";
+import { Domain, DomainListType } from "@common/types";
+import { createContext } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import validator from "validator";
+import { RootState } from "../../../../redux/store";
 import { DomainInputBar } from "./DomainInputBar";
 import { DomainList } from "./DomainList";
 
+export const DomainListContext = createContext<{
+  listType: DomainListType;
+  list: Domain[];
+}>(null);
+
 interface Props {
-  domains: string[];
-  setDomains: (value: string[] | ((val: string[]) => string[])) => void;
+  listType: DomainListType;
 }
 
-function ListPage({ domains, setDomains }: Props) {
-  // Make sure the domain is valid and isnt already in the list
-  function isValidDomain(domain: string) {
-    return validator.isFQDN(domain) && !domains.includes(domain);
-  }
-
-  // Add domain to the top of the list if it is valid
-  function addDomain(domain: string) {
-    if (!isValidDomain(domain)) {
-      return false;
-    }
-
-    setDomains((oldDomains) => {
-      return [domain, ...oldDomains];
-    });
-
-    return true;
-  }
-
-  function deleteDomain(domain: string) {
-    setDomains((oldDomains) => {
-      return oldDomains.filter((_domain) => _domain !== domain);
-    });
-  }
-
-  function editDomain(fromDomain: string, toDomain: string) {
-    if (fromDomain === toDomain) {
-      return true;
-    } else if (!isValidDomain(toDomain)) {
-      return false;
-    }
-
-    setDomains((domainList) => {
-      const editedList = replaceInArray(domainList, fromDomain, toDomain);
-      return editedList;
-    });
-
-    return true;
-  }
-
-  const reorderDomains = (
-    domain: string,
-    source: DraggableLocation,
-    destination: DraggableLocation
-  ) => {
-    setDomains((oldList: string[]) => {
-      const tempList = Array.from(oldList);
-      tempList.splice(source.index, 1);
-      tempList.splice(destination.index, 0, domain);
-      return tempList;
-    });
-  };
+function ListPage({ listType }: Props) {
+  const domainLists = useSelector((state: RootState) => state.domainLists);
+  const list = domainLists[listType];
 
   return (
     <Page>
-      <DomainInputBar domains={domains} addDomain={addDomain} />
-      <DomainList
-        domains={domains}
-        deleteDomain={deleteDomain}
-        editDomain={editDomain}
-        reorderDomains={reorderDomains}
-      />
+      <DomainListContext.Provider value={{ listType, list }}>
+        <DomainInputBar />
+        <DomainList />
+      </DomainListContext.Provider>
     </Page>
   );
 }

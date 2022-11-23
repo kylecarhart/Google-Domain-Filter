@@ -1,31 +1,19 @@
-import { createRef } from "react";
-import {
-  DragDropContext,
-  DraggableLocation,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { reorder } from "@common/redux/features/domainList/domainListSlice";
+import { createRef, useContext } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { DomainListContext } from "../ListPage";
 import DomainListItem from "./DomainListItem";
 
-interface Props {
-  domains: string[];
-  deleteDomain: (domain: string) => void;
-  editDomain: (fromDomain: string, toDomain: string) => boolean;
-  reorderDomains: (
-    domain: string,
-    source: DraggableLocation,
-    destination: DraggableLocation
-  ) => void;
-}
+interface Props {}
 
-function DomainList({
-  domains,
-  deleteDomain,
-  editDomain,
-  reorderDomains,
-}: Props) {
-  const testList = domains.map((domain) => ({
+function DomainList({}: Props) {
+  const dispatch = useDispatch();
+
+  const { list, listType } = useContext(DomainListContext);
+
+  const refMappedList = list.map((domain) => ({
     domain,
     ref: createRef<HTMLDivElement>(),
   }));
@@ -39,7 +27,14 @@ function DomainList({
       return;
     }
 
-    reorderDomains(draggableId, source, destination);
+    dispatch(
+      reorder({
+        domain: draggableId,
+        from: source.index,
+        to: destination.index,
+        type: listType,
+      })
+    );
   }
 
   return (
@@ -47,15 +42,13 @@ function DomainList({
       <Droppable droppableId="list">
         {(provided, snapshot) => (
           <StyledList ref={provided.innerRef} {...provided.droppableProps}>
-            {testList.map(({ domain, ref }, idx) => (
+            {refMappedList.map(({ domain, ref }, idx) => (
               <DomainListItem
                 ref={ref}
                 key={domain}
                 index={idx}
                 domain={domain}
                 isDraggingOver={snapshot.isDraggingOver}
-                deleteDomain={deleteDomain}
-                editDomain={editDomain}
               />
             ))}
             {provided.placeholder}

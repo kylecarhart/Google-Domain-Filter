@@ -1,16 +1,15 @@
+import { setOptions } from "@common/redux/features/options/optionsSlice";
+import { RootState } from "@common/redux/store";
+import { FilterMode } from "@common/types";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import ButtonGroup from "./ButtonGroup";
-import { FilterMode } from "@common/types";
-import { useStorage } from "@ui/hooks";
-import { storage } from "@common/storage";
 
 declare var __VERSION__: string;
 
 function App() {
-  const [options, setOptions] = useStorage(
-    storage.options.key,
-    storage.options.defaultValue
-  );
+  const options = useSelector((state: RootState) => state.options);
+  const dispatch = useDispatch();
 
   const version = __VERSION__;
 
@@ -28,10 +27,7 @@ function App() {
           <ButtonGroup
             option={options.filterListEnabled}
             onClick={(val: boolean) => {
-              setOptions({
-                ...options,
-                filterListEnabled: val,
-              });
+              dispatch(setOptions({ filterListEnabled: val }));
             }}
           />
         </SettingInput>
@@ -46,10 +42,11 @@ function App() {
           <ButtonGroup
             option={options.preferenceListEnabled}
             onClick={(val: boolean) => {
-              setOptions({
-                ...options,
-                preferenceListEnabled: val,
-              });
+              dispatch(
+                setOptions({
+                  preferenceListEnabled: val,
+                })
+              );
             }}
           />
         </SettingInput>
@@ -88,10 +85,11 @@ function App() {
             offText="Experimental"
             offValue={"experimental" as FilterMode}
             onClick={(val: FilterMode) => {
-              setOptions({
-                ...options,
-                filterMode: val,
-              });
+              dispatch(
+                setOptions({
+                  filterMode: val,
+                })
+              );
             }}
           />
         </SettingInput>

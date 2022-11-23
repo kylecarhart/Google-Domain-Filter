@@ -26,7 +26,7 @@ export function sortLexIgnoreCase(
 /**
  * Searches an array of strings and replaces all occurances of from with to.
  */
-export function replaceInArray(arr: any[], from: any, to: any) {
+export function replaceInArray<T>(arr: T[], from: T, to: T) {
   return arr.map((obj) => {
     if (obj === from) {
       return to;

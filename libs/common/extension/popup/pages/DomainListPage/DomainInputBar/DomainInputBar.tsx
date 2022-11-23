@@ -1,20 +1,32 @@
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { push as pushFilter } from "@common/redux/features/domainList/domainListSlice";
 import { Button } from "@ui/components/Button";
+import { isValidDomain } from "@utils/domain.util";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { DomainListContext } from "../ListPage";
 
-interface Props {
-  domains: string[];
-  addDomain: (domain: string) => boolean;
-}
+interface Props {}
 
-function DomainInputBar({ domains, addDomain, ...props }: Props) {
-  const [inputText, setInputText] = useState("");
+function DomainInputBar({ ...props }: Props) {
+  const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [inputText, setInputText] = useState("");
+  const { list, listType } = useContext(DomainListContext);
 
   const handleAddDomain = () => {
-    if (addDomain(inputText)) {
-      setInputText("");
+    if (!isValidDomain(list, inputText)) {
+      return;
     }
+
+    dispatch(
+      pushFilter({
+        domain: inputText,
+        type: listType,
+      })
+    );
+
+    setInputText("");
   };
 
   useEffect(() => {
