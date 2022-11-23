@@ -2,7 +2,7 @@ import { Domain, DomainListType } from "@common/types";
 import { createContext } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "../../store";
+import { RootState } from "../../../../redux/store";
 import { DomainInputBar } from "./DomainInputBar";
 import { DomainList } from "./DomainList";
 

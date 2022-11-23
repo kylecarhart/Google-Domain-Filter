@@ -1,4 +1,4 @@
-import { Domain, Options } from "@common/types";
+import { Domain, AppOptions } from "@common/types";
 import { storageFactory } from "@utils/storage.util";
 
 // Storage keys and default values
@@ -8,7 +8,7 @@ const options = storageFactory("options", {
   filterListEnabled: true,
   preferenceListEnabled: true,
   filterMode: "default",
-} as Options);
+} as AppOptions);
 
 // Storage API
 const storage = {

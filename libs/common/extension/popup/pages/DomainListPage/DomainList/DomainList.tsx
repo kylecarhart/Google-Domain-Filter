@@ -1,4 +1,4 @@
-import { reorder } from "@common/extension/popup/features/filterList/domainListSlice";
+import { reorder } from "@common/redux/features/domainList/domainListSlice";
 import { createRef, useContext } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";

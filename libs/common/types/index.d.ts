@@ -5,7 +5,7 @@ export type Domain = string;
 export type DomainListType = "filterList" | "preferenceList";
 
 export type FilterMode = "default" | "experimental";
-export interface Options {
+export interface AppOptions {
   filterListEnabled: boolean;
   preferenceListEnabled: boolean;
   filterMode: FilterMode;

@@ -1,8 +1,8 @@
 import {
   remove,
   replace,
-} from "@common/extension/popup/features/filterList/domainListSlice";
-import { RootState } from "@common/extension/popup/store";
+} from "@common/redux/features/domainList/domainListSlice";
+import { RootState } from "@common/redux/store";
 import { DragHandleIcon } from "@ui/icons";
 import { isValidDomain } from "@utils/domain.util";
 import { forwardRef, useContext, useRef, useState } from "react";

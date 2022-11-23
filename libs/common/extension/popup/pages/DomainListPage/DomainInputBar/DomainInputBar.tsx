@@ -1,4 +1,4 @@
-import { push as pushFilter } from "@common/extension/popup/features/filterList/domainListSlice";
+import { push as pushFilter } from "@common/redux/features/domainList/domainListSlice";
 import { Button } from "@ui/components/Button";
 import { isValidDomain } from "@utils/domain.util";
 import { useContext, useEffect, useRef, useState } from "react";

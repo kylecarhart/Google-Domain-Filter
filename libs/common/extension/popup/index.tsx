@@ -4,7 +4,7 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import ListPage from "./pages/DomainListPage/ListPage";
-import { persistor, store } from "./store";
+import { persistor, store } from "../../redux/store";
 
 import "normalize.css";
 import "./index.css";
