@@ -1,0 +1,50 @@
+Testing
+
+- Google search "dominos" is normal
+  - Verify no errors in content script.
+- Add "dominos.com" to filter list.
+  - Verify domain is in the list.
+  - Verify domain persists to storage.
+  - Verify domain disappears from content.
+- Resubmit "dominos" google search.
+  - Verify domain is not in results
+- Add "indeed.com" to filter list.
+  - Verify domain is in the list.
+  - Verify domain persists to storage.
+  - Verify domain disappears from content.
+  - Verify drag and drop reordering works.
+- Resubmit "dominos" google search.
+  - Verify "dominos.com" and "indeed.com" are not in results
+- Edit "indeed.com" to something bogus.
+  - Verify domain no longer in list.
+  - Verify domain reappears from content.
+- Navigate to "Preference List"
+  - Verify no domains in the list.
+- Add "indeed.com" to preference list.
+  - Verify domain is in the list.
+  - Verify domain is preferred in the contnet UI.
+- Resubmit "dominos" google search.
+  - Verify "dominos.com" is filtered out of the UI.
+  - Verify "indeed.com" is preferred in the UI.
+- Add "twitter.com" to preference list.
+  - Verify "twitter.com" is in the list.
+  - Verify "twitter.com" is preferred in the UI.
+- Reorder "twitter.com" and "indeed.com"
+  - Verify list can be reordered.
+  - Verify changes persist.
+  - Verify content UI reflects the order of the list.
+- Resubmit "dominos" google search.
+  - Verify "dominos.com" is filtered out of the UI.
+  - Verify preferred domains are preferred in the UI.
+  - Verify preferred domains match the order in the list with the content UI.
+- Open options page
+  - Verify Options page shows.
+  - Verify popup closes on options page show.
+- Turn off filter list and resubmit dominos query
+  - Verify filter mode option is disabled.
+  - Verify "dominos.com" shows in the search results.
+- Turn off preference list and resubmit dominos query
+  - Verify preference list items no longer preferred in content UI.
+- Turn on filter list and preference list, then toggle "experimental mode"
+  - Verify "as_q" query parameter is present with filter list entries.
+  - Verify "dominos.com" is not in search results
