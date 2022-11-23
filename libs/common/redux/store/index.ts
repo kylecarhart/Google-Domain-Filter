@@ -17,7 +17,7 @@ import browser from "webextension-polyfill";
 import { domainListReducer } from "../features/domainList/domainListSlice";
 import { optionsReducer } from "../features/options/optionsSlice";
 
-const syncStorageConfig = {
+export const syncStorageConfig = {
   key: REDUX_PERSIST_KEY,
   storage: syncStorage,
 };

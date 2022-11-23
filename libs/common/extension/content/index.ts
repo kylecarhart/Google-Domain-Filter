@@ -1,5 +1,7 @@
-import { storage } from "@common/storage";
+import { RootState, store, syncStorageConfig } from "@common/redux/store";
 import { QUERY_PARAM } from "@constants/index";
+import { isEqual } from "lodash";
+import getStoredState from "redux-persist/es/getStoredState";
 import { filterResults, preferResults } from "./mutations";
 import QueryObserver from "./QueryObserver";
 import ResultObserver from "./ResultObserver";
@@ -15,10 +17,12 @@ import ResultObserver from "./ResultObserver";
     observer.observe();
   }
 
-  let filterList = await storage.filterList.get();
-  let preferenceList = await storage.preferenceList.get();
-  let options = await storage.options.get();
+  // Get the current state from storage
+  let currentState = (await getStoredState(syncStorageConfig)) as RootState;
+  let { filterList, preferenceList } = currentState.domainLists;
+  let { options } = currentState;
 
+  // If the dom is loading, observe the dom and remove results. When finished, disconnect.
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       if (observer) {
@@ -50,42 +54,57 @@ import ResultObserver from "./ResultObserver";
     }
   }
 
-  // Listen for changes to the options (enable/disable)
-  storage.options.addListener((newOptions, oldOptions) => {
-    // Show/hide filter results when options are changed.
-    if (newOptions.filterListEnabled !== oldOptions.filterListEnabled) {
-      if (newOptions.filterListEnabled) {
-        filterResults(filterList);
+  // Listen for changes to the store and update the UI.
+  store.subscribe(() => {
+    let previousState = currentState;
+    currentState = store.getState();
+
+    // Turn on/off domain filter ui changes
+    if (
+      currentState.options.filterListEnabled !==
+      previousState?.options.filterListEnabled
+    ) {
+      if (currentState.options.filterListEnabled) {
+        filterResults(currentState.domainLists.filterList);
       } else {
         filterResults([]);
       }
     }
 
-    // Emphasize/de-emphasize preferences when options are changed.
-    if (newOptions.preferenceListEnabled !== oldOptions.preferenceListEnabled) {
-      if (newOptions.preferenceListEnabled) {
-        preferResults(preferenceList);
+    // Turn on/off domain preferences ui changes
+    if (
+      currentState.options.preferenceListEnabled !==
+      previousState?.options.preferenceListEnabled
+    ) {
+      if (currentState.options.preferenceListEnabled) {
+        preferResults(currentState.domainLists.preferenceList);
       } else {
         preferResults([]);
       }
     }
 
-    options = newOptions;
-  });
-
-  // Listen for changes to filter list and remove them from the DOM
-  storage.filterList.addListener((newFilterList) => {
-    if (options.filterListEnabled) {
-      filterResults(newFilterList);
+    // Check for changes to filter list
+    if (
+      !isEqual(
+        currentState.domainLists.filterList,
+        previousState?.domainLists.filterList
+      )
+    ) {
+      if (currentState.options.filterListEnabled) {
+        filterResults(currentState.domainLists.filterList);
+      }
     }
-    filterList = newFilterList;
-  });
 
-  // Listen to changes to preference list and highlight them in the DOM
-  storage.preferenceList.addListener((newPreferenceList) => {
-    if (options.preferenceListEnabled) {
-      preferResults(newPreferenceList);
+    // Check for changes to preference list
+    if (
+      !isEqual(
+        currentState.domainLists.preferenceList,
+        previousState?.domainLists.preferenceList
+      )
+    ) {
+      if (currentState.options.preferenceListEnabled) {
+        preferResults(currentState.domainLists.preferenceList);
+      }
     }
-    preferenceList = newPreferenceList;
   });
 })();

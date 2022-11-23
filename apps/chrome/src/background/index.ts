@@ -1,4 +1,5 @@
-import { storage } from "@common/storage";
+import { RootState, store } from "@common/redux/store";
+import { isEqual } from "lodash";
 import {
   disableDynamicRules,
   enableDynamicRules,
@@ -6,25 +7,31 @@ import {
 } from "./netRequestHelper";
 
 (async function () {
-  storage.filterList.addListener((filterList) => {
-    // TODO: If the filter list contains nothing, then the as_q param will be empty. Is that okay?
-    updateDynamicRules(filterList);
-  });
+  let currentState: RootState;
+  store.subscribe(() => {
+    let previousState = currentState;
+    currentState = store.getState();
 
-  // Turn on/off the declarativeNetRequest initially for experimental mode.
-  const options = await storage.options.get();
-  if (options.filterListEnabled && options.filterMode === "experimental") {
-    enableDynamicRules();
-  } else {
-    disableDynamicRules();
-  }
+    // Update the dynamic rules if the filterlist has changed.
+    if (
+      !isEqual(
+        currentState.domainLists.filterList,
+        previousState?.domainLists.filterList
+      )
+    ) {
+      updateDynamicRules(currentState.domainLists.filterList);
+    }
 
-  // Listen for changes to the filter mode option and turn on/off declarativeNetRequest rules
-  storage.options.addListener((options) => {
-    if (options.filterListEnabled && options.filterMode === "experimental") {
-      enableDynamicRules();
-    } else {
-      disableDynamicRules();
+    // Enable/Disable the dynamic rules if the options change
+    if (!isEqual(currentState.options, previousState?.options)) {
+      if (
+        currentState.options.filterListEnabled &&
+        currentState.options.filterMode === "experimental"
+      ) {
+        enableDynamicRules();
+      } else {
+        disableDynamicRules();
+      }
     }
   });
 })();
