@@ -1,4 +1,6 @@
-import { combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
+import { REDUX_PERSIST_KEY } from "@constants/index";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 import {
   FLUSH,
   PAUSE,
@@ -10,14 +12,13 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import { syncStorage } from "redux-persist-webextension-storage";
-import { domainListReducer } from "../features/domainList/domainListSlice";
-import logger from "redux-logger";
-import { optionsReducer } from "../features/options/optionsSlice";
-import browser from "webextension-polyfill";
 import getStoredState from "redux-persist/es/getStoredState";
+import browser from "webextension-polyfill";
+import { domainListReducer } from "../features/domainList/domainListSlice";
+import { optionsReducer } from "../features/options/optionsSlice";
 
 const syncStorageConfig = {
-  key: "root",
+  key: REDUX_PERSIST_KEY,
   storage: syncStorage,
 };
 
@@ -25,22 +26,6 @@ const rootReducer = combineReducers({
   domainLists: domainListReducer,
   options: optionsReducer,
 });
-
-/**
- * Sends crash reports as state is updated and listeners are notified.
- */
-const browserMiddleware: Middleware = (store) => (next) => (action) => {
-  browser.runtime
-    .sendMessage(null, {
-      action,
-    })
-    .catch(() => {
-      console.log("Error during send message");
-    })
-    .finally(() => {
-      next(action);
-    });
-};
 
 export const store = configureStore({
   reducer: persistReducer<ReturnType<typeof rootReducer>>(
@@ -54,35 +39,34 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(logger),
-  // .concat(browserMiddleware),
 });
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store, null, () => {
+  try {
+    syncPersistToStorage();
+  } catch (e) {
+    console.error("Unable to sync redux persist to storage.");
+  }
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
-function listen() {
+function syncPersistToStorage() {
   browser.storage.sync.onChanged.addListener(() => {
-    getStoredState(syncStorageConfig).then((val) => {
-      const json = JSON.stringify(val);
-      const state = JSON.stringify(store.getState());
-      if (json !== state) {
+    getStoredState(syncStorageConfig).then((storedState) => {
+      // TODO: This could probably use some tweaking in the future. Not efficient.
+      const storedStateString = JSON.stringify(storedState);
+      const currentStateString = JSON.stringify(store.getState());
+      if (storedStateString !== currentStateString) {
         store.dispatch({
           type: REHYDRATE,
-          payload: val,
-          key: "root",
+          key: REDUX_PERSIST_KEY,
+          payload: storedState,
         });
       }
-      // console.log({ json, state, equal: json === state });
     });
-    // store.dispatch({ type: "persist/PERSIST", });
-  });
-
-  browser.runtime.onMessage.addListener((message) => {
-    console.log(message);
   });
 }
-listen();
