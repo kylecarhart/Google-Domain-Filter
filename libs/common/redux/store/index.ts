@@ -71,6 +71,6 @@ function initStorageSyncListener() {
   });
 }
 
-export function getStateFromStorage(): Promise<RootState> {
-  return getStoredState.bind(null, syncStorageConfig);
+export function getStateFromStorage() {
+  return getStoredState(syncStorageConfig) as Promise<RootState>;
 }
