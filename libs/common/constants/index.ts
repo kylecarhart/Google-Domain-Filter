@@ -18,7 +18,7 @@ export const FIRST_VERSION = "1.0.0";
  */
 
 /** @deprecated Use Redux Store */
-export const STORAGE_FILTERLIST = "filterlist";
+export const STORAGE_FILTERLIST = "filterList";
 /** @deprecated Use Redux Store */
 export const STORAGE_PREFERENCELIST = "preferenceList";
 /** @deprecated Use Redux Store */
