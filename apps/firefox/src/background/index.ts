@@ -1,6 +1,9 @@
-import { getStateFromStorage, store } from "@common/redux/store";
 import { isEqual } from "lodash";
 import FilterListRequestListener from "./FilterListRequestListener";
+import {
+  getStateFromStorage,
+  store,
+} from "../../../../libs/common/src/redux/store";
 
 (async function () {
   let currentState = await getStateFromStorage();

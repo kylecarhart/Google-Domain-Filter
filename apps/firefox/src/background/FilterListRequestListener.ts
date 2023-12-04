@@ -1,8 +1,7 @@
 import browser, { WebRequest } from "webextension-polyfill";
-import tldsJson from "@constants/tlds.json";
-import { Domain } from "@common/types";
-import { toExcludeQuery } from "@utils/index";
-import { QUERY_PARAM } from "@constants/index";
+import { QUERY_PARAM } from "../../../../libs/common/src/constants";
+import { Domain } from "../../../../libs/common/src/types";
+import { toExcludeQuery } from "../../../../libs/common/src/utils";
 
 export default class FilterListRequestListener {
   filterList: Domain[];

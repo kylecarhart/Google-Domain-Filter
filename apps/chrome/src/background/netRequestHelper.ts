@@ -1,6 +1,6 @@
-import { Domain } from "@common/types";
-import { QUERY_PARAM } from "@constants/index";
-import { toExcludeQuery } from "@utils/query.util";
+import { QUERY_PARAM } from "../../../../libs/common/src/constants";
+import { Domain } from "../../../../libs/common/src/types";
+import { toExcludeQuery } from "../../../../libs/common/src/utils";
 
 const { RuleActionType, ResourceType } = chrome.declarativeNetRequest;
 

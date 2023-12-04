@@ -4,18 +4,9 @@
     "target": "ES6",
     "resolveJsonModule": true,
     "lib": ["DOM"],
-    "noImplicitAny": true,
+    "strict": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    // Base starts here -----------------
-    "baseUrl": "./",
-    "paths": {
-      "@apps/*": ["apps/*"],
-      "@ui/*": ["libs/common/ui/*"],
-      "@utils/*": ["libs/common/utils/*"],
-      "@constants/*": ["libs/common/constants/*"],
-      "@common/*": ["libs/common/*"]
-    }
+    "allowSyntheticDefaultImports": true
   },
   "include": ["./apps/**/*", "./libs/**/*"]
 }

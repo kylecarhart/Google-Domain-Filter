@@ -1,5 +1,3 @@
-import { handleInstalled } from "@common/extension/background/handleInstalled";
-import { RootState, store } from "@common/redux/store";
 import { isEqual } from "lodash";
 import browser from "webextension-polyfill";
 import {
@@ -7,6 +5,8 @@ import {
   enableDynamicRules,
   updateDynamicRules,
 } from "./netRequestHelper";
+import { handleInstalled } from "../../../../libs/common/src/extension/background/handleInstalled";
+import { RootState, store } from "../../../../libs/common/src/redux/store";
 
 // Handle storage initialization on install.
 browser.runtime.onInstalled.addListener(handleInstalled);
