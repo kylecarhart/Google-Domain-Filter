@@ -8,5 +8,5 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["./apps/**/*", "./libs/**/*"]
+  "exclude": ["node_modules"]
 }

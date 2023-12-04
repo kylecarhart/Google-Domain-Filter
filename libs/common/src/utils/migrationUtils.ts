@@ -28,7 +28,6 @@ export async function handleStorageMigrations() {
  */
 export async function migrate(currentVersion: number) {
   switch (currentVersion) {
-    // @ts-expect-error - Intentional fall-thru
     case 0:
       await migrateToV1();
     // eslint-disable-next-line no-fallthrough

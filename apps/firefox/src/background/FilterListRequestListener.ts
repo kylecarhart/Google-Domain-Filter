@@ -2,13 +2,14 @@ import browser, { WebRequest } from "webextension-polyfill";
 import { QUERY_PARAM } from "../../../../libs/common/src/constants";
 import { Domain } from "../../../../libs/common/src/types";
 import { toExcludeQuery } from "../../../../libs/common/src/utils";
+import tldsJson from "../../../../libs/common/src/constants/tlds.json";
 
 export default class FilterListRequestListener {
   filterList: Domain[];
   private isRunning: boolean;
   private listener = (details: WebRequest.OnBeforeRequestDetailsType) => {
     // If there are no domains, don't bother redirecting
-    if (!this.filterList && this.filterList.length === 0) {
+    if (!this.filterList || this.filterList.length === 0) {
       return;
     }
 

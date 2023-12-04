@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
-const { tlds } = require("../../libs/common/constants/tlds.json");
+const { tlds } = require("../../libs/common/src/constants/tlds.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = (env) => {
@@ -11,9 +11,9 @@ module.exports = (env) => {
     // One entry point for each part of an extension
     entry: {
       background: "./src/background",
-      content: "../../libs/common/extension/content",
-      popup: "../../libs/common/extension/popup",
-      options: "../../libs/common/extension/options",
+      content: "../../libs/common/src/extension/content",
+      popup: "../../libs/common/src/extension/popup",
+      options: "../../libs/common/src/extension/options",
     },
     // Output each in a folder named after their entry
     output: {
@@ -57,13 +57,13 @@ module.exports = (env) => {
     plugins: [
       // Create index.html for popup
       new HtmlWebPackPlugin({
-        template: "../../libs/common/extension/popup/index.html",
+        template: "../../libs/common/src/extension/popup/index.html",
         filename: "./popup/index.html",
         chunks: ["popup"],
       }),
       // Create index.html for options
       new HtmlWebPackPlugin({
-        template: "../../libs/common/extension/options/index.html",
+        template: "../../libs/common/src/extension/options/index.html",
         filename: "./options/index.html",
         chunks: ["options"],
       }),
@@ -97,12 +97,12 @@ module.exports = (env) => {
           },
           // Copy static files (imgs)
           {
-            from: "../../libs/common/static/png/logo*.png",
+            from: "../../libs/common/src/static/png/logo*.png",
             to: "./static/[name][ext]",
           },
           // Copy content styles
           {
-            from: "../../libs/common/extension/content/styles.css",
+            from: "../../libs/common/src/extension/content/styles.css",
             to: "./content",
           },
         ],

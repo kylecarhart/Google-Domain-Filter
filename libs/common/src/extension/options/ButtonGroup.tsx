@@ -6,7 +6,7 @@ interface Props {
   onValue?: string | boolean;
   offValue?: string | boolean;
   option: string | boolean;
-  onClick: (val: string | boolean) => void;
+  onClick: (val: any) => void;
   disabled?: boolean;
 }
 
