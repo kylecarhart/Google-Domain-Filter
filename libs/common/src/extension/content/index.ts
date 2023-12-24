@@ -3,7 +3,7 @@ import { filterResults, preferResults } from "./mutations";
 import QueryObserver from "./QueryObserver";
 import ResultObserver from "./ResultObserver";
 import { QUERY_PARAM } from "../../constants";
-import { getStateFromStorage, store } from "../../redux/store";
+import { getStateFromStorage, getStore } from "../../redux/store";
 
 (async function () {
   const url = new URL(window.location.href);
@@ -17,6 +17,7 @@ import { getStateFromStorage, store } from "../../redux/store";
   }
 
   // Get the current state from storage
+  const { store } = getStore();
   let currentState = await getStateFromStorage();
   const { filterList, preferenceList } = currentState.domainLists;
   const { options } = currentState;

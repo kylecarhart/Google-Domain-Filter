@@ -6,10 +6,11 @@ import {
   updateDynamicRules,
 } from "./netRequestHelper";
 import { handleInstalled } from "../../../../libs/common/src/extension/background/handleInstalled";
-import { RootState, store } from "../../../../libs/common/src/redux/store";
+import { RootState, getStore } from "../../../../libs/common/src/redux/store";
 
 // Handle storage initialization on install.
 browser.runtime.onInstalled.addListener(handleInstalled);
+const { store } = getStore();
 
 (async function () {
   let currentState: RootState;

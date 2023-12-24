@@ -6,7 +6,7 @@ import {
 } from "../constants";
 import { set } from "../redux/features/domainList/domainListSlice";
 import { setOptions } from "../redux/features/options/optionsSlice";
-import { store } from "../redux/store";
+import { getStore } from "../redux/store";
 import { setStorageVersion } from "../utils/migrationUtils";
 
 /**
@@ -14,6 +14,7 @@ import { setStorageVersion } from "../utils/migrationUtils";
  * Local storage will now use redux-persist as primary means of storing data.
  */
 export async function migrateToV1() {
+  const { store } = getStore();
   const storage = await browser.storage.sync.get();
 
   // Migrate options

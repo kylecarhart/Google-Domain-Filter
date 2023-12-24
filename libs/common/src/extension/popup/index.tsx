@@ -2,12 +2,15 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
+import { getStore } from "../../redux/store";
 import App from "./App";
 import ListPage from "./pages/DomainListPage/ListPage";
-import { persistor, store } from "../../redux/store";
+import React from "react";
 
 import "normalize.css";
 import "./index.css";
+
+const { store, persistor } = getStore();
 
 const router = createMemoryRouter([
   {
